@@ -12,7 +12,7 @@ type Presentation = {
 
 type Slide = {
     slideId: string;
-    Elements: Array<SlideElement>;
+    elements: Array<SlideElement>;
     background: string;
     selectedElementId: string;
 }
@@ -20,20 +20,40 @@ type Slide = {
 type SlideElement = {
     elementId: string;
     elementType: "text" | "figure" | "image";
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+    position: Position;  
     bgColor: string;
-    urlImage?: string;
-    ext?: string;
-    textcolor?: string;
-    text?: string;
-    fontSize?: string;
-    textWeight?: "light" | "regular" | "bold";
-    strokeColor?: string;
-    fillcolor?: string;
-    form?: string;
+    size: Size;
+    image: ImageType;
+    text: TextType;
+    figure: FigureType
 }
 
-export { Editor, SlideElement }  
+type Position = {
+    x: number;
+    y: number
+}
+
+type Size = {
+    width: number;
+    height: number
+}
+
+type ImageType = {
+    urlImage: string;
+    ext: string
+}
+
+type TextType = {
+    textcolor: string;
+    text: string;
+    fontSize: string;
+    textWeight: "light" | "regular" | "bold"
+}
+
+type FigureType = {
+    strokeColor: string;
+    fillcolor: string;
+    form: string
+}
+
+export { Editor, SlideElement, Slide, Presentation }  

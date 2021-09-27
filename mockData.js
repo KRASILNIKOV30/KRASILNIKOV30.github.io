@@ -46,7 +46,7 @@ editor.presentation.slides[0].elements[0] = {
 editor.presentation.slides[0].elements[1] = {
     elementId: "1",
     elementType: "figure",
-    x: 25,
+    x: 32,
     y: 64,
     width:356,
     height: 93,

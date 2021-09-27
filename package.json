@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/KRASILNIKOV30/presentation_constructor#readme",
   "dependencies": {
-    "http-server": "^13.0.2"
+    "http-server": "^13.0.2",
+    "uuid4": "^2.0.2"
   }
 }
