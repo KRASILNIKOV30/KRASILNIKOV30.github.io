@@ -1,7 +1,7 @@
 type Editor = {
     presentation: Presentation;
     history: History;
-    state: string;
+    statePreview: boolean;
     selectedSlideId: string;
 }
 

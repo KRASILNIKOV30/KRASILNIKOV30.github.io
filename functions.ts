@@ -3,8 +3,14 @@ import { Editor, SlideElement, Slide, Presentation } from "./types";
 import uuidv4 from 'uuid4';
 
 function changeTitle(editor: Editor, title: string): Editor {
-    editor.presentation.title = prompt('Enter new title');
-    return(editor)
+    const newTitle: string = prompt('Enter new title');
+    return {
+        ...editor,
+        presentation: {
+            title: newTitle,
+            slides: editor.presentation.slides
+        } 
+    }
 }
 
 function saveDoc(editor: Editor): Editor {
@@ -20,6 +26,7 @@ function exportDoc(editor: Editor): Editor {
 }
 
 function switchPreview(editor: Editor): Editor {
+    editor.statePreview = !editor.statePreview;
     return(editor)
 }
 
