@@ -2,7 +2,7 @@ type Editor = {
     presentation: Presentation;
     history: History;
     statePreview: boolean;
-    selectedSlideId: string;
+    currentSlideId: string;
 }
 
 type Presentation = {
@@ -14,18 +14,18 @@ type Slide = {
     slideId: string;
     elements: Array<SlideElement>;
     background: string;
-    selectedElementId: string;
+    selectedElementsId: Array<string>;
 }
 
 type SlideElement = {
     elementId: string;
     elementType: "text" | "figure" | "image";
-    position: Position;  
-    bgColor: string;
-    size: Size;
-    image: ImageType;
-    text: TextType;
-    figure: FigureType
+    position: Position; 
+    size: Size; 
+    bgColor?: string;
+    image?: ImageType;
+    text?: TextType;
+    figure?: FigureType
 }
 
 type Position = {
@@ -51,9 +51,9 @@ type TextType = {
 }
 
 type FigureType = {
+    form: "text" | "figure" | "image";
     strokeColor: string;
-    fillcolor: string;
-    form: string
+    fillcolor: string
 }
 
 export { Editor, SlideElement, Slide, Presentation }  
