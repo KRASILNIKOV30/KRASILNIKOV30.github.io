@@ -103,26 +103,30 @@ function addObject(editor: Editor, element: SlideElement): Editor {
     }
 }
 
-function changeObject(editor: Editor, paramName: string, value: string | number, slideId: string, elementId: string): Editor {
-    paramName = prompt("What do u want to change");
-    value = prompt("new value");
-    editor.presentation.slides[slideId].elements[elementId].paramName = value;
-    return(editor)
-}
-
-//lets go
 //find - first found
-function changePosition(editor: Editor, x: number, y: number, selectedElementsId: Array<string>): Editor {
+function changePosition(editor: Editor, xShift: number, yShift: number, selectedElementsId: Array<string>): Editor {
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
-    newSlides[indexSlide].elements.forEach(element => {
-        if(selectedElementsId.includes(element.elementId)) {
+    for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                position: {
+                    x: newSlides[indexSlide].elements[i].position.x + xShift,
+                    y: newSlides[indexSlide].elements[i].position.y + yShift
+                }
+            };
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
         }
-    })
-    return(editor)
+    }
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
 }
-
-//lets stop
 
 function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Editor {
     const newSlides: Array<Slide> = editor.presentation.slides;
