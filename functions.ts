@@ -183,3 +183,12 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
         }
     }
 }
+
+export { changeTitle,
+    saveDoc, uploadDoc, exportDoc, 
+    switchPreview,
+    undo, redo,
+    addSlide, removeSlide, switchSlide,
+    setBackground, addObject, deleteSelected,
+    changePosition,    
+}
