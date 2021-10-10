@@ -2,19 +2,24 @@ type Editor = {
     presentation: Presentation;
     history: History;
     statePreview: boolean;
-    currentSlideId: string;
+    currentSlideId: string
+}
+
+type History = {
+    undoStack: Array<Presentation>;
+    redoStack: Array<Presentation>
 }
 
 type Presentation = {
     title: string;
-    slides: Array<Slide>;
+    slides: Array<Slide>
 }
 
 type Slide = {
     slideId: string;
     elements: Array<SlideElement>;
     background: string;
-    selectedElementsId: Array<string>;
+    selectedElementsId: Array<string>
 }
 
 type SlideElement = {
@@ -56,4 +61,4 @@ type FigureType = {
     fillcolor: string
 }
 
-export { Editor, SlideElement, Slide, Presentation }  
+export { Editor, SlideElement, Slide, Presentation, History }  

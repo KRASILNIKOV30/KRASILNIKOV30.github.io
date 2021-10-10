@@ -1,10 +1,24 @@
-import { Editor, SlideElement, Slide, Presentation } from "./types";
+import { Editor, SlideElement, Slide, Presentation, History } from "./types";
 
 import uuidv4 from 'uuid4';
 
+function createNewHistory(editor: Editor): History {
+    const newHistory: History = editor.history;
+    if(newHistory.undoStack.length = 100) {
+        newHistory.undoStack.shift();
+    }
+    while(newHistory.redoStack.length !== 0) {
+        newHistory.redoStack.pop();
+    }
+    newHistory.undoStack.push(editor.presentation);
+    return (newHistory)
+}
+
 function changeTitle(editor: Editor, title: string): Editor {
+    const newHistory: History = createNewHistory(editor);
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             title: title,
@@ -32,14 +46,28 @@ function switchPreview(editor: Editor): Editor {
 }
 
 function undo(editor: Editor): Editor {
-    return(editor)
+    const newHistory: History = editor.history;
+    const newPresentation: Presentation = newHistory.undoStack.pop();
+    newHistory.redoStack.push(newPresentation);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: newPresentation
+    }
 }
 
 function redo(editor: Editor): Editor {
-    return(editor)
+    const newHistory: History = editor.history;
+    const newPresentation: Presentation = newHistory.redoStack.pop();
+    return {
+        ...editor, 
+        history: newHistory,
+        presentation: newPresentation
+    }
 }
 
 function addSlide(editor: Editor): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     newSlides.push({
         slideId: uuidv4(),
@@ -50,6 +78,7 @@ function addSlide(editor: Editor): Editor {
 
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
@@ -58,11 +87,13 @@ function addSlide(editor: Editor): Editor {
 }
 
 function removeSlide(editor: Editor, slideId: string): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == slideId);
     newSlides.splice(indexSlide, 1);
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
@@ -78,11 +109,13 @@ function switchSlide(editor: Editor, slideId: string): Editor {
 }
 
 function setBackground(editor: Editor, background: string): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
     newSlides[indexSlide].background = background;
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
@@ -91,11 +124,13 @@ function setBackground(editor: Editor, background: string): Editor {
 }
 
 function addObject(editor: Editor, element: SlideElement): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
     newSlides[indexSlide].elements.push(element);
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
@@ -105,6 +140,7 @@ function addObject(editor: Editor, element: SlideElement): Editor {
 
 //find - first found
 function changePosition(editor: Editor, xShift: number, yShift: number, selectedElementsId: Array<string>): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
     for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
@@ -121,6 +157,7 @@ function changePosition(editor: Editor, xShift: number, yShift: number, selected
     }
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
@@ -129,6 +166,7 @@ function changePosition(editor: Editor, xShift: number, yShift: number, selected
 }
 
 function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Editor {
+    const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
     newSlides[indexSlide].elements.forEach(element => {
@@ -138,6 +176,7 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
     })
     return {
         ...editor,
+        history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
