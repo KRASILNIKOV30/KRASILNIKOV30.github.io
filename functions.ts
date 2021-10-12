@@ -1,6 +1,6 @@
 import { Editor, SlideElement, Slide, Presentation, History } from "./types";
 
-import uuidv4 from 'uuid4';
+import { uuid } from "uuidv4";
 
 function createNewHistory(editor: Editor): History {
     const newHistory: History = editor.history;
@@ -30,7 +30,7 @@ function saveDoc(editor: Editor): Editor {
     return(editor)
 }
 
-function uploadDoc(editor: Editor, editorFile: File): Editor {
+function uploadDoc(editor: Editor, editorFile: any): Editor {
     return(editor)
 }
 
@@ -46,23 +46,33 @@ function switchPreview(editor: Editor): Editor {
 }
 
 function undo(editor: Editor): Editor {
-    const newHistory: History = editor.history;
-    const newPresentation: Presentation = newHistory.undoStack.pop();
-    newHistory.redoStack.push(newPresentation);
-    return {
-        ...editor,
-        history: newHistory,
-        presentation: newPresentation
+    if (editor.history.undoStack.length !== 0) {
+        const newHistory: History = editor.history;
+        const newPresentation: Presentation = newHistory.undoStack.pop()!;
+        newHistory.redoStack.push(newPresentation);
+        return {
+            ...editor,
+            history: newHistory,
+            presentation: newPresentation
+        }
+    }
+    else {
+        return(editor)
     }
 }
 
 function redo(editor: Editor): Editor {
-    const newHistory: History = editor.history;
-    const newPresentation: Presentation = newHistory.redoStack.pop();
-    return {
-        ...editor, 
-        history: newHistory,
-        presentation: newPresentation
+    if (editor.history.redoStack.length !== 0) {
+        const newHistory: History = editor.history;
+        const newPresentation: Presentation = newHistory.redoStack.pop()!;
+        return {
+            ...editor, 
+            history: newHistory,
+            presentation: newPresentation
+        }
+    }
+    else {
+        return(editor)
     }
 }
 
@@ -70,7 +80,7 @@ function addSlide(editor: Editor): Editor {
     const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;
     newSlides.push({
-        slideId: uuidv4(),
+        slideId: uuid(),
         elements: [],
         background: "url",
         selectedElementsId: []
@@ -138,7 +148,6 @@ function addObject(editor: Editor, element: SlideElement): Editor {
     }
 }
 
-//find - first found
 function changePosition(editor: Editor, xShift: number, yShift: number, selectedElementsId: Array<string>): Editor {
     const newHistory: History = createNewHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides;

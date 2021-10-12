@@ -1,24 +1,6 @@
 {
-  "name": "presentation_constructor",
-  "version": "1.0.0",
-  "description": "",
-  "main": "functions.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/KRASILNIKOV30/presentation_constructor.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/KRASILNIKOV30/presentation_constructor/issues"
-  },
-  "homepage": "https://github.com/KRASILNIKOV30/presentation_constructor#readme",
   "dependencies": {
-    "http-server": "^13.0.2",
-    "uuid4": "^2.0.2"
+    "typescript": "^4.4.3",
+    "uuidv4": "^6.2.12"
   }
 }
