@@ -193,11 +193,28 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
     }
 }
 
-export { changeTitle,
-    saveDoc, uploadDoc, exportDoc, 
-    switchPreview,
-    undo, redo,
-    addSlide, removeSlide, switchSlide,
-    setBackground, addObject, deleteSelected,
-    changePosition,    
+//Тесты поехали
+
+const presentation: Presentation = {
+    title: "Бравая презентация",
+    slides: []
 }
+
+const history: History = {
+    undoStack: [],
+    redoStack: []
+} 
+
+const editor: Editor = {
+    presentation: presentation,
+    history: history,
+    statePreview: false,
+    currentSlideId: uuid()
+}
+
+function writeEditor(editor: Editor) {
+    console.log('fsjgjw')
+}
+
+console.log('Hello Kerim')
+writeEditor(editor)
