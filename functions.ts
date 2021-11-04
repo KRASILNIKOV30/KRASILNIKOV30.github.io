@@ -1,5 +1,5 @@
-import { Editor, SlideElement, Slide, Presentation, History } from "./types";
-
+import { Editor, SlideElement, Slide, Presentation, History, TextType } from "./types";
+//Создать textStyle и менять его
 import { uuid } from "uuidv4";
 
 function addActionToHistory(editor: Editor): History {
@@ -201,16 +201,20 @@ function changeSize(editor: Editor, selectedElementsId: Array<string>, widthShif
     }
 }
 
-function changeTextValue(editor: Editor, selectedElementsId: Array<string>, textValue: string): Editor {
+function changeTextProps(editor: Editor, selectedElementsId: Array<string>, textPropsValue: TextType): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
-    for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
-        if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && newSlides[indexSlide].elements[i].elementType == "text") {
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && newSlides[indexSlide].elements[i].elementType == "text") {
             const newElement: SlideElement = {
                 ...newSlides[indexSlide].elements[i],
                 textProps: {
-                    ...editor.presentation.slides[indexSlide].elements[i].textProps
+                    textColor: textPropsValue.textColor != null ? textPropsValue.textColor : newSlides[indexSlide].elements[i].textProps.textColor,
+                    bgColor: textPropsValue.bgColor != null ? textPropsValue.bgColor : newSlides[indexSlide].elements[i].textProps.bgColor,
+                    textValue: textPropsValue.textValue != null ? textPropsValue.textValue : newSlides[indexSlide].elements[i].textProps.textValue,
+                    fontSize: textPropsValue.fontSize != null ? textPropsValue.fontSize : newSlides[indexSlide].elements[i].textProps.fontSize,
+                    fontWeight: textPropsValue.fontWeight != null ? textPropsValue.fontWeight : newSlides[indexSlide].elements[i].textProps.fontWeight,
                 }
             };
             newSlides[indexSlide].elements.splice(i, 1, newElement)
@@ -226,7 +230,60 @@ function changeTextValue(editor: Editor, selectedElementsId: Array<string>, text
     }
 }
 
-/*textValue, fontSize, textWeight, bgColor*/
+function changeStrokeColor(editor: Editor, selectedElementsId: Array<string>, newStrokeColor: string): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                figure: {
+                    form: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newStrokeColor,
+                    fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
+                }
+            }
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+function changeFillColor(editor: Editor, selectedElementsId: Array<string>, newFillColor: string): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                figure: {
+                    form: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
+                    fillColor: newFillColor
+                }
+            }
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 
 function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Editor {
     const newHistory: History = addActionToHistory(editor);
@@ -246,29 +303,3 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
         }
     }
 }
-
-//Тесты поехали
-
-const presentation: Presentation = {
-    title: "Бравая презентация",
-    slides: []
-}
-
-const history: History = {
-    undoStack: [],
-    redoStack: []
-} 
-
-const editor: Editor = {
-    presentation: presentation,
-    history: history,
-    statePreview: false,
-    currentSlideIds: [uuid()]
-}
-
-function writeEditor(editor: Editor) {
-    console.log('fsjgjw')
-}
-
-console.log('Hello Kerim')
-writeEditor(editor)

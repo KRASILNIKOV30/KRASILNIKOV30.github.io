@@ -50,17 +50,17 @@ type ImageType = {
 }
 
 type TextType = {
-    textColor: string;
-    bgColor: string;
-    textValue: string;
-    fontSize: string;
-    textWeight: "light" | "regular" | "bold"
+    textColor: string | null;
+    bgColor: string | null;
+    textValue: string | null;
+    fontSize: string | null;
+    fontWeight: "light" | "regular" | "bold" | null
 }
 
 type FigureType = {
-    form: "text" | "figure" | "image";
+    form: "rectangle" | "circle" | "triangle";
     strokeColor: string;
-    fillcolor: string
+    fillColor: string
 }
 
-export { Editor, SlideElement, Slide, Presentation, History }  
+export { Editor, SlideElement, Slide, Presentation, History, TextType }  
