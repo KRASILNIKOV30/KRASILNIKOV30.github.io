@@ -1,8 +1,8 @@
-import { Editor, SlideElement, Slide, Presentation, History } from "./types";
-
+import { Editor, SlideElement, Slide, Presentation, History, TextType } from "./types";
+//Создать textStyle и менять его
 import { uuid } from "uuidv4";
 
-function createNewHistory(editor: Editor): History {
+function addActionToHistory(editor: Editor): History {
     const newHistory: History = editor.history;
     if(newHistory.undoStack.length = 100) {
         newHistory.undoStack.shift();
@@ -15,7 +15,7 @@ function createNewHistory(editor: Editor): History {
 }
 
 function changeTitle(editor: Editor, title: string): Editor {
-    const newHistory: History = createNewHistory(editor);
+    const newHistory: History = addActionToHistory(editor);
     return {
         ...editor,
         history: newHistory,
@@ -30,7 +30,7 @@ function saveDoc(editor: Editor): Editor {
     return(editor)
 }
 
-function uploadDoc(editor: Editor, editorFile: any): Editor {
+function uploadDoc(editor: Editor): Editor {
     return(editor)
 }
 
@@ -49,41 +49,39 @@ function undo(editor: Editor): Editor {
     if (editor.history.undoStack.length !== 0) {
         const newHistory: History = editor.history;
         const newPresentation: Presentation = newHistory.undoStack.pop()!;
-        newHistory.redoStack.push(newPresentation);
+        newHistory.redoStack.push(editor.presentation);
         return {
             ...editor,
             history: newHistory,
             presentation: newPresentation
         }
     }
-    else {
-        return(editor)
-    }
+    return(editor)
 }
 
 function redo(editor: Editor): Editor {
     if (editor.history.redoStack.length !== 0) {
         const newHistory: History = editor.history;
         const newPresentation: Presentation = newHistory.redoStack.pop()!;
+        newHistory.undoStack.push(editor.presentation);
         return {
             ...editor, 
             history: newHistory,
             presentation: newPresentation
         }
     }
-    else {
-        return(editor)
-    }
+    return(editor)
 }
 
 function addSlide(editor: Editor): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
     newSlides.push({
         slideId: uuid(),
         elements: [],
-        background: "url",
-        selectedElementsId: []
+        background: "white",
+        backgroundType: "Base64",
+        selectedElementsIds: []
     });
 
     return {
@@ -96,11 +94,14 @@ function addSlide(editor: Editor): Editor {
     }
 }
 
-function removeSlide(editor: Editor, slideId: string): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == slideId);
-    newSlides.splice(indexSlide, 1);
+function removeSlides(editor: Editor): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    newSlides.forEach(slide => {
+        if(editor.currentSlideIds.includes(slide.slideId)) {
+            newSlides.splice(newSlides.indexOf(slide), 1)
+        }
+    })
     return {
         ...editor,
         history: newHistory,
@@ -114,14 +115,14 @@ function removeSlide(editor: Editor, slideId: string): Editor {
 function switchSlide(editor: Editor, slideId: string): Editor {
     return {
         ...editor,
-        currentSlideId: slideId
+        currentSlideIds: [slideId]
     }
 }
 
 function setBackground(editor: Editor, background: string): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
     newSlides[indexSlide].background = background;
     return {
         ...editor,
@@ -134,9 +135,9 @@ function setBackground(editor: Editor, background: string): Editor {
 }
 
 function addObject(editor: Editor, element: SlideElement): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
     newSlides[indexSlide].elements.push(element);
     return {
         ...editor,
@@ -149,9 +150,9 @@ function addObject(editor: Editor, element: SlideElement): Editor {
 }
 
 function changePosition(editor: Editor, xShift: number, yShift: number, selectedElementsId: Array<string>): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
     for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId)) {
             const newElement: SlideElement = {
@@ -174,10 +175,120 @@ function changePosition(editor: Editor, xShift: number, yShift: number, selected
     }
 }
 
+function changeSize(editor: Editor, selectedElementsId: Array<string>, widthShift: number, heightShift: number): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                size: {
+                    width: newSlides[indexSlide].elements[i].size.width + widthShift,
+                    height: newSlides[indexSlide].elements[i].size.height + heightShift
+                }
+            };
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+function changeTextProps(editor: Editor, selectedElementsId: Array<string>, textPropsValue: TextType): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && newSlides[indexSlide].elements[i].elementType == "text") {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                textProps: {
+                    textColor: textPropsValue.textColor != null ? textPropsValue.textColor : newSlides[indexSlide].elements[i].textProps.textColor,
+                    bgColor: textPropsValue.bgColor != null ? textPropsValue.bgColor : newSlides[indexSlide].elements[i].textProps.bgColor,
+                    textValue: textPropsValue.textValue != null ? textPropsValue.textValue : newSlides[indexSlide].elements[i].textProps.textValue,
+                    fontSize: textPropsValue.fontSize != null ? textPropsValue.fontSize : newSlides[indexSlide].elements[i].textProps.fontSize,
+                    fontWeight: textPropsValue.fontWeight != null ? textPropsValue.fontWeight : newSlides[indexSlide].elements[i].textProps.fontWeight,
+                }
+            };
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+function changeStrokeColor(editor: Editor, selectedElementsId: Array<string>, newStrokeColor: string): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                figure: {
+                    form: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newStrokeColor,
+                    fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
+                }
+            }
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+function changeFillColor(editor: Editor, selectedElementsId: Array<string>, newFillColor: string): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                figure: {
+                    form: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
+                    fillColor: newFillColor
+                }
+            }
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+
 function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Editor {
-    const newHistory: History = createNewHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideId);
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
     newSlides[indexSlide].elements.forEach(element => {
         if(selectedElementsId.includes(element.elementId)) {
             newSlides[indexSlide].elements.splice(newSlides[indexSlide].elements.indexOf(element), 1)
@@ -191,13 +302,4 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
             slides: newSlides
         }
     }
-}
-
-export { changeTitle,
-    saveDoc, uploadDoc, exportDoc, 
-    switchPreview,
-    undo, redo,
-    addSlide, removeSlide, switchSlide,
-    setBackground, addObject, deleteSelected,
-    changePosition,    
 }

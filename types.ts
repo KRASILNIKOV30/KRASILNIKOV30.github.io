@@ -2,7 +2,7 @@ type Editor = {
     presentation: Presentation;
     history: History;
     statePreview: boolean;
-    currentSlideId: string
+    currentSlideIds: Array<string>
 }
 
 type History = {
@@ -19,7 +19,8 @@ type Slide = {
     slideId: string;
     elements: Array<SlideElement>;
     background: string;
-    selectedElementsId: Array<string>
+    backgroundType: "url" | "Base64";
+    selectedElementsIds: Array<string>
 }
 
 type SlideElement = {
@@ -27,9 +28,8 @@ type SlideElement = {
     elementType: "text" | "figure" | "image";
     position: Position; 
     size: Size; 
-    bgColor?: string;
     image?: ImageType;
-    text?: TextType;
+    textProps: TextType;
     figure?: FigureType
 }
 
@@ -45,20 +45,22 @@ type Size = {
 
 type ImageType = {
     urlImage: string;
+    ImageType: "url" | "Base64";
     ext: string
 }
 
 type TextType = {
-    textcolor: string;
-    text: string;
-    fontSize: string;
-    textWeight: "light" | "regular" | "bold"
+    textColor: string | null;
+    bgColor: string | null;
+    textValue: string | null;
+    fontSize: string | null;
+    fontWeight: "light" | "regular" | "bold" | null
 }
 
 type FigureType = {
-    form: "text" | "figure" | "image";
+    form: "rectangle" | "circle" | "triangle";
     strokeColor: string;
-    fillcolor: string
+    fillColor: string
 }
 
-export { Editor, SlideElement, Slide, Presentation, History }  
+export { Editor, SlideElement, Slide, Presentation, History, TextType }  
