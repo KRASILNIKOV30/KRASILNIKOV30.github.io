@@ -1,0 +1,38 @@
+.button {
+    width: 82px;
+    height: 29px;
+
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 11px;
+
+    background: none;
+    color: #343434;
+
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 8px 10px;
+}
+
+.button:hover {
+    cursor: pointer;
+    color: #184708;
+}
+
+.button--style--default:hover {
+    background-color: #EAFFF3;
+}
+
+.button--style--outline {
+    border: 1px solid #343434;
+}
+
+.button--style--outline:hover {
+    border-color: #184708;
+}
