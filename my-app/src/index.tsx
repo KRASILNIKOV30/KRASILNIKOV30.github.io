@@ -17,17 +17,26 @@ ReactDOM.render(
         />
         <Button
             style = 'delete'
-            text = 'Сохранить'
             onClick = {() => {}}
         />
         <Button
             style = 'redo'
-            text = ''
             onClick = {() => {}}
         />
         <Button
             style = 'undo'
             text = 'спокойно'
+            onClick = {() => {}}
+        />
+        <Button
+            style = 'drop_down'
+            text = 'Список тут'
+            onClick = {() => {}}
+        />
+        <Button
+            style = 'drop_down'
+            text = 'Список там'
+            active = {true}
             onClick = {() => {}}
         />
     </div>,

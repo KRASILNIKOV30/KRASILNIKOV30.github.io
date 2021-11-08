@@ -6,12 +6,12 @@
     font-weight: 500;
     font-size: 11px;
 
-    background: center no-repeat none;
     color: #343434;
 
     box-sizing: border-box;
     border: 1px solid rgba(0, 0, 0, 0);
     border-radius: 5px;
+    background: center no-repeat none;
 
     display: flex;
     align-items: center;
@@ -20,7 +20,8 @@
     padding: 8px 10px;
 }
 
-.button:hover {
+.button--style--outline:hover,
+.button--style--default:hover {
     cursor: pointer;
     color: #184708;
 }
@@ -29,7 +30,8 @@
     background-color: #EAFFF3;
 }
 
-.button--style--outline {
+.button--style--outline,
+.button--style--drop_down {
     border: 1px solid #343434;
 }
 
@@ -38,25 +40,51 @@
 }
 
 .button--style--delete {
-    background: url('./icons/delete_default.png');
+    background: center no-repeat url('./icons/delete-default.png');
 }
 
 .button--style--delete:hover {
-    background: url('./icons/delete_focused.png');
+    background: center no-repeat url('./icons/delete-focused.png');
 }
 
 .button--style--redo {
-    background: url('./icons/redo_default.png');
+    background: center no-repeat url('./icons/redo-default.png');
 }
 
 .button--style--redo:hover {
-    background: url('./icons/redo_focused.png');
+    background: center no-repeat url('./icons/redo-focused.png');
 }
 
 .button--style--undo {
-    background: url('./icons/undo_default.png');
+    background: center no-repeat url('./icons/undo-default.png');
 }
 
 .button--style--undo:hover {
-    background: url('./icons/undo_focused.png');
+    background: center no-repeat url('./icons/undo-focused.png');
+}
+
+.button--style--drop_down:hover {
+    cursor: pointer;
+}
+
+.button--style--drop_down.button--active {
+    border-color: #184708;
+    color: #184708;
+}
+
+.text_container--style--drop_down.text_container::after {
+    content: url('./icons/arrow.png');
+    width: 11px;
+    height: 6px;
+    margin-left: 7px;
+}
+
+.text_container--style--drop_down.text_container--active::after {
+    content: url('./icons/arrow-active.png');
+}
+
+.text_container--style--delete,
+.text_container--style--redo,
+.text_container--style--undo {
+    display: none;
 }
