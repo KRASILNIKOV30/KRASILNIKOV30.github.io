@@ -1,12 +1,12 @@
 .button {
-    width: 82px;
-    height: 29px;
+    width: auto;
+    height: auto;
 
     font-family: Montserrat;
     font-weight: 500;
     font-size: 11px;
 
-    background: none;
+    background: center no-repeat none;
     color: #343434;
 
     box-sizing: border-box;
@@ -35,4 +35,28 @@
 
 .button--style--outline:hover {
     border-color: #184708;
+}
+
+.button--style--delete {
+    background: url('./icons/delete_default.png');
+}
+
+.button--style--delete:hover {
+    background: url('./icons/delete_focused.png');
+}
+
+.button--style--redo {
+    background: url('./icons/redo_default.png');
+}
+
+.button--style--redo:hover {
+    background: url('./icons/redo_focused.png');
+}
+
+.button--style--undo {
+    background: url('./icons/undo_default.png');
+}
+
+.button--style--undo:hover {
+    background: url('./icons/undo_focused.png');
 }
