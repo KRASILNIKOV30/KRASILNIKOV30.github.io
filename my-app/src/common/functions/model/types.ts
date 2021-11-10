@@ -63,4 +63,4 @@ type FigureType = {
     fillColor: string
 }
 
-export { Editor, SlideElement, Slide, Presentation, History, TextType }  
+export type { TextType, SlideElement, Slide, Presentation, History, Editor };
