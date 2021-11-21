@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import './index.css'
 
 import { Button } from "./common/Button/Button";
+import { DropDown } from './common/DropDown/DropDown';
 
 ReactDOM.render(
     <div className = 'test'>
@@ -28,15 +29,12 @@ ReactDOM.render(
             text = 'спокойно'
             onClick = {() => {}}
         />
-        <Button
-            style = 'drop_down'
-            text = 'Список тут'
+        <DropDown 
             onClick = {() => {}}
         />
         <Button
-            style = 'drop_down'
-            text = 'Список там'
-            active = {true}
+            style = 'outline'
+            text = 'test'
             onClick = {() => {}}
         />
     </div>,
