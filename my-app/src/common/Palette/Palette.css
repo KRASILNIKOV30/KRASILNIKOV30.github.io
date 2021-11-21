@@ -1,0 +1,6 @@
+.paletteElement {
+    width: 20px;
+    height: 20px;
+    border-radius: 20;
+    background-color: black;
+}
