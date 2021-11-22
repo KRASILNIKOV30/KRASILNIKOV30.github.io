@@ -1,9 +1,6 @@
 import { uuid } from 'uuidv4';
 import { makeClassName } from '../functions/utils/makeClassName';
 import './Palette.css';
-import type { PaletteType } from './PaletteTypes'
-
-
 
 interface PaletteProps {
     selectedPaletteElementId: string;
@@ -13,27 +10,30 @@ interface PaletteProps {
     selectedPaletteElementId = '',
 }: PaletteProps) => {
     const paletteElements = [];
+    const colors = ['#FFD966']
     for (let i = 1; i <= 80; i++) {
         const paletteElementId = uuid();
-        const isSelected = selectedPaletteElementId == paletteElementId;
+        const isSelected = selectedPaletteElementId === paletteElementId;
         paletteElements.push({
             paletteElementId: paletteElementId,
             isSelected: isSelected,
             className: makeClassName('paletteElement', {
                 'color': i.toString(),
-                selected: isSelected
+                'selected': isSelected
             }),
-            onClick: () => {
-                return(paletteElementId)
-            }
+            onClick: () => console.log(paletteElementId)
         });
     }
     const listElements = paletteElements.map((paletteElement) => 
-        <li key={paletteElement.paletteElementId}>
-            {paletteElement}
+        <li 
+            key = {paletteElement.paletteElementId}
+            className = {paletteElement.className}
+            style = {{"background": colors[0]}}
+            onClick = {paletteElement.onClick} 
+        >
         </li>
     )
     return (
-        <ul>{listElements}</ul>
+        <ul className = 'palette'>{listElements}</ul>
     )
 }
