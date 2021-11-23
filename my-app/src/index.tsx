@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import './index.css'
 
 import { Button } from "./common/Button/Button";
+import { Input } from "./common/Input/input";
 
 ReactDOM.render(
     <div className = 'test'>
@@ -38,6 +39,19 @@ ReactDOM.render(
             text = 'Список там'
             active = {true}
             onClick = {() => {}}
+        />
+        <Button
+            style = 'outline'
+            text = 'Переименовать'
+            onClick = {() => {}}
+        />
+        <Input
+            type = 'text'
+            value = ''
+            placeholder = 'Введите название'
+            style = 'default'
+            size = 'default'
+            onChange = {() => {}}
         />
     </div>,
     document.getElementById('root')
