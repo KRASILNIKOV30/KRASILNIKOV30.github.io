@@ -18,7 +18,11 @@
     /* background-color: red; */
 }
 
-.paletteElement--color--1 {
+.paletteElement--selected {
+    box-shadow: 0px 0px 3px 3px rgba(23, 166, 86, 0.5);
+}
+
+/* .paletteElement--color--1 {
     background-color: #000;
 }
 
@@ -52,15 +56,15 @@
 
 .paletteElement--color--9 {
     background-color: #F3F3F3;
-}
+} */
 
-.paletteElement--color--10 {
+.paletteElement--color--9 {
     background-color: #FFFFFF;
     border: 1px solid #D3D3D3;
     box-sizing: border-box;
 }
 
-.paletteElement--color--11 {
+/* .paletteElement--color--11 {
     background-color: #000;
 }
 
@@ -338,4 +342,4 @@
 
 .paletteElement--color--80 {
     background-color: #000;
-}
+} */
