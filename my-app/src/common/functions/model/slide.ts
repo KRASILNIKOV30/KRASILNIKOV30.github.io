@@ -1,12 +1,12 @@
 import type { Editor, Slide, History } from './types';
 import { addActionToHistory } from './pres';
-import { uuid } from "uuidv4";
+//import { uuid } from "uuidv4";
 
 function addSlide(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     newSlides.push({
-        slideId: uuid(),
+        slideId: '',
         elements: [],
         background: "white",
         backgroundType: "Base64",
