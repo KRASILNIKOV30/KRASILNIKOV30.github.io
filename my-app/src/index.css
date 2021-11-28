@@ -10,15 +10,29 @@
 }
 
 body {  
-  font-family: 'Roboto', sans-serif;
+  font: 'Montserrat', sans-serif;
 }
 
-.test {
-  width: 100vw;
-  height: auto;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+.main-container {
+  width: 1440px;
+  height: 1024px;
 }
+
+.tool-bar-container {
+  height: 200px;
+}
+
+.pres-viewer {
+  height: 824px;
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.slide-editor-container {
+  width: 1090px;
+}
+
+.side-bar-container {
+  width: 350px;
+}
+
