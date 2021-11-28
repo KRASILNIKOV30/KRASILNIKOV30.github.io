@@ -2,7 +2,8 @@ import ReactDOM from 'react-dom';
 import './index.css'
 import { Palette } from './common/Palette/Palette';
 import { Button } from "./common/Button/Button";
-import { DropDown } from "./common/DropDown/DropDown"
+import { DropDown } from "./common/DropDown/DropDown";
+import { Input } from "./common/Input/input";
 
 ReactDOM.render(
     <div className = 'test'>
@@ -35,7 +36,19 @@ ReactDOM.render(
         <DropDown
             onClick = {() => {}}
         />
-
+        <Button
+            style = 'outline'
+            text = 'Переименовать'
+            onClick = {() => {}}
+        />
+        <Input
+            type = 'text'
+            value = ''
+            placeholder = 'Введите название'
+            style = 'default'
+            size = 'default'
+            onChange = {() => {}}
+        />
     </div>,
     document.getElementById('root')
 )
