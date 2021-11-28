@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 import { getEditor, addEditorChangeHandler } from './common/functions/model/editor';
-import App from './app';
+import App from './App';
 
 function render() {
     ReactDOM.render(
