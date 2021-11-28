@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import './index.css'
 import { Palette } from './common/Palette/Palette';
 import { Button } from "./common/Button/Button";
+import { DropDown } from "./common/DropDown/DropDown"
 
 ReactDOM.render(
     <div className = 'test'>
@@ -31,6 +32,10 @@ ReactDOM.render(
         <Palette
             selectedPaletteElementId = ''
         />
+        <DropDown
+            onClick = {() => {}}
+        />
+
     </div>,
     document.getElementById('root')
 )
