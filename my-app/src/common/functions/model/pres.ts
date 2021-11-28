@@ -70,3 +70,5 @@ function redo(editor: Editor): Editor {
     }
     return(editor)
 }
+
+export { changeTitle };

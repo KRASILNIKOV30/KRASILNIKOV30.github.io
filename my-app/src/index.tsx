@@ -1,44 +1,18 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css'
 
-import { Button } from "./common/Button/Button";
+import './index.css';
+import { getEditor, addEditorChangeHandler } from './common/functions/model/editor';
+import App from './app';
 
-ReactDOM.render(
-    <div className = 'test'>
-        <Button
-            style = 'default'
-            text = 'Сохранить'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'outline'
-            text = 'Сохранить, нет блин загрузить'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'delete'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'redo'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'undo'
-            text = 'спокойно'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'drop_down'
-            text = 'Список тут'
-            onClick = {() => {}}
-        />
-        <Button
-            style = 'drop_down'
-            text = 'Список там'
-            active = {true}
-            onClick = {() => {}}
-        />
-    </div>,
-    document.getElementById('root')
-)
+function render() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <App editor={getEditor()} />
+        </React.StrictMode>,
+        document.getElementById('root')
+    )
+}
+
+addEditorChangeHandler(render)
+render()
