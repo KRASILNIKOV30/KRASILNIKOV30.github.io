@@ -32,11 +32,6 @@ ReactDOM.render(
         <DropDown 
             onClick = {() => {}}
         />
-        <Button
-            style = 'outline'
-            text = 'test'
-            onClick = {() => {}}
-        />
     </div>,
     document.getElementById('root')
 )
