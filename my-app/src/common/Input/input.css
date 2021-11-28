@@ -6,6 +6,8 @@
     font-weight: 500;
     font-size: 13px;
 
+    border-color: #343434;
+
     box-sizing: border-box;
     border: 1px solid;
     border-radius: 5px;
@@ -18,12 +20,12 @@
     padding: 8px 10px;
 }
 
-.input--focused--false {
-    border-color: #343434;
-}
-
-.input--focused--true {
+.input:focus {
     cursor: pointer;
     border-color: #184708;
-    background-color: #184708;
 }
+
+:focus::-webkit-input-placeholder {color: transparent}
+:focus::-moz-placeholder          {color: transparent}
+:focus:-moz-placeholder           {color: transparent}
+:focus:-ms-input-placeholder      {color: transparent}

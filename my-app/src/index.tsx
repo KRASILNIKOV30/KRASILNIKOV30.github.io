@@ -48,7 +48,6 @@ ReactDOM.render(
         <Input
             value = ''
             placeholder = 'Введите название'
-            focused = {true}
             onChange = {() => {}}
         />
     </div>,
