@@ -1,6 +1,12 @@
 import type { Editor, SlideElement, Slide, History, TextType } from './types';
 import { addActionToHistory } from './pres';
 
+type ChangePositionParams = {
+    xShift: number,
+    yShift: number,
+    selectedElementsId: Array<string>
+}
+
 function addObject(editor: Editor, element: SlideElement): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
@@ -16,7 +22,7 @@ function addObject(editor: Editor, element: SlideElement): Editor {
     }
 }
 
-function changePosition(editor: Editor, xShift: number, yShift: number, selectedElementsId: Array<string>): Editor {
+function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: ChangePositionParams): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -42,7 +48,13 @@ function changePosition(editor: Editor, xShift: number, yShift: number, selected
     }
 }
 
-function changeSize(editor: Editor, selectedElementsId: Array<string>, widthShift: number, heightShift: number): Editor {
+type ChangeSizeParams = {
+    widthShift: number,
+    heightShift: number,
+    selectedElementsId: Array<string>
+}
+
+function changeSize(editor: Editor, { selectedElementsId, widthShift, heightShift }: ChangeSizeParams): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -68,7 +80,12 @@ function changeSize(editor: Editor, selectedElementsId: Array<string>, widthShif
     }
 }
 
-function changeTextProps(editor: Editor, selectedElementsId: Array<string>, textPropsValue: TextType): Editor {
+type ChangeTextParams = {
+    textPropsValue: TextType,
+    selectedElementsId: Array<string>
+}
+
+function changeTextProps(editor: Editor, { textPropsValue, selectedElementsId }: ChangeTextParams): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -97,7 +114,12 @@ function changeTextProps(editor: Editor, selectedElementsId: Array<string>, text
     }
 }
 
-function changeStrokeColor(editor: Editor, selectedElementsId: Array<string>, newStrokeColor: string): Editor {
+type ChangeColorParams = {
+    newColor: string,
+    selectedElementsId: Array<string>
+}
+
+function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: ChangeColorParams): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -107,7 +129,7 @@ function changeStrokeColor(editor: Editor, selectedElementsId: Array<string>, ne
                 ...newSlides[indexSlide].elements[i],
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
-                    strokeColor: newStrokeColor,
+                    strokeColor: newColor,
                     fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
                 }
             }
@@ -124,7 +146,7 @@ function changeStrokeColor(editor: Editor, selectedElementsId: Array<string>, ne
     }
 }
 
-function changeFillColor(editor: Editor, selectedElementsId: Array<string>, newFillColor: string): Editor {
+function changeFillColor(editor: Editor, { newColor, selectedElementsId }: ChangeColorParams): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -135,7 +157,7 @@ function changeFillColor(editor: Editor, selectedElementsId: Array<string>, newF
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
                     strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
-                    fillColor: newFillColor
+                    fillColor: newColor
                 }
             }
             newSlides[indexSlide].elements.splice(i, 1, newElement)

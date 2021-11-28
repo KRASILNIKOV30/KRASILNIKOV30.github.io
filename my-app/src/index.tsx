@@ -1,4 +1,6 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
+<<<<<<< HEAD
 import './index.css'
 import { Palette } from './common/Palette/Palette';
 import { Button } from "./common/Button/Button";
@@ -24,3 +26,21 @@ ReactDOM.render(
     </div>,
     document.getElementById('root')
 )
+=======
+
+import './index.css';
+import { getEditor, addEditorChangeHandler } from './common/functions/model/editor';
+import App from './app';
+
+function render() {
+    ReactDOM.render(
+        <React.StrictMode>
+            <App editor={getEditor()} />
+        </React.StrictMode>,
+        document.getElementById('root')
+    )
+}
+
+addEditorChangeHandler(render)
+render()
+>>>>>>> React-start
