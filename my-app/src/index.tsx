@@ -28,17 +28,6 @@ ReactDOM.render(
             text = 'спокойно'
             onClick = {() => {}}
         />
-        <Button // eslint-disable-next-line
-            style = 'drop_down'
-            text = 'Список тут'
-            onClick = {() => {}}
-        />
-        <Button // eslint-disable-next-line
-            style = 'drop_down'
-            text = 'Список там'
-            active = {true}
-            onClick = {() => {}}
-        />
         <Palette
             selectedPaletteElementId = ''
         />
