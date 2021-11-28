@@ -2,26 +2,23 @@ import './input.css';
 import { makeClassName } from '../functions/utils/makeClassName';
 
 interface InputProps {
-    type?: 'text',
     placeholder?: string,
-    style: 'default',
     value: string | undefined,
-    size: 'default',
+    focused: boolean,
     onChange: (value: string) => void
 }
 
 export const Input = ({
-    style = 'default',
-    size = 'default',
-    type = 'text',
     value,
+    focused,
     ...props 
 }: InputProps) => {
     return (
         <input
-          type={type}
           value={value}
-          className={makeClassName('input', { size })}
+          className = {makeClassName('input', {
+            'focused': focused
+        })}
           placeholder={props.placeholder}
           onChange={(event) => onchange}
         ></input>

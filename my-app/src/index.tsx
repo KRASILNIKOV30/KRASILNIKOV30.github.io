@@ -46,11 +46,9 @@ ReactDOM.render(
             onClick = {() => {}}
         />
         <Input
-            type = 'text'
             value = ''
             placeholder = 'Введите название'
-            style = 'default'
-            size = 'default'
+            focused = {true}
             onChange = {() => {}}
         />
     </div>,

@@ -6,10 +6,8 @@
     font-weight: 500;
     font-size: 13px;
 
-    color: #343434;
-
     box-sizing: border-box;
-    border: 1px solid rgba(0, 0, 0, 0);
+    border: 1px solid;
     border-radius: 5px;
     background: center no-repeat none;
 
@@ -20,22 +18,12 @@
     padding: 8px 10px;
 }
 
-.input--placeholder {
-    position: absolute;
-    width: 136px;
-    height: 15px;
-    font-family: Montserrat;
-    font-weight: 500;
-    font-size: 13px;
-    color: #9A9A9A
+.input--focused--false {
+    border-color: #343434;
 }
 
-.input--style--default:hover {
+.input--focused--true {
     cursor: pointer;
-    color: #184708;
+    border-color: #184708;
+    background-color: #184708;
 }
-
-.input--style--default:hover {
-    background-color: #EAFFF3;
-}
-
