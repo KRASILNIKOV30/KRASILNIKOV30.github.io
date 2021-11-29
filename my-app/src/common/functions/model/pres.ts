@@ -12,11 +12,11 @@ export function addActionToHistory(editor: Editor): History {
     return (newHistory)
 }
 
-type changeTitleArgs = {
+type ChangeTitleArgs = {
     title: string;
 }
 
-function changeTitle(editor: Editor, { title }: changeTitleArgs): Editor {
+function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     return {
         ...editor,
