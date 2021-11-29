@@ -11,6 +11,7 @@ function SlideEditor({ background }: SlideBarProps) {
                 className="slide"
                 style = {{"background": background}}
             >
+                
             </div>
         </div>
     )

@@ -29,6 +29,7 @@ type SlideElement = {
     elementId: string;
     elementType: "text" | "figure" | "image";
     position: Position; 
+    isSelected?: boolean;
     size: Size; 
     image?: ImageType;
     textProps?: TextType;
@@ -61,8 +62,9 @@ type TextType = {
 
 type FigureType = {
     form: "rectangle" | "circle" | "triangle";
+    strokeWidth: string;
     strokeColor: string;
     fillColor: string
 }
 
-export type { TextType, SlideElement, Slide, Presentation, History, Editor };
+export type { TextType, SlideElement, Slide, Presentation, History, Editor, FigureType, Size };
