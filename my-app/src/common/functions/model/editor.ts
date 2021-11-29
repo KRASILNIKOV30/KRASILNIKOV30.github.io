@@ -61,7 +61,7 @@ let editor: Editor = {
                         }
                     }
                 ],
-                background: "#FFFFFF",
+                background: "#FFF2AF",
                 backgroundType: 'Base64',
                 selectedElementsIds: []
             }, 
@@ -99,6 +99,7 @@ let editor: Editor = {
     statePreview: false,
     currentSlideIds: ['0']
 };
+
 let editorChangeHandler: Function;
 
 function getEditor() {

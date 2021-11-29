@@ -4,6 +4,7 @@ import { Editor } from './common/functions/model/types';
 import { dispatch } from './common/functions/model/editor';
 
 import { changeTitle } from './common/functions/model/pres';
+import { SlideEditor } from './slideEditor/SlideEditor';
 
 type AppProps = {
     editor: Editor;
@@ -19,7 +20,13 @@ function App({ editor }: AppProps) {
                 <p onClick={onTextClick}>
                     Edit <code>src/App.js</code> and save to reload
                 </p>
+                <p>
+                    PresName = {editor.presentation.title}
+                </p>
             </header>
+            <SlideEditor 
+                background = {editor.presentation.slides[Number(editor.currentSlideIds[0])].background}
+            />
         </div>
     )
 }
