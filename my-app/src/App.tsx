@@ -1,10 +1,8 @@
 import React from 'react';
-
 import { Editor } from './common/functions/model/types';
 import { dispatch } from './common/functions/model/editor';
-
 import { changeTitle } from './common/functions/model/pres';
-import { SlideEditor } from './slideEditor/SlideEditor';
+import { SlideEditor } from './slideEditor/slideEditor';
 
 type AppProps = {
     editor: Editor;
