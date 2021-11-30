@@ -40,6 +40,7 @@ let editor: Editor = {
                         figure: {
                             form: "rectangle",
                             strokeColor: "#d0ff00",
+                            strokeWidth: 2,
                             fillColor: "#00ff2a"
                         }
                     },
@@ -57,6 +58,7 @@ let editor: Editor = {
                         figure: {
                             form: "triangle",
                             strokeColor: "#00ff2a",
+                            strokeWidth: 0,
                             fillColor: "#d0ff00"
                         }
                     }

@@ -130,6 +130,7 @@ function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: Chan
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
                     strokeColor: newColor,
+                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
                     fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
                 }
             }
@@ -157,6 +158,7 @@ function changeFillColor(editor: Editor, { newColor, selectedElementsId }: Chang
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
                     strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
+                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
                     fillColor: newColor
                 }
             }

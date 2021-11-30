@@ -62,7 +62,7 @@ type TextType = {
 
 type FigureType = {
     form: "rectangle" | "circle" | "triangle";
-    strokeWidth: string;
+    strokeWidth: number;
     strokeColor: string;
     fillColor: string
 }

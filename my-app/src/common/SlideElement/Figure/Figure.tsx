@@ -20,7 +20,6 @@ return (
             'height': size.height
         }}
     >
-
     </div>
 )}
 export {Figure}
