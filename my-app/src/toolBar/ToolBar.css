@@ -1,0 +1,46 @@
+.ToolBar {
+    width: 1440px;
+    display: flex;
+    flex-direction: column;
+}
+
+.Top_Buttons_Block {
+    margin-bottom: 37px;
+    margin-left: 21px;
+    margin-top: 15px;
+}
+
+.Bottom_Buttons_Block {
+    margin-left: 34px;
+    display: flex;
+    flex-direction: row;
+}
+
+.Slidebar_Buttons_Block {
+    margin-right: 123px;
+}
+
+.SlideEditor_Buttons_Block {
+    display: flex;
+}
+
+.Result_Buttons_Block {
+    right: 50px;
+    position: absolute;
+}
+
+.Outline_Button {
+    margin-right: 30px;
+    float: left;
+    height: 35px;
+}
+
+.Icon_Button {
+    margin-right: 10px;
+    float: left;
+}
+
+.DropDown {
+    margin-right: -10px;
+    float: left;
+}

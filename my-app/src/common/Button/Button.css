@@ -1,6 +1,6 @@
 .button {
     width: auto;
-    height: auto;
+    height: 35px;
 
     font-family: Montserrat;
     font-weight: 500;
@@ -70,4 +70,7 @@
 .text_container--style--redo,
 .text_container--style--undo {
     display: none;
+}
+.text_container--style--sign {
+    font-size: 13px;
 }

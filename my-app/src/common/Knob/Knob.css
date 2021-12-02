@@ -1,0 +1,27 @@
+.Knob {
+    float: left;
+    margin-right: 0px;
+}
+
+.Table {
+    border-collapse: collapse;
+    width: 90px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    display: block;
+}
+
+.Roller {
+    width: 20px;
+}
+
+.Knob_value {
+    width: 50px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    text-align: middle;
+}

@@ -4,6 +4,7 @@ import { Editor } from './common/functions/model/types';
 import { dispatch } from './common/functions/model/editor';
 
 import { changeTitle } from './common/functions/model/pres';
+import { ToolBar } from './toolBar/ToolBar';
 
 type AppProps = {
     editor: Editor;
@@ -15,6 +16,7 @@ function App({ editor }: AppProps) {
     }
     return (
         <div className="App">
+            <ToolBar/>
             <header className="App-header">
                 <p onClick={onTextClick}>
                     Edit <code>src/App.js</code> and save to reload
