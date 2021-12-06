@@ -1,45 +1,24 @@
 import './SlideEditor.css';
+import { SlidesElement } from "../common/SlidesElement/SlidesElement";
+import type { Slide } from '../common/functions/model/types'
 
 type SlideBarProps = {
-    background: string;
+        slide: Slide
 }
 
-function SlideEditor({ background }: SlideBarProps) {
+function SlideEditor({
+        slide 
+    }: SlideBarProps) {
+    const width = 100;
     return (
         <div className="slide-container">
             <div 
                 className="slide"
-                style = {{"background": background}}
+                style = {{"background": slide.background}}
             >
-                <svg
-                   width = '100'
-                   height = '100' 
-                >
-                    <ellipse
-                        rx = '50'
-                        ry = '50'
-                        fill = 'gold'
-                        stroke = 'orange'
-                        stroke-width = '5'
-                        cx = '50'
-                        cy = '50'
-                    >
-                    </ellipse>
-                </svg>
-                <svg
-                    
-                >
-                <ellipse
-                    rx = '100'
-                    ry = '25'
-                    fill = 'green'
-                    stroke = '#0000FF'
-                    stroke-width = '5'
-                    cx = '200'
-                    cy = '200'
-                >
-                </ellipse>
-            </svg>
+                <SlidesElement
+                    slideElement = {slide.elements[0]} 
+                />                
             </div>
         </div>
     )

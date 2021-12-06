@@ -9,6 +9,24 @@ let editor: Editor = {
                 elements: [
                     {
                         elementId: "0",
+                        elementType: "figure",
+                        position: {
+                            x: 32,
+                            y: 64
+                        },
+                        size: {
+                            width: 356,
+                            height: 93
+                        },
+                        figure: {
+                            form: "triangle",
+                            strokeColor: "#d0ff00",
+                            strokeWidth: 5,
+                            fillColor: "#ff00ff"
+                        }
+                    },
+                    {
+                        elementId: "1",
                         elementType: "text",
                         position: {
                             x: 234,
@@ -24,24 +42,6 @@ let editor: Editor = {
                             textValue: "Hello Kerim!",
                             fontSize: "16px",
                             fontWeight: "regular"
-                        }
-                    },
-                    {
-                        elementId: "1",
-                        elementType: "figure",
-                        position: {
-                            x: 32,
-                            y: 64
-                        },
-                        size: {
-                            width: 356,
-                            height: 93
-                        },
-                        figure: {
-                            form: "rectangle",
-                            strokeColor: "#d0ff00",
-                            strokeWidth: 2,
-                            fillColor: "#00ff2a"
                         }
                     },
                     {

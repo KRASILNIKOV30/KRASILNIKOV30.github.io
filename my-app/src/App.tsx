@@ -24,7 +24,7 @@ function App({ editor }: AppProps) {
                 </p>
             </header>
             <SlideEditor 
-                background = {editor.presentation.slides[Number(editor.currentSlideIds[0])].background}
+                slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
             />
         </div>
     )
