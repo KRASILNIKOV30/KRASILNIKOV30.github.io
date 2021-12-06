@@ -27,6 +27,42 @@ let editor: Editor = {
                     },
                     {
                         elementId: "1",
+                        elementType: "figure",
+                        position: {
+                            x: 50,
+                            y: 100
+                        },
+                        size: {
+                            width: 300,
+                            height: 90
+                        },
+                        figure: {
+                            form: "rectangle",
+                            strokeColor: "#d000ff",
+                            strokeWidth: 5,
+                            fillColor: "#ffff00"
+                        }
+                    },
+                    {
+                        elementId: "2",
+                        elementType: "figure",
+                        position: {
+                            x: 70,
+                            y: 150
+                        },
+                        size: {
+                            width: 400,
+                            height: 400
+                        },
+                        figure: {
+                            form: "circle",
+                            strokeColor: "#d0ffff",
+                            strokeWidth: 5,
+                            fillColor: "#0000ff"
+                        }
+                    },
+                    {
+                        elementId: "3",
                         elementType: "text",
                         position: {
                             x: 234,
@@ -45,7 +81,7 @@ let editor: Editor = {
                         }
                     },
                     {
-                        elementId: "2",
+                        elementId: "4",
                         elementType: "figure",
                         position: {
                             x: 564,

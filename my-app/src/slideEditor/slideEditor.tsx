@@ -9,16 +9,23 @@ type SlideBarProps = {
 function SlideEditor({
         slide 
     }: SlideBarProps) {
-    const width = 100;
+    const slideElements = slide.elements.map((slideElement) =>
+        <li
+            key = {slideElement.elementId}
+            className = 'slideElement'
+        >
+            <SlidesElement
+                slideElement = {slideElement}
+            />
+        </li>
+    )    
     return (
         <div className="slide-container">
             <div 
                 className="slide"
                 style = {{"background": slide.background}}
             >
-                <SlidesElement
-                    slideElement = {slide.elements[0]} 
-                />                
+                <ul>{slideElements}</ul>                
             </div>
         </div>
     )
