@@ -1,36 +1,32 @@
-import './Knob.css';
-import '../Button/Button.tsx';
-import '../Button/Button.css';
-import { makeClassName } from '../functions/utils/makeClassName';
 import { Button } from '../Button/Button';
+import './Knob.css';
 
 interface KnobProps {
-    text?: string,
-    value?: number,
+    value: string,
     onClick: () => void
 }
 
 export const Knob = ({
-    text = '',
+    value,
     onClick
 }: KnobProps) => {
     return (
-        <div className="Knob">
-            <table className="Table">
-                <td className="Roller">
+        <div className="knob">
+            <table className="table">
+                <td className="roller-minus">
                     <Button
-                        style='sign'
-                        text='-'
+                        style='default'
                         onClick={console.log}
                     />
                 </td>
-                <td className="Knob_value">
-                    0
+                <td className="knob_value">
+                    <p className="value">
+                        {value}
+                    </p>
                 </td>
-                <td className="Roller">
+                <td className="roller-plus">
                     <Button
-                        style='sign'
-                        text='+'
+                        style='default'
                         onClick={console.log}
                     />
                 </td>

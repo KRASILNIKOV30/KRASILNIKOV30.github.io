@@ -44,6 +44,7 @@
 
 .button--style--delete:hover {
     background: center no-repeat url('./icons/delete-focused.png');
+    color: #184708;
 }
 
 .button--style--redo {
@@ -52,6 +53,7 @@
 
 .button--style--redo:hover {
     background: center no-repeat url('./icons/redo-focused.png');
+    color: #184708;
 }
 
 .button--style--undo {
@@ -60,6 +62,16 @@
 
 .button--style--undo:hover {
     background: center no-repeat url('./icons/undo-focused.png');
+    color: #184708;
+}
+
+.button--style--add {
+    background: center no-repeat url('./icons/add-plus-default.svg');
+}
+
+.button--style--add:hover {
+    background: center no-repeat url('./icons/add-plus-focused.svg');
+    color: #184708;
 }
 
 .text_container {
@@ -72,5 +84,5 @@
     display: none;
 }
 .text_container--style--sign {
-    font-size: 13px;
+    font-size: 13 px;
 }
