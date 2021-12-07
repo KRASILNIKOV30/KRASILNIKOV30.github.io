@@ -1,38 +1,69 @@
+import { useState } from "react";
+
 import { Button } from "../common/Button/Button"
 import { DropDown } from "../common/DropDown/DropDown"
 import { Knob } from "../common/Knob/Knob"
+import { Input } from "../common/Input/input" 
+
+import { Editor } from "../common/functions/model/types"
+import { dispatch } from '../common/functions/model/editor';
+
+import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../common/functions/model/pres";
+import { addSlide } from "../common/functions/model/slide";
+
+
 import "./ToolBar.css"
 
-const ToolBar = () => {
+type ToolBarProps = {
+    editor: Editor
+}
+
+function ToolBar({ editor }: ToolBarProps) {
+    const [rename, setRename] = useState(false);
+    
     return (
-        
         <div className='toolbar'>
             <div className='top_block'>
                 <img className='logo'
 
                 />
                 <div className='top_block_second'>
-                    <p className='name'>Название презентации</p>
+                    {
+                        rename ?
+                            <div className="rename_container">
+                                <Input 
+                                    onKeyUp = {(value) => {
+                                        if (value !== '') {
+                                            dispatch(changeTitle, { title: value });
+                                        }
+                                        setRename(false)
+                                    }}
+                                    placeholder = 'Название презентации'
+                                />
+                            </div>
+                            : <p className='name'>{ editor.presentation.title }</p>
+
+                    }
                     <div className='top_buttons_block'>
                         <div className='outline_button'>
                             <Button 
                                 style='outline' 
                                 text='Сохранить' 
-                                onClick={console.log}
+                                onClick={() => dispatch(saveDoc, {})}
                             />
                         </div>
                         <div className='outline_button'>
                             <Button 
                                 style='outline' 
                                 text='Загрузить' 
-                                onClick={console.log}
+                                onClick={() => dispatch(uploadDoc, {})}
                             />
                         </div>
                         <div className='outline_button'>
                             <Button 
                                 style='outline' 
                                 text='Переименовать' 
-                                onClick={console.log}
+                                onClick={() => setRename(!rename)}
                             />
                         </div>
                     </div>
@@ -42,8 +73,9 @@ const ToolBar = () => {
                 <div className='slidebar_buttons_block'>
                     <div className='icon_button'>
                         <Button
-                            style='add'
-                            onClick={console.log}
+                            style='sign'
+                            text='+'
+                            onClick={() => dispatch(addSlide, {})}
                         />
                     </div>
                     <div className='icon_button'>
@@ -57,22 +89,20 @@ const ToolBar = () => {
                         <Button
                             style='undo'
                             text=''
-                            onClick={console.log}
+                            onClick={() => dispatch(undo, {})}
                         />
                     </div>
                     <div className='icon_button'>
                         <Button
                             style='redo'
                             text=''
-                            onClick={console.log}
+                            onClick={() => dispatch(redo, {})}
                         />
                     </div>
                 </div>
                 <div className='slide_editor_buttons_block'>
                     <div className='dropdown'>
-                        <DropDown
-                            onClick={console.log}
-                        />
+                        <DropDown />
                     </div>
                     <div className='outline_button'>
                         <Button
@@ -81,7 +111,6 @@ const ToolBar = () => {
                             onClick={console.log}
                         />
                     </div>
-                    --
                         <div className='outline_button'>
                             <Button
                                 style='outline'
@@ -103,14 +132,14 @@ const ToolBar = () => {
                         <Button
                             style='outline'
                             text='Просмотр'
-                            onClick={console.log}
+                            onClick={() => dispatch(switchPreview, {})}
                         />
                     </div>
                     <div className='outline_button'>
                         <Button
                             style='outline'
                             text='Экспорт'
-                            onClick={console.log}
+                            onClick={() => dispatch(exportDoc, {})}
                         />
                     </div>
                 </div>
@@ -122,4 +151,4 @@ const ToolBar = () => {
         </div>
     )}
 
-export {ToolBar}
+export { ToolBar }

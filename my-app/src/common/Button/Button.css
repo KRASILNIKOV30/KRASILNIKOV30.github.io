@@ -1,5 +1,5 @@
 .button {
-    width: auto;
+    min-width: 41px;
     height: 35px;
 
     font-family: Montserrat;
@@ -65,13 +65,12 @@
     color: #184708;
 }
 
-.button--style--add {
-    background: center no-repeat url('./icons/add-plus-default.svg');
-}
-
-.button--style--add:hover {
-    background: center no-repeat url('./icons/add-plus-focused.svg');
-    color: #184708;
+.button--style--undo:hover,
+.button--style--redo:hover,
+.button--style--delete:hover,
+.button--style--sign:hover {
+    background-color: #EAFFF3;
+    cursor: pointer;
 }
 
 .text_container {
@@ -84,5 +83,7 @@
     display: none;
 }
 .text_container--style--sign {
-    font-size: 13 px;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 36px;
 }

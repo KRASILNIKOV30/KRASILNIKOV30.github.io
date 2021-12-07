@@ -71,3 +71,9 @@
     margin-right: -10px;
     float: left;
 }
+
+.rename_container {
+    height: 49px;
+    display: flex;
+    align-items: center;
+}

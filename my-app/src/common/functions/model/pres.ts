@@ -12,7 +12,11 @@ export function addActionToHistory(editor: Editor): History {
     return (newHistory)
 }
 
-function changeTitle(editor: Editor, title: string): Editor {
+type ChangeTitleArgs = {
+    title: string;
+}
+
+function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     return {
         ...editor,
@@ -71,4 +75,4 @@ function redo(editor: Editor): Editor {
     return(editor)
 }
 
-export { changeTitle };
+export { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo };

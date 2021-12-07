@@ -9,6 +9,60 @@ let editor: Editor = {
                 elements: [
                     {
                         elementId: "0",
+                        elementType: "figure",
+                        position: {
+                            x: 32,
+                            y: 64
+                        },
+                        size: {
+                            width: 356,
+                            height: 93
+                        },
+                        figure: {
+                            form: "triangle",
+                            strokeColor: "#d0ff00",
+                            strokeWidth: 5,
+                            fillColor: "#ff00ff"
+                        }
+                    },
+                    {
+                        elementId: "1",
+                        elementType: "figure",
+                        position: {
+                            x: 50,
+                            y: 100
+                        },
+                        size: {
+                            width: 300,
+                            height: 90
+                        },
+                        figure: {
+                            form: "rectangle",
+                            strokeColor: "#d000ff",
+                            strokeWidth: 5,
+                            fillColor: "#ffff00"
+                        }
+                    },
+                    {
+                        elementId: "2",
+                        elementType: "figure",
+                        position: {
+                            x: 70,
+                            y: 150
+                        },
+                        size: {
+                            width: 400,
+                            height: 400
+                        },
+                        figure: {
+                            form: "circle",
+                            strokeColor: "#d0ffff",
+                            strokeWidth: 5,
+                            fillColor: "#0000ff"
+                        }
+                    },
+                    {
+                        elementId: "3",
                         elementType: "text",
                         position: {
                             x: 234,
@@ -22,29 +76,12 @@ let editor: Editor = {
                             textColor: "#000000",
                             bgColor: "#ff0000",
                             textValue: "Hello Kerim!",
-                            fontSize: "16px",
+                            fontSize: 16,
                             fontWeight: "regular"
                         }
                     },
                     {
-                        elementId: "1",
-                        elementType: "figure",
-                        position: {
-                            x: 32,
-                            y: 64
-                        },
-                        size: {
-                            width: 356,
-                            height: 93
-                        },
-                        figure: {
-                            form: "rectangle",
-                            strokeColor: "#d0ff00",
-                            fillColor: "#00ff2a"
-                        }
-                    },
-                    {
-                        elementId: "2",
+                        elementId: "4",
                         elementType: "figure",
                         position: {
                             x: 564,
@@ -57,11 +94,12 @@ let editor: Editor = {
                         figure: {
                             form: "triangle",
                             strokeColor: "#00ff2a",
+                            strokeWidth: 0,
                             fillColor: "#d0ff00"
                         }
                     }
                 ],
-                background: "#FFFFFF",
+                background: "#FFF2AF",
                 backgroundType: 'Base64',
                 selectedElementsIds: []
             }, 
@@ -99,6 +137,7 @@ let editor: Editor = {
     statePreview: false,
     currentSlideIds: ['0']
 };
+
 let editorChangeHandler: Function;
 
 function getEditor() {

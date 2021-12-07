@@ -1,12 +1,12 @@
 import type { Editor, Slide, History } from './types';
 import { addActionToHistory } from './pres';
-//import { uuid } from "uuidv4";
+import { uuid } from "uuidv4";
 
 function addSlide(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     newSlides.push({
-        slideId: '',
+        slideId: uuid(),
         elements: [],
         background: "white",
         backgroundType: "Base64",
@@ -41,14 +41,22 @@ function removeSlides(editor: Editor): Editor {
     }
 }
 
-function switchSlide(editor: Editor, slideId: string): Editor {
+type SwitchSlideArgs = {
+    slideId: string;
+}
+
+function switchSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
     return {
         ...editor,
         currentSlideIds: [slideId]
     }
 }
 
-function setBackground(editor: Editor, background: string): Editor {
+type SetBackgroundArgs = {
+    background: string;
+}
+
+function setBackground(editor: Editor, { background }: SetBackgroundArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -62,3 +70,5 @@ function setBackground(editor: Editor, background: string): Editor {
         }
     }
 }
+
+export { addSlide, removeSlides, switchSlide, setBackground }

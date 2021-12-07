@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Editor } from './common/functions/model/types';
 import { dispatch } from './common/functions/model/editor';
 
@@ -16,7 +14,9 @@ function App({ editor }: AppProps) {
     }
     return (
         <div className="App">
-            <ToolBar/>
+            <ToolBar
+                editor = { editor }
+            />
             <header className="App-header">
                 <p onClick={onTextClick}>
                     Edit <code>src/App.js</code> and save to reload

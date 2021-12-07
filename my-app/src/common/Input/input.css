@@ -30,12 +30,12 @@
     color: #9A9A9A
 }
 
-.input--style--default:hover {
+.input:hover {
     cursor: pointer;
     color: #184708;
 }
 
-.input--style--default:hover {
+.input:hover {
     background-color: #EAFFF3;
 }
 

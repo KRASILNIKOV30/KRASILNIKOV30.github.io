@@ -1,5 +1,6 @@
 import type { Editor, SlideElement, Slide, History, TextType } from './types';
 import { addActionToHistory } from './pres';
+import { uuid } from 'uuidv4';
 
 type ChangePositionParams = {
     xShift: number,
@@ -7,11 +8,72 @@ type ChangePositionParams = {
     selectedElementsId: Array<string>
 }
 
-function addObject(editor: Editor, element: SlideElement): Editor {
+function addObject(editor: Editor, element: string): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
-    newSlides[indexSlide].elements.push(element);
+    const NewEl: SlideElement = {
+        elementId: uuid(),
+        elementType: 'figure',
+        position: {
+            x: 400,
+            y: 400
+        },
+        size: {
+            width: 100,
+            height: 100
+        }
+    }
+    switch(element) {
+        case 'rectangle': {
+            NewEl.figure = {
+                form: 'rectangle',
+                strokeWidth: 1,
+                strokeColor: 'black',
+                fillColor: 'white'
+            }
+            break;
+        }
+        case 'triangle': {
+            NewEl.figure = {
+                form: 'triangle',
+                strokeWidth: 1,
+                strokeColor: 'black',
+                fillColor: 'white'
+            }
+            break;
+        }
+        case 'circle': {
+            NewEl.figure = {
+                form: 'circle',
+                strokeWidth: 1,
+                strokeColor: 'black',
+                fillColor: 'white'
+            }
+            break;
+        }
+        case 'image': {
+            NewEl.elementType = 'image';
+            NewEl.image = {
+                urlImage: 'ToDo',
+                imageType: 'Base64',
+                ext: 'png'
+            }
+            break;
+        }
+        case 'text': {
+            NewEl.elementType = 'text';
+            NewEl.textProps = {
+                textColor: 'black',
+                bgColor: null,
+                textValue: 'Hello Kerim',
+                fontSize: 15,
+                fontWeight: 'regular'
+            }
+            break;
+        }
+    }
+    newSlides[indexSlide].elements.push(NewEl);
     return {
         ...editor,
         history: newHistory,
@@ -130,6 +192,7 @@ function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: Chan
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
                     strokeColor: newColor,
+                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
                     fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
                 }
             }
@@ -157,6 +220,7 @@ function changeFillColor(editor: Editor, { newColor, selectedElementsId }: Chang
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
                     strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
+                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
                     fillColor: newColor
                 }
             }
@@ -192,3 +256,5 @@ function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Edit
         }
     }
 }
+
+export { addObject }

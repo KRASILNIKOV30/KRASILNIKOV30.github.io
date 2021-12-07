@@ -2,14 +2,11 @@ import './DropDown.css';
 import { makeClassName } from '../functions/utils/makeClassName';
 import { useState } from 'react';
 import { Button } from '../Button/Button';
+import { addObject } from '../functions/model/element';
+import { dispatch } from '../../common/functions/model/editor';
 
-interface DropDownProps {
-    onClick: () => void
-}
 
-export const DropDown = ({
-    onClick
-}: DropDownProps) => {
+export const DropDown = () => {
     const [opened, setOpened] = useState(false);
     return (
         <div className = 'drop_down_container'>
@@ -17,7 +14,7 @@ export const DropDown = ({
                 className = {makeClassName('drop_down', {
                     'active': opened
                 })}
-                onClick={() => setOpened(!opened)}
+                onClick = {() => setOpened(!opened)}
             >
                 <div
                     className = {makeClassName('drop_down--text_container', {
@@ -29,14 +26,20 @@ export const DropDown = ({
             </div>
             {
                 opened
-                    ?  <DropDownOptions /> 
+                    ?  <DropDownOptions 
+                        onClick = {() => setOpened(false)}
+                    /> 
                     :  null
             }
         </div>
     )
 }
 
-const DropDownOptions = () => {
+interface DropDownOptionsProps {
+    onClick: () => void
+}
+
+const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
     const [activeFigure, setActiveFigure] = useState(false);
     const [activeImage, setActiveImage] = useState(false);
     return (
@@ -63,8 +66,10 @@ const DropDownOptions = () => {
             </div>
             <div className = 'option--text'
                 onClick = {() => {
+                    dispatch(addObject, { element: 'text' })
                     setActiveImage(false);
                     setActiveFigure(false);
+                    onClick();
                 }}  
             >
                 Текст
@@ -73,9 +78,27 @@ const DropDownOptions = () => {
                 activeFigure 
                     ?
                         <div className = 'option--figure--types'>
-                            <div className='option--figure--types--rectangle'></div>
-                            <div className='option--figure--types--triangle'></div>
-                            <div className='option--figure--types--circle'></div>
+                            <div 
+                                className='option--figure--types--rectangle'
+                                onClick = {() => {
+                                    dispatch(addObject, { element: 'rectangle' })
+                                    onClick()
+                                }}>
+                            </div>
+                            <div 
+                                className='option--figure--types--triangle'
+                                onClick = {() => {
+                                    dispatch(addObject, { element: 'triangle' })
+                                    onClick()
+                                }}>
+                            </div>
+                            <div 
+                                className='option--figure--types--circle'
+                                onClick = {() => {
+                                    dispatch(addObject, { element: 'circle' })
+                                    onClick()
+                                }}>
+                            </div>
                         </div>
                     : null
             }
@@ -86,12 +109,17 @@ const DropDownOptions = () => {
                             <Button 
                                 style = 'default'
                                 text = 'С компьютера'
-                                onClick = {() => {}}
+                                onClick = {() => {
+                                    dispatch(addObject, { element: 'image' })
+                                    onClick()
+                                }}
                             />
                             <Button 
                                 style = 'default'
                                 text = 'С интернета'
-                                onClick = {() => {}}
+                                onClick = {() => {
+                                    onClick()
+                                }}
                             />
                         </div>
                     : null
