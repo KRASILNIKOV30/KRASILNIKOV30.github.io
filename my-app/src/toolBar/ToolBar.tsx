@@ -5,54 +5,62 @@ import "./ToolBar.css"
 
 const ToolBar = () => {
     return (
-        <div className='ToolBar'>
-            <div className='Top_Buttons_Block'>
-                <div className='Outline_Button'>
-                    <Button 
-                        style='outline' 
-                        text='Сохранить' 
-                        onClick={console.log}
-                    />
-                </div>
-                <div className='Outline_Button'>
-                    <Button 
-                        style='outline' 
-                        text='Загрузить' 
-                        onClick={console.log}
-                    />
-                </div>
-                <div className='Outline_Button'>
-                    <Button 
-                        style='outline' 
-                        text='Переименовать' 
-                        onClick={console.log}
-                    />
+        
+        <div className='toolbar'>
+            <div className='top_block'>
+                <img className='logo'
+
+                />
+                <div className='top_block_second'>
+                    <p className='name'>Название презентации</p>
+                    <div className='top_buttons_block'>
+                        <div className='outline_button'>
+                            <Button 
+                                style='outline' 
+                                text='Сохранить' 
+                                onClick={console.log}
+                            />
+                        </div>
+                        <div className='outline_button'>
+                            <Button 
+                                style='outline' 
+                                text='Загрузить' 
+                                onClick={console.log}
+                            />
+                        </div>
+                        <div className='outline_button'>
+                            <Button 
+                                style='outline' 
+                                text='Переименовать' 
+                                onClick={console.log}
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className='Bottom_Buttons_Block'>
-                <div className='Slidebar_Buttons_Block'>
-                    <div className='Icon_Button'>
+            <div className='bottom_buttons_block'>
+                <div className='slidebar_buttons_block'>
+                    <div className='icon_button'>
                         <Button
-                            style='default'
-                            text='+'
+                            style='add'
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Icon_Button'>
+                    <div className='icon_button'>
                         <Button
                             style='delete'
                             text=''
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Icon_Button'>
+                    <div className='icon_button'>
                         <Button
                             style='undo'
                             text=''
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Icon_Button'>
+                    <div className='icon_button'>
                         <Button
                             style='redo'
                             text=''
@@ -60,44 +68,45 @@ const ToolBar = () => {
                         />
                     </div>
                 </div>
-                <div className='SlideEditor_Buttons_Block'>
-                    <div className='DropDown'>
+                <div className='slide_editor_buttons_block'>
+                    <div className='dropdown'>
                         <DropDown
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Outline_Button'>
+                    <div className='outline_button'>
                         <Button
                             style='outline'
                             text='Фон'
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Outline_Button'>
-                        <Button
-                            style='outline'
-                            text='Заливка фигуры'
-                            onClick={console.log}
-                        />
-                    </div>
-                    <div className='Outline_Button'>
-                        <Button
-                            style='outline'
-                            text='Контур фигуры'
-                            onClick={console.log}
-                        />
-                    </div>
-
+                    --
+                        <div className='outline_button'>
+                            <Button
+                                style='outline'
+                                text='Заливка фигуры'
+                                onClick={console.log}
+                            />
+                        </div>
+                        <div className='outline_button'>
+                            <Button
+                                style='outline'
+                                text='Контур фигуры'
+                                onClick={console.log}
+                            />
+                        </div>
+                    
                 </div>
-                <div className='Result_Buttons_Block'>
-                    <div className='Outline_Button'>
+                <div className='result_buttons_block'>
+                    <div className='outline_button'>
                         <Button
                             style='outline'
                             text='Просмотр'
                             onClick={console.log}
                         />
                     </div>
-                    <div className='Outline_Button'>
+                    <div className='outline_button'>
                         <Button
                             style='outline'
                             text='Экспорт'
@@ -107,7 +116,7 @@ const ToolBar = () => {
                 </div>
             </div>
             <Knob
-                text='0'
+                value='1'
                 onClick={console.log}
             />
         </div>
