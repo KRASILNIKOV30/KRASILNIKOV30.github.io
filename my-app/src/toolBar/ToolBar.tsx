@@ -9,7 +9,7 @@ import { Editor } from "../common/functions/model/types"
 import { dispatch } from '../common/functions/model/editor';
 
 import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../common/functions/model/pres";
-import { addSlide } from "../common/functions/model/slide";
+import { addSlide, removeSlides } from "../common/functions/model/slide";
 
 
 import "./ToolBar.css"
@@ -82,7 +82,7 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='delete'
                             text=''
-                            onClick={console.log}
+                            onClick={() => dispatch(removeSlides, {})}
                         />
                     </div>
                     <div className='icon_button'>
@@ -111,6 +111,9 @@ function ToolBar({ editor }: ToolBarProps) {
                             onClick={console.log}
                         />
                     </div>
+                    {
+                        
+                    }
                         <div className='outline_button'>
                             <Button
                                 style='outline'
