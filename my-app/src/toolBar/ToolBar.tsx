@@ -20,7 +20,9 @@ type ToolBarProps = {
 
 function ToolBar({ editor }: ToolBarProps) {
     const [rename, setRename] = useState(false);
-    
+
+    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+
     return (
         <div className='toolbar'>
             <div className='top_block'>
@@ -112,7 +114,10 @@ function ToolBar({ editor }: ToolBarProps) {
                         />
                     </div>
                     {
-                        
+                        //Вот тут делаем условный рендеринг в зависимости от того
+                        //что именно у нас лежит в выбранных элементах
+                        //Если все одного типа — выводим соотвествующие кнопки
+                        //P.S.следующие два дива тоже сюда сунуть под условный рендеринг
                     }
                         <div className='outline_button'>
                             <Button

@@ -52,6 +52,19 @@ function switchSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
     }
 }
 
+type SelectSlideArgs = {
+    slideId: string;
+}
+
+function selectSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
+    const newCurrentSlideIds = editor.currentSlideIds.concat();
+    newCurrentSlideIds.push(slideId);
+    return {
+        ...editor,
+        currentSlideIds: newCurrentSlideIds
+    }
+}
+
 type SetBackgroundArgs = {
     background: string;
 }

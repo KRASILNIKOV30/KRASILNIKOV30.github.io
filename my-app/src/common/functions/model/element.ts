@@ -2,13 +2,11 @@ import type { Editor, SlideElement, Slide, History, TextType } from './types';
 import { addActionToHistory } from './pres';
 import { uuid } from 'uuidv4';
 
-type ChangePositionParams = {
-    xShift: number,
-    yShift: number,
-    selectedElementsId: Array<string>
+type AddObjectArgs = {
+    element: string;
 }
 
-function addObject(editor: Editor, element: string): Editor {
+function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -84,7 +82,33 @@ function addObject(editor: Editor, element: string): Editor {
     }
 }
 
-function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: ChangePositionParams): Editor {
+type selectedElementsArgs = {
+    elementId: string;
+}
+
+
+function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    newSlides[indexSlide].selectedElementsIds.push(elementId);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+type ChangePositionArgs = {
+    xShift: number,
+    yShift: number,
+    selectedElementsId: Array<string>
+}
+
+function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -110,13 +134,13 @@ function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: 
     }
 }
 
-type ChangeSizeParams = {
+type ChangeSizeArgs = {
     widthShift: number,
     heightShift: number,
     selectedElementsId: Array<string>
 }
 
-function changeSize(editor: Editor, { selectedElementsId, widthShift, heightShift }: ChangeSizeParams): Editor {
+function changeSize(editor: Editor, { selectedElementsId, widthShift, heightShift }: ChangeSizeArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -142,12 +166,12 @@ function changeSize(editor: Editor, { selectedElementsId, widthShift, heightShif
     }
 }
 
-type ChangeTextParams = {
+type ChangeTextArgs = {
     textPropsValue: TextType,
     selectedElementsId: Array<string>
 }
 
-function changeTextProps(editor: Editor, { textPropsValue, selectedElementsId }: ChangeTextParams): Editor {
+function changeTextProps(editor: Editor, { textPropsValue, selectedElementsId }: ChangeTextArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -176,12 +200,12 @@ function changeTextProps(editor: Editor, { textPropsValue, selectedElementsId }:
     }
 }
 
-type ChangeColorParams = {
+type ChangeColorArgs = {
     newColor: string,
     selectedElementsId: Array<string>
 }
 
-function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: ChangeColorParams): Editor {
+function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: ChangeColorArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -209,7 +233,7 @@ function changeStrokeColor(editor: Editor, { newColor, selectedElementsId}: Chan
     }
 }
 
-function changeFillColor(editor: Editor, { newColor, selectedElementsId }: ChangeColorParams): Editor {
+function changeFillColor(editor: Editor, { newColor, selectedElementsId }: ChangeColorArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
@@ -238,7 +262,11 @@ function changeFillColor(editor: Editor, { newColor, selectedElementsId }: Chang
 }
 
 
-function deleteSelected(editor: Editor, selectedElementsId: Array<string>): Editor {
+type DeleteSelectedArgs = {
+    selectedElementsId: Array<string>
+}
+
+function deleteSelected(editor: Editor, { selectedElementsId }: DeleteSelectedArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
