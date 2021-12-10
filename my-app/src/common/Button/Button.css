@@ -39,29 +39,27 @@
 }
 
 .button--style--delete {
-    background: center no-repeat url('./icons/delete-default.png');
+    background: center no-repeat url('./icons/delete-default.svg');
 }
 
 .button--style--delete:hover {
-    background: center no-repeat url('./icons/delete-focused.png');
-    color: #184708;
+    background: center no-repeat url('./icons/delete-focused.svg');
 }
 
 .button--style--redo {
-    background: center no-repeat url('./icons/redo-default.png');
+    background: center no-repeat url('./icons/redo-default.svg');
 }
 
 .button--style--redo:hover {
-    background: center no-repeat url('./icons/redo-focused.png');
-    color: #184708;
+    background: center no-repeat url('./icons/redo-focused.svg');
 }
 
 .button--style--undo {
-    background: center no-repeat url('./icons/undo-default.png');
+    background: center no-repeat url('./icons/undo-default.svg');
 }
 
 .button--style--undo:hover {
-    background: center no-repeat url('./icons/undo-focused.png');
+    background: center no-repeat url('./icons/undo-focused.svg');
     color: #184708;
 }
 

@@ -52,6 +52,7 @@ function switchSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
     }
 }
 
+<<<<<<< HEAD
 type SelectSlideArgs = {
     slideId: string;
 }
@@ -65,6 +66,8 @@ function selectSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
     }
 }
 
+=======
+>>>>>>> SlideElement
 type SetBackgroundArgs = {
     background: string;
 }
