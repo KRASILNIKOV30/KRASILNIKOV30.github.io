@@ -80,56 +80,75 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
             >
                 Текст
             </div>
-            {
-                activeFigure 
-                    ?
-                        <div className = 'option--figure--types'>
-                            <div 
-                                className='option--figure--types--rectangle'
-                                onClick = {() => {
-                                    dispatch(addObject, { element: 'rectangle' })
-                                    onClick()
-                                }}>
-                            </div>
-                            <div 
-                                className='option--figure--types--triangle'
-                                onClick = {() => {
-                                    dispatch(addObject, { element: 'triangle' })
-                                    onClick()
-                                }}>
-                            </div>
-                            <div 
-                                className='option--figure--types--circle'
-                                onClick = {() => {
-                                    dispatch(addObject, { element: 'circle' })
-                                    onClick()
-                                }}>
-                            </div>
-                        </div>
-                    : null
-            }
-            {
-                activeImage
-                    ?
-                        <div className = 'option--image--types'>
-                            <Button 
-                                style = 'default'
-                                text = 'С компьютера'
-                                onClick = {() => {
-                                    dispatch(addObject, { element: 'image' })
-                                    onClick()
-                                }}
-                            />
-                            <Button 
-                                style = 'default'
-                                text = 'С интернета'
-                                onClick = {() => {
-                                    onClick()
-                                }}
-                            />
-                        </div>
-                    : null
-            }
+            <DropDownOptionsToAdd 
+                activeFigure = { activeFigure }
+                activeImage = { activeImage }
+                onClick = {onClick}
+            />
         </div>
+    )
+}
+
+interface DropDownOptionsToAddProps {
+    activeFigure: boolean,
+    activeImage: boolean,
+    onClick: () => void
+}
+
+const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOptionsToAddProps) => {
+    return (
+        <div className='DropDownOptionsToAdd_container'>
+            {
+            activeFigure 
+                ?
+                    <div className = 'option--figure--types'>
+                        <div 
+                            className='option--figure--types--rectangle'
+                            onClick = {() => {
+                                dispatch(addObject, { element: 'rectangle' })
+                                onClick()
+                            }}>
+                        </div>
+                        <div 
+                            className='option--figure--types--triangle'
+                            onClick = {() => {
+                                dispatch(addObject, { element: 'triangle' })
+                                onClick()
+                            }}>
+                        </div>
+                        <div 
+                            className='option--figure--types--circle'
+                            onClick = {() => {
+                                dispatch(addObject, { element: 'circle' })
+                                onClick()
+                            }}>
+                        </div>
+                    </div>
+                : null
+        }
+        {
+            activeImage
+                ?
+                    <div className = 'option--image--types'>
+                        <Button 
+                            style = 'default'
+                            text = 'С компьютера'
+                            onClick = {() => {
+                                dispatch(addObject, { element: 'image' })
+                                onClick()
+                            }}
+                        />
+                        <Button 
+                            style = 'default'
+                            text = 'С интернета'
+                            onClick = {() => {
+                                onClick()
+                            }}
+                        />
+                    </div>
+                : null
+        }
+        </div>
+        
     )
 }

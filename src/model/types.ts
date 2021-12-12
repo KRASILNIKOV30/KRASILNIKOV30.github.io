@@ -53,11 +53,12 @@ type ImageType = {
 }
 
 type TextType = {
-    textColor: string | null;
+    font: string;
+    textColor: string;
     bgColor: string | null;
-    textValue: string | null;
-    fontSize: number | null;
-    fontWeight: "light" | "regular" | "bold" | null
+    textValue: string;
+    fontSize: number;
+    fontWeight: "light" | "regular" | "bold"
 }
 
 type FigureType = {

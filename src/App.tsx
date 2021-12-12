@@ -1,6 +1,4 @@
 import { Editor } from './model/types';
-import { dispatch } from './model/editor';
-import { changeTitle } from './model/pres';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
 import './App.css';
@@ -10,13 +8,14 @@ type AppProps = {
 }
 
 function App({ editor }: AppProps) {
+    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
     return (
         <div className="App">
             <ToolBar
                 editor = { editor }
             />
             <SlideEditor 
-                slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
+                slide = {editor.presentation.slides[indexSlide]}
             />
         </div>
     )

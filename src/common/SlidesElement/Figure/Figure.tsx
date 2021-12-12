@@ -24,7 +24,7 @@ const Circle = ({
                     cy = {height/2}
                     fill = {figure.fillColor}
                     stroke = {figure.strokeColor}
-                    stroke-width = {figure.strokeWidth}
+                    strokeWidth = {figure.strokeWidth}
                 >
                 </ellipse>
             </svg>
@@ -51,7 +51,7 @@ const Rectangle = ({
                     height = {size.height}
                     fill = {figure.fillColor}
                     stroke = {figure.strokeColor}
-                    stroke-width = {figure.strokeWidth}
+                    strokeWidth = {figure.strokeWidth}
                 >
                 </rect>
             </svg>
@@ -76,7 +76,7 @@ const Triangle = ({
                     points = {points}
                     fill = {figure.fillColor}
                     stroke = {figure.strokeColor}
-                    stroke-width = {figure.strokeWidth}
+                    strokeWidth = {figure.strokeWidth}
                 >
                 </polygon>
             </svg>

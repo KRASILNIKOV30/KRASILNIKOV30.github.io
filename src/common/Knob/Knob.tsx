@@ -1,9 +1,8 @@
-import { Button } from '../Button/Button';
 import './Knob.css';
 
 interface KnobProps {
-    value: string,
-    onClick: () => void
+    value: number,
+    onClick: (value: number) => void
 }
 
 export const Knob = ({
@@ -11,26 +10,22 @@ export const Knob = ({
     onClick
 }: KnobProps) => {
     return (
-        <div className="knob">
-            <table className="table">
-                <td className="roller-minus">
-                    <Button
-                        style={'default'}
-                        onClick={console.log}
-                    />
-                </td>
-                <td className="knob_value">
-                    <p className="value">
-                        {value}
-                    </p>
-                </td>
-                <td className="roller-plus">
-                    <Button
-                        style={'default'}
-                        onClick={console.log}
-                    />
-                </td>
-            </table>
-        </div>
+        <table className="table">
+            <tr className='table_string'>
+                <td 
+                    className='minus_value_container'
+                    onClick={() => {
+                        onClick(--value)
+                    }}
+                ></td>
+                <td className='value_container'>{value}</td>
+                <td 
+                    className='plus_value_container'
+                    onClick={() => {
+                        onClick(++value)
+                    }}
+                ></td>
+            </tr>
+        </table>
     )
 }

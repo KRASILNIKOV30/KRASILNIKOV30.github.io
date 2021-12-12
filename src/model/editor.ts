@@ -7,7 +7,7 @@ let editor: Editor = {
             {
                 slideId: "0",
                 elements: [
-                    {
+                    /*{
                         elementId: "0",
                         elementType: "figure",
                         position: {
@@ -62,7 +62,7 @@ let editor: Editor = {
                         }
                     },
                     {
-                        elementId: "3",
+                        elementId: '3',
                         elementType: "text",
                         position: {
                             x: 234,
@@ -73,6 +73,7 @@ let editor: Editor = {
                             height: 50
                         },
                         textProps: {
+                            font: 'Montserrat',
                             textColor: "#000000",
                             bgColor: "#ff0000",
                             textValue: "Hello Kerim!",
@@ -97,13 +98,13 @@ let editor: Editor = {
                             strokeWidth: 0,
                             fillColor: "#d0ff00"
                         }
-                    }
+                    }*/
                 ],
                 background: "#FFF2AF",
                 backgroundType: 'Base64',
-                selectedElementsIds: []
+                selectedElementsIds: ['3']
             }, 
-            {
+            /*{
                 slideId: "1",
                 elements: [
                     {
@@ -127,7 +128,7 @@ let editor: Editor = {
                 background: "#000FFF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
-            }
+            }*/
         ]
     },
     history: {

@@ -1,16 +1,19 @@
 import type { Editor, History, Presentation } from './types';
 
 export function addActionToHistory(editor: Editor): History {
-    console.log('inhistory')
-    const newHistory: History = editor.history;
+    const newHistory: History = {
+        ...editor.history
+    };
+    const presentation: Presentation = {
+        ...editor.presentation
+    }
     if(newHistory.undoStack.length === 100) {
-        console.log(newHistory.undoStack)
         newHistory.undoStack.shift();
     }
     while(newHistory.redoStack.length !== 0) {
         newHistory.redoStack.pop();
     }
-    newHistory.undoStack.push(editor.presentation);
+    newHistory.undoStack.push(presentation);
     return (newHistory)
 }
 
@@ -19,7 +22,6 @@ type ChangeTitleArgs = {
 }
 
 function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
-    console.log('changed');
     const newHistory: History = addActionToHistory(editor);
     return {
         ...editor,
@@ -51,11 +53,14 @@ function switchPreview(editor: Editor): Editor {
 }
 
 function undo(editor: Editor): Editor {
-    console.log(editor.history.undoStack.length);
+    console.log('Old: ' + JSON.stringify(editor.presentation))
     if (editor.history.undoStack.length !== 0) {
-        const newHistory: History = editor.history;
+        const newHistory: History = {
+            ...editor.history
+        };
         const newPresentation: Presentation = newHistory.undoStack.pop()!;
         newHistory.redoStack.push(editor.presentation);
+        console.log('New: ' + JSON.stringify(newPresentation))
         return {
             ...editor,
             history: newHistory,

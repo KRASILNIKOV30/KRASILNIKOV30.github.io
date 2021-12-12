@@ -9,7 +9,6 @@ interface SlidesElementProps {
 const SlidesElement = ({
     slideElement,
 }: SlidesElementProps) => {
-    slideElement.elementId = '';
     switch (slideElement.elementType) {
         case "text": 
             return (
