@@ -1,6 +1,7 @@
 import './SlideEditor.css';
 import { SlidesElement } from "../common/SlidesElement/SlidesElement";
 import type { Slide } from '../model/types'
+import { Console } from 'console';
 
 type SlideBarProps = {
         slide: Slide
@@ -13,6 +14,7 @@ function SlideEditor({
         <li
             key = {slideElement.elementId}
             className = 'slideElement'
+            onClick = {console.log}
         >
             <SlidesElement
                 slideElement = {slideElement}

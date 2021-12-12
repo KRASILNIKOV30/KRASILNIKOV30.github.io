@@ -1,6 +1,7 @@
 import './SlidesElement.css'
 import { Figure } from "./Figure/Figure";
 import type { SlideElement } from "../../model/types"
+import { uuid } from 'uuidv4';
 
 interface SlidesElementProps {
     slideElement: SlideElement 
@@ -9,7 +10,7 @@ interface SlidesElementProps {
 const SlidesElement = ({
     slideElement,
 }: SlidesElementProps) => {
-    slideElement.elementId = '';
+    slideElement.elementId = uuid();
     switch (slideElement.elementType) {
         case "text": 
             return (
