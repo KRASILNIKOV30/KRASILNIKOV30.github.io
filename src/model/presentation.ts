@@ -1,12 +1,9 @@
 import type { Editor, History, Presentation } from './types';
+import { deepClone } from '../core/functions/deepClone';
 
 export function addActionToHistory(editor: Editor): History {
-    const newHistory: History = {
-        ...editor.history
-    };
-    const presentation: Presentation = {
-        ...editor.presentation
-    }
+    const newHistory = deepClone(editor.history) as History;
+    const presentation = deepClone(editor.presentation) as Presentation;
     if(newHistory.undoStack.length === 100) {
         newHistory.undoStack.shift();
     }
@@ -53,14 +50,10 @@ function switchPreview(editor: Editor): Editor {
 }
 
 function undo(editor: Editor): Editor {
-    console.log('Old: ' + JSON.stringify(editor.presentation))
     if (editor.history.undoStack.length !== 0) {
-        const newHistory: History = {
-            ...editor.history
-        };
+        const newHistory = deepClone(editor.history) as History;
         const newPresentation: Presentation = newHistory.undoStack.pop()!;
         newHistory.redoStack.push(editor.presentation);
-        console.log('New: ' + JSON.stringify(newPresentation))
         return {
             ...editor,
             history: newHistory,
@@ -72,7 +65,7 @@ function undo(editor: Editor): Editor {
 
 function redo(editor: Editor): Editor {
     if (editor.history.redoStack.length !== 0) {
-        const newHistory: History = editor.history;
+        const newHistory = deepClone(editor.history) as History;
         const newPresentation: Presentation = newHistory.redoStack.pop()!;
         newHistory.undoStack.push(editor.presentation);
         return {

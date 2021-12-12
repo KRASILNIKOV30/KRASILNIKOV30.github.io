@@ -7,7 +7,7 @@ let editor: Editor = {
             {
                 slideId: "0",
                 elements: [
-                    /*{
+                    {
                         elementId: "0",
                         elementType: "figure",
                         position: {
@@ -98,13 +98,13 @@ let editor: Editor = {
                             strokeWidth: 0,
                             fillColor: "#d0ff00"
                         }
-                    }*/
+                    }
                 ],
                 background: "#FFF2AF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['3']
             }, 
-            /*{
+            {
                 slideId: "1",
                 elements: [
                     {
@@ -128,7 +128,7 @@ let editor: Editor = {
                 background: "#000FFF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
-            }*/
+            }
         ]
     },
     history: {

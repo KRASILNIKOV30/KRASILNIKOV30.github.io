@@ -1,5 +1,6 @@
 import type { Editor, SlideElement, Slide, History } from './types';
-import { addActionToHistory } from './pres';
+import { addActionToHistory } from './presentation';
+import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 
 type AddObjectArgs = {
@@ -8,7 +9,7 @@ type AddObjectArgs = {
 
 function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
     const NewEl: SlideElement = {
         elementId: v4(),
@@ -72,9 +73,7 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
             break;
         }
     }
-    console.log('New History BEFORE: ' + JSON.stringify(newHistory))
     newSlides[indexSlide].elements.push(NewEl);
-    console.log('New History AFTER: ' + JSON.stringify(newHistory))
     return {
         ...editor,
         history: newHistory,
@@ -92,7 +91,7 @@ type selectedElementsArgs = {
 
 function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
     newSlides[indexSlide].selectedElementsIds.push(elementId);
     return {
@@ -112,9 +111,9 @@ type ChangePositionArgs = {
 
 function changePosition(editor: Editor, { xShift, yShift }: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId)) {
             const newElement: SlideElement = {
@@ -144,9 +143,9 @@ type ChangeSizeArgs = {
 
 function changeSize(editor: Editor, { widthShift, heightShift }: ChangeSizeArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     for(let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if(selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId)) {
             const newElement: SlideElement = {
@@ -180,9 +179,9 @@ type ChangeTextArgs = {
 
 function changeTextProps(editor: Editor, { font, textColor, bgColor, textValue, fontSize, fontWeight }: ChangeTextArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && newSlides[indexSlide].elements[i].elementType == "text") {
             const newElement: SlideElement = {
@@ -215,9 +214,9 @@ type ChangeColorArgs = {
 
 function changeStrokeColor(editor: Editor, { newColor }: ChangeColorArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
             const newElement: SlideElement = {
@@ -244,9 +243,9 @@ function changeStrokeColor(editor: Editor, { newColor }: ChangeColorArgs): Edito
 
 function changeFillColor(editor: Editor, { newColor }: ChangeColorArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
         if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
             const newElement: SlideElement = {
@@ -278,9 +277,9 @@ type DeleteSelectedArgs = {
 
 function deleteSelected(editor: Editor ): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds;
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
     newSlides[indexSlide].elements.forEach(element => {
         if(selectedElementsId.includes(element.elementId)) {
             newSlides[indexSlide].elements.splice(newSlides[indexSlide].elements.indexOf(element), 1)

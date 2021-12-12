@@ -1,10 +1,11 @@
 import type { Editor, Slide, History } from './types';
-import { addActionToHistory } from './pres';
+import { addActionToHistory } from './presentation';
+import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 
 function addSlide(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     newSlides.push({
         slideId: v4(),
         elements: [],
@@ -25,16 +26,16 @@ function addSlide(editor: Editor): Editor {
 
 function removeSlides(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     newSlides.forEach(slide => {
-        if(editor.currentSlideIds.includes(slide.slideId)) {
+        if(editor.currentSlideIds.includes(slide.slideId) && newSlides.length >= 2) {
             newSlides.splice(newSlides.indexOf(slide), 1)
         }
     })
     return {
         ...editor,
         history: newHistory,
-        currentSlideIds: [],
+        currentSlideIds: [newSlides[0].slideId],
         presentation: {
             ...editor.presentation,
             slides: newSlides,
@@ -72,7 +73,7 @@ type SetBackgroundArgs = {
 
 function setBackground(editor: Editor, { background }: SetBackgroundArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
-    const newSlides: Array<Slide> = editor.presentation.slides.concat();
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
     newSlides[indexSlide].background = background;
     return {

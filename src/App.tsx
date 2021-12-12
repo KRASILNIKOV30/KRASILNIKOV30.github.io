@@ -15,7 +15,7 @@ function App({ editor }: AppProps) {
                 editor = { editor }
             />
             <SlideEditor 
-                slide = {editor.presentation.slides[indexSlide]}
+                    slide = {editor.presentation.slides[indexSlide]}
             />
         </div>
     )

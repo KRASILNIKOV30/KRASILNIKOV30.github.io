@@ -8,7 +8,7 @@ import { Input } from "../common/Input/input"
 import { Editor, SlideElement } from "../model/types"
 import { dispatch } from '../model/editor';
 
-import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../model/pres";
+import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../model/presentation";
 import { addSlide, removeSlides } from "../model/slide";
 import { changeTextProps } from "../model/element"
 
