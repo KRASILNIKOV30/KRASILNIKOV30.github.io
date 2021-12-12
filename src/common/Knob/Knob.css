@@ -1,0 +1,50 @@
+.knob {
+    float: left;
+    margin-right: 0px;
+}
+
+.table {
+    border-collapse: collapse;
+    height: 35px;
+    width: 94px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    display: block;
+    flex-wrap: nowrap;
+}
+
+.roller-minus {
+    background: center no-repeat url('./icons/minus.svg');
+    display: inline-flex;
+}
+
+.roller-plus {
+    background: center no-repeat url('./icons/plus.svg');
+    display: inline-flex;
+}
+
+.roler-minus,
+.roller-plus {
+    width: 20px;
+    height: 35px;
+    cursor: pointer;
+    display: inline-flex;
+}
+
+.knob_value {
+    width: 50px;
+    height: 34px;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.value {
+    display: inline-block;   
+}

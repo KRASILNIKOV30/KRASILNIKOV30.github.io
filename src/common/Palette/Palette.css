@@ -1,0 +1,345 @@
+.palette {
+    width: 220px;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.paletteElement {
+    display: inline;
+
+    width: 20px;
+    height: 20px;
+    margin: 1px;
+
+    list-style-type: none;
+    
+    border-radius: 20px;
+    /* background-color: red; */
+}
+
+.paletteElement--selected {
+    box-shadow: 0px 0px 3px 3px rgba(23, 166, 86, 0.5);
+}
+
+/* .paletteElement--color--1 {
+    background-color: #000;
+}
+
+.paletteElement--color--2 {
+    background-color: #434343;
+}
+
+.paletteElement--color--3 {
+    background-color: #666666;
+}
+
+.paletteElement--color--4 {
+    background-color: #999999;
+}
+
+.paletteElement--color--5 {
+    background-color: #B7B7B7;
+}
+
+.paletteElement--color--6 {
+    background-color: #CCCCCC;
+}
+
+.paletteElement--color--7 {
+    background-color: #D9D9D9;
+}
+
+.paletteElement--color--8 {
+    background-color: #EFEFEF;
+}
+
+.paletteElement--color--9 {
+    background-color: #F3F3F3;
+} */
+
+.paletteElement--color--9 {
+    background-color: #FFFFFF;
+    border: 1px solid #D3D3D3;
+    box-sizing: border-box;
+}
+
+/* .paletteElement--color--11 {
+    background-color: #000;
+}
+
+.paletteElement--color--12 {
+    background-color: #000;
+}
+
+.paletteElement--color--13 {
+    background-color: #000;
+}
+
+.paletteElement--color--14 {
+    background-color: #000;
+}
+
+.paletteElement--color--15 {
+    background-color: #000;
+}
+
+.paletteElement--color--16 {
+    background-color: #000;
+}
+
+.paletteElement--color--17 {
+    background-color: #000;
+}
+
+.paletteElement--color--18 {
+    background-color: #000;
+}
+
+.paletteElement--color--19 {
+    background-color: #000;
+}
+
+.paletteElement--color--20 {
+    background-color: #000;
+}
+
+.paletteElement--color--21 {
+    background-color: #000;
+}
+
+.paletteElement--color--22 {
+    background-color: #000;
+}
+
+.paletteElement--color--23 {
+    background-color: #000;
+}
+
+.paletteElement--color--24 {
+    background-color: #000;
+}
+
+.paletteElement--color--25 {
+    background-color: #000;
+}
+
+.paletteElement--color--26 {
+    background-color: #000;
+}
+
+.paletteElement--color--27 {
+    background-color: #000;
+}
+
+.paletteElement--color--28 {
+    background-color: #000;
+}
+
+.paletteElement--color--29 {
+    background-color: #000;
+}
+
+.paletteElement--color--30 {
+    background-color: #000;
+}
+
+.paletteElement--color--31 {
+    background-color: #000;
+}
+
+.paletteElement--color--32 {
+    background-color: #000;
+}
+
+.paletteElement--color--33 {
+    background-color: #000;
+}
+
+.paletteElement--color--34 {
+    background-color: #000;
+}
+
+.paletteElement--color--35 {
+    background-color: #000;
+}
+
+.paletteElement--color--36 {
+    background-color: #000;
+}
+
+.paletteElement--color--37 {
+    background-color: #000;
+}
+
+.paletteElement--color--38 {
+    background-color: #000;
+}
+
+.paletteElement--color--39 {
+    background-color: #000;
+}
+
+.paletteElement--color--40 {
+    background-color: #000;
+}
+
+.paletteElement--color--41 {
+    background-color: #000;
+}
+
+.paletteElement--color--42 {
+    background-color: #000;
+}
+
+.paletteElement--color--43 {
+    background-color: #000;
+}
+
+.paletteElement--color--44 {
+    background-color: #000;
+}
+
+.paletteElement--color--45 {
+    background-color: #000;
+}
+
+.paletteElement--color--46 {
+    background-color: #000;
+}
+
+.paletteElement--color--47 {
+    background-color: #000;
+}
+
+.paletteElement--color--48 {
+    background-color: #000;
+}
+
+.paletteElement--color--49 {
+    background-color: #000;
+}
+
+.paletteElement--color--50 {
+    background-color: #000;
+}
+
+.paletteElement--color--51 {
+    background-color: #000;
+}
+
+.paletteElement--color--52 {
+    background-color: #000;
+}
+
+.paletteElement--color--53 {
+    background-color: #000;
+}
+
+.paletteElement--color--54 {
+    background-color: #000;
+}
+
+.paletteElement--color--55 {
+    background-color: #000;
+}
+
+.paletteElement--color--56 {
+    background-color: #000;
+}
+
+.paletteElement--color--57 {
+    background-color: #000;
+}
+
+.paletteElement--color--58 {
+    background-color: #000;
+}
+
+.paletteElement--color--59 {
+    background-color: #000;
+}
+
+.paletteElement--color--60 {
+    background-color: #000;
+}
+
+.paletteElement--color--61 {
+    background-color: #000;
+}
+
+.paletteElement--color--62 {
+    background-color: #000;
+}
+
+.paletteElement--color--63 {
+    background-color: #000;
+}
+
+.paletteElement--color--64 {
+    background-color: #000;
+}
+
+.paletteElement--color--65 {
+    background-color: #000;
+}
+
+.paletteElement--color--66 {
+    background-color: #000;
+}
+
+.paletteElement--color--67 {
+    background-color: #000;
+}
+
+.paletteElement--color--68 {
+    background-color: #000;
+}
+
+.paletteElement--color--69 {
+    background-color: #000;
+}
+
+.paletteElement--color--70 {
+    background-color: #000;
+}
+
+.paletteElement--color--71 {
+    background-color: #000;
+}
+
+.paletteElement--color--72 {
+    background-color: #000;
+}
+
+.paletteElement--color--73 {
+    background-color: #000;
+}
+
+.paletteElement--color--74 {
+    background-color: #000;
+}
+
+.paletteElement--color--75 {
+    background-color: #000;
+}
+
+.paletteElement--color--76 {
+    background-color: #000;
+}
+
+.paletteElement--color--77 {
+    background-color: #000;
+}
+
+.paletteElement--color--78 {
+    background-color: #000;
+}
+
+.paletteElement--color--79 {
+    background-color: #000;
+}
+
+.paletteElement--color--80 {
+    background-color: #000;
+} */

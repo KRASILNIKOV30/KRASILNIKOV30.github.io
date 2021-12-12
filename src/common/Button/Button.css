@@ -1,0 +1,87 @@
+.button {
+    min-width: 41px;
+    height: 35px;
+
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 13px;
+
+    color: #343434;
+
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0);
+    border-radius: 5px;
+    background: center no-repeat none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 10px;
+}
+
+.button--style--outline:hover,
+.button--style--default:hover {
+    cursor: pointer;
+    color: #184708;
+}
+
+.button--style--default:hover {
+    background-color: #EAFFF3;
+}
+
+.button--style--outline {
+    border: 1px solid #343434;
+}
+
+.button--style--outline:hover {
+    border-color: #184708;
+}
+
+.button--style--delete {
+    background: center no-repeat url('./icons/delete-default.svg');
+}
+
+.button--style--delete:hover {
+    background: center no-repeat url('./icons/delete-focused.svg');
+}
+
+.button--style--redo {
+    background: center no-repeat url('./icons/redo-default.svg');
+}
+
+.button--style--redo:hover {
+    background: center no-repeat url('./icons/redo-focused.svg');
+}
+
+.button--style--undo {
+    background: center no-repeat url('./icons/undo-default.svg');
+}
+
+.button--style--undo:hover {
+    background: center no-repeat url('./icons/undo-focused.svg');
+    color: #184708;
+}
+
+.button--style--undo:hover,
+.button--style--redo:hover,
+.button--style--delete:hover,
+.button--style--sign:hover {
+    background-color: #EAFFF3;
+    cursor: pointer;
+}
+
+.text_container {
+    white-space: nowrap;
+}
+
+.text_container--style--delete,
+.text_container--style--redo,
+.text_container--style--undo {
+    display: none;
+}
+.text_container--style--sign {
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 36px;
+}
