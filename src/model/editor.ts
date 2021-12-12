@@ -153,7 +153,7 @@ let editor: Editor = {
         redoStack: []
     },
     statePreview: false,
-    currentSlideIds: ['1']
+    currentSlideIds: ['0']
 };
 
 let editorChangeHandler: Function;

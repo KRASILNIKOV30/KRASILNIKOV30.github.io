@@ -3,9 +3,10 @@ import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { uuid } from 'uuidv4';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps } from '../../model/element'
+import { changeTextProps, changePosition } from '../../model/element'
+import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 
 interface SlidesElementProps {
     slideElement: SlideElement 
@@ -14,10 +15,21 @@ interface SlidesElementProps {
 const SlidesElement = ({
     slideElement,
 }: SlidesElementProps) => {
+    const slideElementRef = useRef<HTMLDivElement>(null)
+
+    /* useDragAndDrop(
+        slideElementRef, 
+        {x: Number(slideElementRef.current?.style.left),
+         y: Number(slideElementRef.current?.style.top)   
+        },
+        console.log
+    ) */
+
     switch (slideElement.elementType) {
         case "text": 
             return (
                 <div
+                    ref = {slideElementRef}
                     className = 'slide-element'
                     style = {{
                         'top': slideElement.position.y,
@@ -46,6 +58,7 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
+                    ref = {slideElementRef}
                     className = 'slide-element'
                     style = {{
                         'top': slideElement.position.y,
@@ -61,6 +74,7 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
+                    ref = {slideElementRef}
                     className = 'slide-element'
                     style = {{
                         'top': slideElement.position.y,

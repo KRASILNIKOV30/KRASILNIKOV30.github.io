@@ -102,13 +102,13 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
     }
 }
 
-type ChangePositionArgs = {
+export type ChangePositionArgs = {
     xShift: number,
     yShift: number,
     selectedElementsId: Array<string>
 }
 
-function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: ChangePositionArgs): Editor {
+export function changePosition(editor: Editor, { xShift, yShift, selectedElementsId }: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides: Array<Slide> = editor.presentation.slides.concat();
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
