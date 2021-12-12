@@ -104,12 +104,12 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
     }
 }
 
-type ChangePositionArgs = {
+export type ChangePositionArgs = {
     xShift: number,
     yShift: number
 }
 
-function changePosition(editor: Editor, { xShift, yShift }: ChangePositionArgs): Editor {
+export function changePosition(editor: Editor, { xShift, yShift}: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);

@@ -1,6 +1,7 @@
 import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
+import { SideBar } from './sideBar/SideBar'
 import './App.css';
 
 type AppProps = {
@@ -14,9 +15,15 @@ function App({ editor }: AppProps) {
             <ToolBar
                 editor = { editor }
             />
-            <SlideEditor 
+            <div className='pres-view'>
+                <SideBar
+                    editor = {editor}           
+                />
+                <SlideEditor 
                     slide = {editor.presentation.slides[indexSlide]}
-            />
+                />
+            </div>
+            
         </div>
     )
 }

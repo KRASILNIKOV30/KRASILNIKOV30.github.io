@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { Editor } from "./types"
 
 let editor: Editor = {
@@ -75,10 +76,10 @@ let editor: Editor = {
                         textProps: {
                             font: 'Montserrat',
                             textColor: "#000000",
-                            bgColor: "#ff0000",
+                            bgColor: "#ff9999",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
-                            fontWeight: "regular"
+                            fontWeight: "bold"
                         }
                     },
                     {
@@ -98,6 +99,23 @@ let editor: Editor = {
                             strokeWidth: 0,
                             fillColor: "#d0ff00"
                         }
+                    },
+                    {
+                        elementId: "5",
+                        elementType: "image",
+                        position: {
+                            x: 530,
+                            y: 50
+                        },
+                        size: {
+                            width: 100,
+                            height: 100
+                        },
+                        image: {
+                            urlImage: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
+                            imageType: 'url',
+                            ext: '.jpg'
+                        }
                     }
                 ],
                 background: "#FFF2AF",
@@ -112,16 +130,16 @@ let editor: Editor = {
                         elementType: "image",
                         position: {
                             x: 54,
-                            y: 405
+                            y: 30
                         },
                         size: {
                             width: 450,
                             height: 59
                         },
                         image: {
-                            urlImage: "./assets/image",
+                            urlImage: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
                             imageType: "url",
-                            ext: 'svg'
+                            ext: 'jpg'
                         }
                     }
                 ],
