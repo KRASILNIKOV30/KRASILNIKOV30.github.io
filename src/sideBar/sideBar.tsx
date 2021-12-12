@@ -32,7 +32,6 @@ const SideBar = ({
             />
         </li>
     ))
-    console.log(slidesList)
     return (
         <div
             className = 'sidebar-container'
