@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { Editor } from "./types"
 
 let editor: Editor = {
@@ -74,10 +75,10 @@ let editor: Editor = {
                         },
                         textProps: {
                             textColor: "#000000",
-                            bgColor: "#ff0000",
+                            bgColor: "#ff9999",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
-                            fontWeight: "regular"
+                            fontWeight: "bold"
                         }
                     },
                     {
@@ -96,6 +97,23 @@ let editor: Editor = {
                             strokeColor: "#00ff2a",
                             strokeWidth: 0,
                             fillColor: "#d0ff00"
+                        }
+                    },
+                    {
+                        elementId: "5",
+                        elementType: "image",
+                        position: {
+                            x: 530,
+                            y: 50
+                        },
+                        size: {
+                            width: 100,
+                            height: 100
+                        },
+                        image: {
+                            urlImage: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
+                            imageType: 'url',
+                            ext: '.jpg'
                         }
                     }
                 ],

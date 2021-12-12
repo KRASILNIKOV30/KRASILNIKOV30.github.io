@@ -1,0 +1,16 @@
+.text--placeholder {
+    position: absolute;
+}
+
+.text {
+    width: auto;
+    box-sizing: border-box;
+}
+
+.text:hover {
+    cursor: pointer;
+}
+
+.text:hover {
+    background-color: #EAFFF3;
+}

@@ -285,4 +285,4 @@ function deleteSelected(editor: Editor, { selectedElementsId }: DeleteSelectedAr
     }
 }
 
-export { addObject }
+export { addObject, changeTextProps }
