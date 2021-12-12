@@ -1,0 +1,18 @@
+.sidebar-container {
+    height: auto;
+    width: 310px;
+}
+
+.scaled-slide {
+    transform: scale(0.3, 0.3);
+    line-height: 0;
+}
+
+.scaled-slide::marker {
+    font-size: 100px;
+    font-family: Montserrat;
+}
+
+.slide-list {
+    line-height: 0;
+}

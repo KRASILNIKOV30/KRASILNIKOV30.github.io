@@ -129,16 +129,16 @@ let editor: Editor = {
                         elementType: "image",
                         position: {
                             x: 54,
-                            y: 405
+                            y: 30
                         },
                         size: {
                             width: 450,
                             height: 59
                         },
                         image: {
-                            urlImage: "./assets/image",
+                            urlImage: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
                             imageType: "url",
-                            ext: 'svg'
+                            ext: 'jpg'
                         }
                     }
                 ],
@@ -153,7 +153,7 @@ let editor: Editor = {
         redoStack: []
     },
     statePreview: false,
-    currentSlideIds: ['0']
+    currentSlideIds: ['1']
 };
 
 let editorChangeHandler: Function;

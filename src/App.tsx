@@ -3,6 +3,7 @@ import { dispatch } from './model/editor';
 import { changeTitle } from './model/pres';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
+import { SideBar } from './sideBar/SideBar'
 import './App.css';
 
 type AppProps = {
@@ -15,9 +16,15 @@ function App({ editor }: AppProps) {
             <ToolBar
                 editor = { editor }
             />
-            <SlideEditor 
-                slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
-            />
+            <div className='pres-view'>
+                <SideBar
+                    editor = {editor}           
+                />
+                <SlideEditor 
+                    slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
+                />
+            </div>
+            
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import './SlideEditor.css';
 import { SlidesElement } from "../common/SlidesElement/SlidesElement";
-import type { Slide } from '../model/types'
-import { Console } from 'console';
+import type { Slide, SlideElement } from '../model/types'
+import { SlideView } from '../common/Slide/Slide'
 
 type SlideBarProps = {
         slide: Slide
@@ -23,14 +23,12 @@ function SlideEditor({
     )    
     return (
         <div className="slide-container">
-            <div 
-                className="slide"
-                style = {{"background": slide.background}}
-            >
-                <ul>{slideElements}</ul>                
-            </div>
+            <SlideView
+                slideElements = {slideElements}
+                background = {slide.background}
+            />
         </div>
     )
 }
 
-export { SlideEditor }
+export { SlideEditor, SlidesElement }

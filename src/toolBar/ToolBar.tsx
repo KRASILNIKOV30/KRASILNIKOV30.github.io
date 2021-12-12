@@ -152,10 +152,6 @@ function ToolBar({ editor }: ToolBarProps) {
                     </div>
                 </div>
             </div>
-            <Knob
-                value='1'
-                onClick={console.log}
-            />
         </div>
     )}
 
