@@ -17,13 +17,13 @@ const SlidesElement = ({
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null)
 
-    /* useDragAndDrop(
+     useDragAndDrop(
         slideElementRef, 
         {x: Number(slideElementRef.current?.style.left),
          y: Number(slideElementRef.current?.style.top)   
         },
         console.log
-    ) */
+    )
 
     switch (slideElement.elementType) {
         case "text": 

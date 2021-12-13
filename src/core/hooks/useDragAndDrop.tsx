@@ -13,28 +13,45 @@ export function useDragAndDrop(
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         console.log('mouseDown')
-        if (elementRef.current && elementRef.current.contains(e.target as Node)) {
-            setElementPosition({
-                x: e.clientX,
-                y: e.clientY
-            })        
+        if (elementRef.current) 
+        {
+            window.addEventListener('mouseup', onMouseUp)
+           window.addEventListener('mousemove', onMouseMove)
+
+            if ( elementRef.current.contains(e.target as Node)) {
+                setElementPosition({
+                    x: e.clientX,
+                    y: e.clientY
+                })  
+            }
+                
         }
+      
+        
     }, [elementRef])
 
     const onMouseMove = (e: MouseEvent) => {
         console.log('onMouseMove')
         const newX = e.clientX;
         const newY = e.clientY;
+        console.log(newX, newY)
         setElementPosition({
             x: newX,
             y: newY
         })
+        if (elementRef.current) {
+            elementRef.current.style.left = `${newX}px` 
+            elementRef.current.style.top = `${newY}px`
+        }
     }
 
     const onMouseUp = (e: MouseEvent) => {
+        console.log('onMouseUp')
         const newX = e.clientX;
         const newY = e.clientY;
-        window.removeEventListener('mousemove', onMouseMove)
+        {
+            window.removeEventListener('mousemove', onMouseMove)
+        }
         setElementPosition({
             x: newX,
             y: newY
@@ -46,18 +63,23 @@ export function useDragAndDrop(
     }
 
     useEffect(() => {
-        //window.addEventListener('mousedown', onMouseDown)
-        window.addEventListener('mousemove', onMouseMove)
+        console.log('addEventListener onMouseDown')
+        console.log('addEventListener onMouseMove')
+        
+        
+        //window.addEventListener('mouseup', onMouseUp)
         if (elementRef.current) {
+            elementRef.current.addEventListener('mousedown', onMouseDown)
+
             elementRef.current.style.left = `${elementPosition.x}px` 
             elementRef.current.style.top = `${elementPosition.y}px`
         }
-        window.removeEventListener('mouseup', onMouseUp)
+      
     }, [onMouseDown])
 
     return () => {
         if (elementRef.current) {
-            window.removeEventListener('mousedown', onMouseDown)
+            elementRef.current.removeEventListener('mousedown', onMouseDown)
         }
     }
 }

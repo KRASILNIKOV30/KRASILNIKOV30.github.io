@@ -26,7 +26,7 @@ let editor: Editor = {
                             fillColor: "#ff00ff"
                         }
                     },
-                    {
+                    /* {
                         elementId: "1",
                         elementType: "figure",
                         position: {
@@ -116,13 +116,13 @@ let editor: Editor = {
                             imageType: 'url',
                             ext: '.jpg'
                         }
-                    }
+                    } */
                 ],
                 background: "#FFF2AF",
                 backgroundType: 'Base64',
-                selectedElementsIds: ['3']
+                selectedElementsIds: ['0']
             }, 
-            {
+            /* {
                 slideId: "1",
                 elements: [
                     {
@@ -146,7 +146,7 @@ let editor: Editor = {
                 background: "#000FFF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
-            }
+            } */
         ]
     },
     history: {
