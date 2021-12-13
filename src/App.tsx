@@ -4,20 +4,22 @@ import { changeTitle } from './model/pres';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
 import './App.css';
+import { EditColorWindow } from './toolBar/editColorWindow/EditColorWindow';
 
 type AppProps = {
     editor: Editor;
 }
-
+let isDrawEditColorWindow: boolean = false; 
 function App({ editor }: AppProps) {
     return (
-        <div className="App">
+        <div className="app">
             <ToolBar
                 editor = { editor }
-            />
-            <SlideEditor 
-                slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
-            />
+            />    
+            
+            {/*<SlideEditor 
+               slide = {editor.presentation.slides[Number(editor.currentSlideIds[0])]}
+            />*/}
         </div>
     )
 }

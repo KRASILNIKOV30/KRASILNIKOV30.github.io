@@ -13,6 +13,7 @@ import { addSlide, removeSlides } from "../model/slide";
 
 
 import "./ToolBar.css"
+import { EditColorWindow } from "./editColorWindow/EditColorWindow";
 
 type ToolBarProps = {
     editor: Editor
@@ -20,7 +21,8 @@ type ToolBarProps = {
 
 function ToolBar({ editor }: ToolBarProps) {
     const [rename, setRename] = useState(false);
-
+    const [drawBlock, setDrawBlock] = useState(false)
+    const [kontur, setKontur] = useState(false)
     const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
 
     return (
@@ -110,7 +112,7 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='outline'
                             text='Фон'
-                            onClick={console.log}
+                            onClick={() => setDrawBlock(!drawBlock)}
                         />
                     </div>
                     {
@@ -123,14 +125,14 @@ function ToolBar({ editor }: ToolBarProps) {
                             <Button
                                 style='outline'
                                 text='Заливка фигуры'
-                                onClick={console.log}
+                                onClick={() => setDrawBlock(!drawBlock)}
                             />
                         </div>
                         <div className='outline_button'>
                             <Button
                                 style='outline'
                                 text='Контур фигуры'
-                                onClick={console.log}
+                                onClick={() => setDrawBlock(!drawBlock)}
                             />
                         </div>
                     
@@ -156,7 +158,13 @@ function ToolBar({ editor }: ToolBarProps) {
                 value='1'
                 onClick={console.log}
             />
+            {drawBlock === true &&
+                <EditColorWindow
+                    editor = { editor }
+                />
+            }
         </div>
+        
     )}
 
 export { ToolBar }
