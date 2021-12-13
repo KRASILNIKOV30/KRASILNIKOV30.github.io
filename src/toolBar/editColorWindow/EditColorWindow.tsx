@@ -4,7 +4,8 @@ import { Editor } from "../../model/types"
 import { Button } from "../../common/Button/Button";
 import { Knob } from "../../common/Knob/Knob";
 import { Palette } from "../../common/Palette/Palette";
-import "./EditColorWindow.css"
+import "./EditColorWindow.css";
+import { changeStrokeColor, changeFillColor } from "../../model/element";
 {//import { dispatch } from '.../model/editor';
 
 //import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from ".../model/pres";
@@ -16,9 +17,12 @@ type EditColorWindowProps = {
 }
 
 function EditColorWindow({ editor }: EditColorWindowProps) {
-    const [drawBlock, setDrawBlock] = useState(false);
+    const [visible, setVisible] = useState(true);
+    const [whichBlock, setWhichBlock] = useState(0);
+
+    if (!visible) return null
+
     return (
-        
         <div className='edit_color_window'>
             <div className="frame">
                 <div className="head_text">
@@ -35,35 +39,37 @@ function EditColorWindow({ editor }: EditColorWindowProps) {
                         />
                     </div>
                 </div>
-                {
-                /*<div className="change_value">
-                    <div className="secondary_text">
-                        Изображение
-                    </div>
+                {whichBlock === 1 &&
+                    <div className="change_value">
+                        <div className="secondary_text">
+                            Изображение
+                        </div>
 
-                    <Button
-                        style="outline"
-                        text="Выбрать изображение"
-                        onClick={console.log}
-                    />
-                </div>*/
+                        <Button
+                            style="outline"
+                            text="Выбрать изображение"
+                            onClick={console.log}
+                        />
+                    </div>
                 }
-                <div className="change_value">
-                    <div className="secondary_text">
-                        Толщина
-                    </div>
+                {whichBlock === 0 &&
+                    <div className="change_value">
+                        <div className="secondary_text">
+                            Толщина
+                        </div>
 
-                    <Knob
-                        value="1"
-                        onClick={console.log}
-                    />
-                </div>
+                        <Knob
+                            value="1"
+                            onClick={console.log}
+                        />
+                    </div>
+                }
                 <hr className="hr"/>
                 <div className="ready_button">
                     <Button
                         style="default"
                         text="Готово"
-                        onClick={() => setDrawBlock(!drawBlock)}
+                        onClick={() => setVisible(!visible)}
                     />
                 </div>
             </div>
