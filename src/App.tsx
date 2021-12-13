@@ -1,7 +1,7 @@
 import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
-import { SideBar } from './sideBar/SideBar'
+import { SideBar } from './sideBar/sideBar';    
 import './App.css';
 
 type AppProps = {
@@ -9,7 +9,7 @@ type AppProps = {
 }
 
 function App({ editor }: AppProps) {
-    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
+    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
     return (
         <div className="App">
             <ToolBar

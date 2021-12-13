@@ -3,8 +3,7 @@ import { url } from "inspector"
 type Editor = {
     presentation: Presentation;
     history: History;
-    statePreview: boolean;
-    currentSlideIds: Array<string>
+    statePreview: boolean
 } 
 
 type History = {
@@ -14,7 +13,8 @@ type History = {
 
 type Presentation = {
     title: string;
-    slides: Array<Slide>
+    slides: Array<Slide>;
+    currentSlideIds: Array<string>
 }
 
 type Slide = {

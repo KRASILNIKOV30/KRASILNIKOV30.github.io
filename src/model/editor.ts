@@ -147,14 +147,14 @@ let editor: Editor = {
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
             } */
-        ]
+        ],
+        currentSlideIds: ['0']
     },
     history: {
         undoStack: [],
         redoStack: []
     },
-    statePreview: false,
-    currentSlideIds: ['0']
+    statePreview: false
 };
 
 let editorChangeHandler: Function;

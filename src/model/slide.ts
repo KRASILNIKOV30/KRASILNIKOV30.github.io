@@ -28,17 +28,17 @@ function removeSlides(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     newSlides.forEach(slide => {
-        if(editor.currentSlideIds.includes(slide.slideId) && newSlides.length >= 2) {
+        if(editor.presentation.currentSlideIds.includes(slide.slideId) && newSlides.length >= 2) {
             newSlides.splice(newSlides.indexOf(slide), 1)
         }
     })
     return {
         ...editor,
         history: newHistory,
-        currentSlideIds: [newSlides[0].slideId],
         presentation: {
             ...editor.presentation,
             slides: newSlides,
+            currentSlideIds: [newSlides[0].slideId]
         }
     }
 }
@@ -50,7 +50,10 @@ type SwitchSlideArgs = {
 function switchSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
     return {
         ...editor,
-        currentSlideIds: [slideId]
+        presentation: {
+            ...editor.presentation,
+            currentSlideIds: [slideId]
+        }
     }
 }
 
@@ -59,11 +62,14 @@ type SelectSlideArgs = {
 }
 
 function selectSlide(editor: Editor, { slideId }: SwitchSlideArgs): Editor {
-    const newCurrentSlideIds = editor.currentSlideIds.concat();
+    const newCurrentSlideIds = editor.presentation.currentSlideIds.concat();
     newCurrentSlideIds.push(slideId);
     return {
         ...editor,
-        currentSlideIds: newCurrentSlideIds
+        presentation: {
+            ...editor.presentation,
+            currentSlideIds: [slideId]
+        }
     }
 }
 
@@ -74,7 +80,7 @@ type SetBackgroundArgs = {
 function setBackground(editor: Editor, { background }: SetBackgroundArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.currentSlideIds[0]);
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.presentation.currentSlideIds[0]);
     newSlides[indexSlide].background = background;
     return {
         ...editor,

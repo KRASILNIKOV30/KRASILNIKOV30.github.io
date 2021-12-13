@@ -22,7 +22,7 @@ type ToolBarProps = {
 function ToolBar({ editor }: ToolBarProps) {
     const [rename, setRename] = useState(false);
 
-    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
+    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
     let textSelected = true;
     let figureSelected = true;
     editor.presentation.slides[indexSlide].selectedElementsIds.forEach(id => 
