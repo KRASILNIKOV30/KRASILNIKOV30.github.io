@@ -30,6 +30,17 @@ function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
     }
 }
 
+type ChangeSelectedSlide = {
+    slideId: string
+}
+
+function changeSelectedSlide(editor: Editor, { slideId }: ChangeSelectedSlide): Editor {
+    return {
+        ...editor, 
+        currentSlideIds: [slideId]
+    }
+}
+
 function saveDoc(editor: Editor): Editor {
     return(editor)
 }
@@ -77,4 +88,4 @@ function redo(editor: Editor): Editor {
     return(editor)
 }
 
-export { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo };
+export { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo, changeSelectedSlide };

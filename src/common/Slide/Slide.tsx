@@ -9,7 +9,7 @@ interface SlideViewProps {
 
 export const SlideView = ({
     slideElements,
-    background
+    background,
 }: SlideViewProps) => {
     return (
         <div 
