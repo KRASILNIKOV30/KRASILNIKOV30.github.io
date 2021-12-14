@@ -2,6 +2,9 @@ import './SideBar.css'
 import type { Editor } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
+import { makeClassName } from '../core/functions/makeClassName'
+import { dispatch } from '../model/editor'
+import { changeSelectedSlide } from '../model/presentation'
 
 interface SideBarProps {
     editor: Editor
@@ -11,26 +14,35 @@ const SideBar = ({
     editor
 }: SideBarProps) => {
     const slidesList = editor.presentation.slides.map((slide) => (
-        <li
-            key = {slide.slideId}
-            className = 'scaled-slide'
-        >
-            <SlideView
-                slideElements = {
-                    slide.elements.map((slideElement) =>
-                        <li
-                            key = {slideElement.elementId} 
-                            className = 'slideElement'
-                            onClick = {console.log}
-                        >    
-                            <SlidesElement
-                                slideElement = {slideElement}
-                            />
-                        </li> 
-                    )}
-                background = {slide.background}   
-            />
-        </li>
+        <div className = {makeClassName('sidebar-element', {
+            'selected': editor.currentSlideIds.includes(slide.slideId, 0)
+        })}>
+            <li
+                key = {slide.slideId}
+                className = 'scaled-slide-container'
+            >
+                <div className = {makeClassName('scaled-slide', {
+                        'selected': editor.currentSlideIds.includes(slide.slideId, 0)
+                    })}
+                    onClick = {() => dispatch(changeSelectedSlide, {slideId: slide.slideId})}
+                >
+                    <SlideView
+                        slideElements = {
+                            slide.elements.map((slideElement) =>
+                                <li
+                                    key = {slideElement.elementId} 
+                                    className = 'slideElement'
+                                >    
+                                    <SlidesElement
+                                        slideElement = {slideElement}
+                                    />
+                                </li> 
+                            )}
+                        background = {slide.background}   
+                    />
+                </div>
+            </li>    
+        </div>
     ))
     return (
         <div
