@@ -66,7 +66,7 @@ function EditColorWindow({ mode, onClick, firstSelectedElement }: EditColorWindo
                         </div>
 
                         <Knob
-                            value = {firstSelectedElement.figure.strokeWidth}
+                            value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
                             onClick={(value) => dispatch(changeStrokeWidth, {value})}
                         />
                     </div>

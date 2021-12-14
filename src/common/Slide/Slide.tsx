@@ -1,5 +1,3 @@
-import { JsxClosingElement } from 'typescript';
-import { SlideElement } from '../../model/types';
 import './Slide.css'
 
 interface SlideViewProps {

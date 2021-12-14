@@ -222,8 +222,10 @@ function changeStrokeWidth(editor: Editor, { newWidth }: ChangeStrokeWidthArgs):
             const newElement: SlideElement = {
                 ...newSlides[indexSlide].elements[i],
                 figure: {
-                    ...newSlides[indexSlide].elements[i].figure,
-                    strokeWidth: newWidth
+                    form: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeWidth: newWidth,
+                    fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
                 }
             }
             newSlides[indexSlide].elements.splice(i, 1, newElement)
@@ -299,6 +301,11 @@ function changeFillColor(editor: Editor, { newColor }: ChangeColorArgs): Editor 
             slides: newSlides
         }
     }
+}
+
+
+type DeleteSelectedArgs = {
+    selectedElementsId: Array<string>
 }
 
 function deleteSelected(editor: Editor ): Editor {
