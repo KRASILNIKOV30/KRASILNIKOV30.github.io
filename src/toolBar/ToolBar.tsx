@@ -21,9 +21,9 @@ type ToolBarProps = {
 
 function ToolBar({ editor }: ToolBarProps) {
     const [rename, setRename] = useState(false);
-    const [drawBlock, setDrawBlock] = useState(false)
-    const [kontur, setKontur] = useState(false)
+    const [drawBlock, setDrawBlock] = useState('absent')
     const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.currentSlideIds[0]);
+    console.log('slide = ' + JSON.stringify(editor.presentation.slides[indexSlide].elements[1]))
 
     return (
         <div className='toolbar'>
@@ -112,7 +112,7 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='outline'
                             text='Фон'
-                            onClick={() => setDrawBlock(!drawBlock)}
+                            onClick={() => setDrawBlock('fone')}
                         />
                     </div>
                     {
@@ -125,14 +125,14 @@ function ToolBar({ editor }: ToolBarProps) {
                             <Button
                                 style='outline'
                                 text='Заливка фигуры'
-                                onClick={() => setDrawBlock(!drawBlock)}
+                                onClick={() => setDrawBlock('fillFigure')}
                             />
                         </div>
                         <div className='outline_button'>
                             <Button
                                 style='outline'
                                 text='Контур фигуры'
-                                onClick={() => setDrawBlock(!drawBlock)}
+                                onClick={() => setDrawBlock('strokeFigure')}
                             />
                         </div>
                     
@@ -158,9 +158,10 @@ function ToolBar({ editor }: ToolBarProps) {
                 value='1'
                 onClick={console.log}
             />
-            {drawBlock === true &&
+            {drawBlock !== 'absent' &&
                 <EditColorWindow
-                    editor = { editor }
+                    mode = {drawBlock}
+                    onClick={() => setDrawBlock('absent')}
                 />
             }
         </div>

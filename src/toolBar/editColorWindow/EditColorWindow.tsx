@@ -6,40 +6,45 @@ import { Knob } from "../../common/Knob/Knob";
 import { Palette } from "../../common/Palette/Palette";
 import "./EditColorWindow.css";
 import { changeStrokeColor, changeFillColor } from "../../model/element";
-{//import { dispatch } from '.../model/editor';
+import { dispatch } from '../../model/editor';
 
-//import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from ".../model/pres";
-//import { addSlide, removeSlides } from ".../model/slide";
+interface EditColorWindowProps {
+    mode: string,
+    onClick: () => void
 }
 
-type EditColorWindowProps = {
-    editor: Editor
-}
-
-function EditColorWindow({ editor }: EditColorWindowProps) {
-    const [visible, setVisible] = useState(true);
-    const [whichBlock, setWhichBlock] = useState(0);
-
-    if (!visible) return null
-
+function EditColorWindow({ mode, onClick }: EditColorWindowProps) {
+    const [selectedColor, setSelectedColor] = useState('')
     return (
         <div className='edit_color_window'>
             <div className="frame">
-                <div className="head_text">
-                     Фон
-                </div>
+                {mode === 'fone' &&
+                    <div className="head_text">
+                        Фон
+                    </div>
+                }
+                {mode === 'fillFigure' &&
+                    <div className="head_text">
+                        Заливка
+                    </div>
+                }
+                {mode === 'strokeFigure' &&
+                    <div className="head_text">
+                        Контур
+                    </div>
+                }
                 <hr className="hr"/>
                 <div className="palette_block">
                     <div className="secondary_text">
                         Цвет
                     </div>
                     <div>
-                        <Palette
-                            selectedPaletteElementId=""
+                        <Palette 
+                            sendValue = {(colorValue) => setSelectedColor(colorValue)}
                         />
                     </div>
                 </div>
-                {whichBlock === 1 &&
+                {mode === 'fone' &&
                     <div className="change_value">
                         <div className="secondary_text">
                             Изображение
@@ -52,7 +57,7 @@ function EditColorWindow({ editor }: EditColorWindowProps) {
                         />
                     </div>
                 }
-                {whichBlock === 0 &&
+                {mode === 'strokeFigure' &&
                     <div className="change_value">
                         <div className="secondary_text">
                             Толщина
@@ -69,7 +74,13 @@ function EditColorWindow({ editor }: EditColorWindowProps) {
                     <Button
                         style="default"
                         text="Готово"
-                        onClick={() => setVisible(!visible)}
+                        onClick={() => {
+                            dispatch(changeFillColor, { 
+                                newColor: selectedColor,
+                                selectedElementsId: ['1']
+                            });
+                            onClick()
+                        }}
                     />
                 </div>
             </div>
