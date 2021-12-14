@@ -1,10 +1,10 @@
 import './SlideEditor.css';
 import { SlidesElement } from "../common/SlidesElement/SlidesElement";
-import type { Slide, SlideElement } from '../model/types'
+import type { Slide } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
 
 type SlideBarProps = {
-        slide: Slide
+    slide: Slide
 }
 
 function SlideEditor({

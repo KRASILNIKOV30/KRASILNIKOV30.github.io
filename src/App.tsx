@@ -11,7 +11,7 @@ type AppProps = {
 function App({ editor }: AppProps) {
     const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
     return (
-        <div className="App">
+        <div className="app">
             <ToolBar
                 editor = { editor }
             />
@@ -23,7 +23,6 @@ function App({ editor }: AppProps) {
                     slide = {editor.presentation.slides[indexSlide]}
                 />
             </div>
-            
         </div>
     )
 }

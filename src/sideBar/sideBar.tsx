@@ -4,7 +4,7 @@ import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
 import { makeClassName } from '../core/functions/makeClassName'
 import { dispatch } from '../model/editor'
-import { changeSelectedSlide } from '../model/presentation'
+import { switchSlide } from '../model/slide'
 
 interface SideBarProps {
     editor: Editor
@@ -15,16 +15,16 @@ const SideBar = ({
 }: SideBarProps) => {
     const slidesList = editor.presentation.slides.map((slide) => (
         <div className = {makeClassName('sidebar-element', {
-            'selected': editor.currentSlideIds.includes(slide.slideId, 0)
+            'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
         })}>
             <li
                 key = {slide.slideId}
                 className = 'scaled-slide-container'
             >
                 <div className = {makeClassName('scaled-slide', {
-                        'selected': editor.currentSlideIds.includes(slide.slideId, 0)
+                        'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
                     })}
-                    onClick = {() => dispatch(changeSelectedSlide, {slideId: slide.slideId})}
+                    onClick = {() => dispatch(switchSlide, {slideId: slide.slideId})}
                 >
                     <SlideView
                         slideElements = {
@@ -32,7 +32,7 @@ const SideBar = ({
                                 <li
                                     key = {slideElement.elementId} 
                                     className = 'slideElement'
-                                >    
+                                > 
                                     <SlidesElement
                                         slideElement = {slideElement}
                                     />

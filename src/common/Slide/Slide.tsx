@@ -11,7 +11,7 @@ export const SlideView = ({
 }: SlideViewProps) => {
     return (
         <div 
-            className="slide"
+            className = "slide"
             style = {{"background": background}}
         >
             <ul>{slideElements}</ul>                

@@ -11,26 +11,26 @@ import { dispatch } from '../../model/editor';
 
 interface EditColorWindowProps {
     firstSelectedElement: SlideElement
-    mode: string,
+    drawMode: string,
     onClick: () => void
 }
 
-function EditColorWindow({ mode, onClick, firstSelectedElement }: EditColorWindowProps) {
+function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
     return (
         <div className='edit_color_window'>
             <div className="frame">
-                {mode === 'backgroundSlide' &&
+                {drawMode === 'backgroundSlide' &&
                     <div className="head_text">
                         Фон
                     </div>
                 }
-                {mode === 'fillFigure' &&
+                {drawMode === 'fillFigure' &&
                     <div className="head_text">
                         Заливка
                     </div>
                 }
-                {mode === 'strokeFigure' &&
+                {drawMode === 'strokeFigure' &&
                     <div className="head_text">
                         Контур
                     </div>
@@ -46,7 +46,7 @@ function EditColorWindow({ mode, onClick, firstSelectedElement }: EditColorWindo
                         />
                     </div>
                 </div>
-                {mode === 'fone' &&
+                {drawMode === 'fone' &&
                     <div className="change_value">
                         <div className="secondary_text">
                             Изображение
@@ -59,7 +59,7 @@ function EditColorWindow({ mode, onClick, firstSelectedElement }: EditColorWindo
                         />
                     </div>
                 }
-                {mode === 'strokeFigure' &&
+                {drawMode === 'strokeFigure' &&
                     <div className="change_value">
                         <div className="secondary_text">
                             Толщина
@@ -77,9 +77,9 @@ function EditColorWindow({ mode, onClick, firstSelectedElement }: EditColorWindo
                         style="default"
                         text="Готово"
                         onClick={() => {
-                            switch(mode) {
+                            switch(drawMode) {
                             case 'backgroundSlide':
-                                dispatch(setBackground, { newColor: selectedColor });
+                                dispatch(setBackground, { background: selectedColor });
                                 break
                             case 'fillFigure':
                                 dispatch(changeFillColor, { newColor: selectedColor });

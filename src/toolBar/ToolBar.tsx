@@ -44,7 +44,6 @@ function ToolBar({ editor }: ToolBarProps) {
     const firstSelectedElement: SlideElement = editor.presentation.slides[indexSlide].elements.
         find(element => element.elementId === 
             editor.presentation.slides[indexSlide].selectedElementsIds[0])!;
-    console.log('slide = ' + JSON.stringify(editor.presentation.slides[indexSlide].elements[1]))
 
     return (
         <div className='toolbar'>
@@ -64,7 +63,7 @@ function ToolBar({ editor }: ToolBarProps) {
                                     }
                                     setRename(false)
                                 }}
-                                placeholder = 'Название презентации'
+                                placeholder = 'Введите название...'
                              />
                             : <p className='name'>{ editor.presentation.title }</p>
 
@@ -141,6 +140,7 @@ function ToolBar({ editor }: ToolBarProps) {
                         textSelected = {textSelected}
                         figureSelected = {figureSelected}
                         firstSelectedElement = {firstSelectedElement}
+                        onClick = {(newMode) => setDrawBlock(newMode)}
                     />
                 </div>
                 <div className='result_buttons_block'>
@@ -164,7 +164,7 @@ function ToolBar({ editor }: ToolBarProps) {
                 drawBlock !== 'absent' &&
                 <EditColorWindow
                     firstSelectedElement = {firstSelectedElement}
-                    mode = {drawBlock}
+                    drawMode = {drawBlock}
                     onClick={() => setDrawBlock('absent')}
                 />
             }
@@ -175,10 +175,11 @@ function ToolBar({ editor }: ToolBarProps) {
 interface OptionalTools {
     textSelected: boolean,
     figureSelected: boolean,
-    firstSelectedElement: SlideElement
+    firstSelectedElement: SlideElement,
+    onClick: (newMode: string) => void
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement }: OptionalTools) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick }: OptionalTools) {
     if (!textSelected && figureSelected){
         return (
             <div className="optional_tools_container">
@@ -186,14 +187,14 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement }: O
                     <Button
                         style = 'outline'
                         text = 'Заливка фигуры'
-                        onClick = {console.log}
+                        onClick = {() => onClick('fillFigure')}
                     />
                 </div>
                 <div className='outline_button'>
                     <Button
                         style='outline'
                         text='Контур фигуры'
-                        onClick={console.log}
+                        onClick = {() => onClick('strokeFigure')}
                     />
                 </div>
             </div>

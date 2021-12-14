@@ -3,7 +3,6 @@
     display: flex;
     flex-direction: column;
     position: relative;
-    z-index: 0;
 }
 
 .top_buttons_block {
@@ -45,7 +44,7 @@
 }
 
 .slidebar_buttons_block {
-    margin-right: 123px;
+    margin-right: 113px;
 }
 
 .slide_editor_buttons_block {
@@ -75,10 +74,12 @@
 }
 
 .rename_container {
+    max-width: 1186px;
     height: 49px;
     display: flex;
     align-items: center;
     padding-top: 10px;
+    overflow: hidden;
 }
 
 .optional_tools_container {
