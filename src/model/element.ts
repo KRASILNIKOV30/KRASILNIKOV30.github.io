@@ -208,6 +208,37 @@ function changeTextProps(editor: Editor, { font, textColor, bgColor, textValue, 
     }
 }
 
+type ChangeStrokeWidthArgs = {
+    newWidth: number
+}
+
+function changeStrokeWidth(editor: Editor, { newWidth }: ChangeStrokeWidthArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
+    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+            const newElement: SlideElement = {
+                ...newSlides[indexSlide].elements[i],
+                figure: {
+                    ...newSlides[indexSlide].elements[i].figure,
+                    strokeWidth: newWidth
+                }
+            }
+            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+    }
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 type ChangeColorArgs = {
     newColor: string
 }
@@ -270,11 +301,6 @@ function changeFillColor(editor: Editor, { newColor }: ChangeColorArgs): Editor 
     }
 }
 
-
-type DeleteSelectedArgs = {
-    selectedElementsId: Array<string>
-}
-
 function deleteSelected(editor: Editor ): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
@@ -296,4 +322,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addObject, changeTextProps }
+export { addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }

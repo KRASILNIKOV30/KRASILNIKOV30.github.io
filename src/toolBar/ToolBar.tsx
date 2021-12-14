@@ -14,6 +14,7 @@ import { changeTextProps } from "../model/element"
 
 
 import "./ToolBar.css"
+import { EditColorWindow } from "./editColorWindow/EditColorWindow";
 
 type ToolBarProps = {
     editor: Editor
@@ -39,6 +40,11 @@ function ToolBar({ editor }: ToolBarProps) {
             }
         }   
     )
+    const [drawBlock, setDrawBlock] = useState('absent')
+    const firstSelectedElement: SlideElement = editor.presentation.slides[indexSlide].elements.
+        find(element => element.elementId === 
+            editor.presentation.slides[indexSlide].selectedElementsIds[0])!;
+    console.log('slide = ' + JSON.stringify(editor.presentation.slides[indexSlide].elements[1]))
 
     return (
         <div className='toolbar'>
@@ -128,14 +134,13 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='outline'
                             text='Фон'
-                            onClick={console.log}
+                            onClick={() => setDrawBlock('backgroundSlide')}
                         />
                     </div>
                     <OptionalTools 
                         textSelected = {textSelected}
                         figureSelected = {figureSelected}
-                        editor = {editor}
-                        indexSlide = {indexSlide}
+                        firstSelectedElement = {firstSelectedElement}
                     />
                 </div>
                 <div className='result_buttons_block'>
@@ -155,17 +160,25 @@ function ToolBar({ editor }: ToolBarProps) {
                     </div>
                 </div>
             </div>
+            {
+                drawBlock !== 'absent' &&
+                <EditColorWindow
+                    firstSelectedElement = {firstSelectedElement}
+                    mode = {drawBlock}
+                    onClick={() => setDrawBlock('absent')}
+                />
+            }
         </div>
+        
     )}
 
 interface OptionalTools {
     textSelected: boolean,
     figureSelected: boolean,
-    editor: Editor,
-    indexSlide: number
+    firstSelectedElement: SlideElement
 }
 
-function OptionalTools({ textSelected, figureSelected, editor, indexSlide }: OptionalTools) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement }: OptionalTools) {
     if (!textSelected && figureSelected){
         return (
             <div className="optional_tools_container">
@@ -187,20 +200,17 @@ function OptionalTools({ textSelected, figureSelected, editor, indexSlide }: Opt
         )
     }
     else if (textSelected && !figureSelected) {
-        const textElement: SlideElement = editor.presentation.slides[indexSlide].elements.
-        find(element => element.elementId === 
-            editor.presentation.slides[indexSlide].selectedElementsIds[0])!;
         return (
             <div className="optional_tools_container">
                 <p>Шрифт</p>
                 <Input
                     style="small"
-                    placeholder={textElement.textProps!.font}
+                    placeholder={firstSelectedElement.textProps!.font}
                     onKeyUp={(value) => dispatch(changeTextProps, { font: value })}
                 /> 
                 <p>Размер шрифта</p>
                 <Knob 
-                    value={textElement.textProps!.fontSize}    
+                    value={firstSelectedElement.textProps!.fontSize}    
                     onClick={(value) => dispatch(changeTextProps, { fontSize: value })}
                 />
             </div>
