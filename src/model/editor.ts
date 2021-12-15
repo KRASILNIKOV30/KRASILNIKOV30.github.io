@@ -26,26 +26,8 @@ let editor: Editor = {
                             fillColor: "#ff00ff"
                         }
                     },
-                    /* {
-                        elementId: "1",
-                        elementType: "figure",
-                        position: {
-                            x: 50,
-                            y: 100
-                        },
-                        size: {
-                            width: 300,
-                            height: 90
-                        },
-                        figure: {
-                            form: "rectangle",
-                            strokeColor: "#d000ff",
-                            strokeWidth: 5,
-                            fillColor: "#ffff00"
-                        }
-                    },
                     {
-                        elementId: "2",
+                        elementId: "1",
                         elementType: "figure",
                         position: {
                             x: 70,
@@ -63,7 +45,7 @@ let editor: Editor = {
                         }
                     },
                     {
-                        elementId: '3',
+                        elementId: '2',
                         elementType: "text",
                         position: {
                             x: 234,
@@ -83,24 +65,6 @@ let editor: Editor = {
                         }
                     },
                     {
-                        elementId: "4",
-                        elementType: "figure",
-                        position: {
-                            x: 564,
-                            y: 455
-                        },
-                        size: {
-                            width: 50,
-                            height: 50
-                        },
-                        figure: {
-                            form: "triangle",
-                            strokeColor: "#00ff2a",
-                            strokeWidth: 0,
-                            fillColor: "#d0ff00"
-                        }
-                    },
-                    {
                         elementId: "5",
                         elementType: "image",
                         position: {
@@ -116,13 +80,13 @@ let editor: Editor = {
                             imageType: 'url',
                             ext: '.jpg'
                         }
-                    } */
+                    }
                 ],
                 background: "#FFF2AF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
             }, 
-            /* {
+            {
                 slideId: "1",
                 elements: [
                     {
@@ -146,7 +110,7 @@ let editor: Editor = {
                 background: "#000FFF",
                 backgroundType: 'Base64',
                 selectedElementsIds: ['0']
-            } */
+            }
         ],
         currentSlideIds: ['0']
     },

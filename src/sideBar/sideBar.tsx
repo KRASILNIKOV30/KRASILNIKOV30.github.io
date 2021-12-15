@@ -4,7 +4,7 @@ import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
 import { makeClassName } from '../core/functions/makeClassName'
 import { dispatch } from '../model/editor'
-import { switchSlide } from '../model/slide'
+import { switchSlide, selectOneSlide, selectManySlide } from '../model/slide'
 
 interface SideBarProps {
     editor: Editor
@@ -13,6 +13,7 @@ interface SideBarProps {
 const SideBar = ({
     editor
 }: SideBarProps) => {
+    console.log('Selected: ' + editor.presentation.currentSlideIds)
     const slidesList = editor.presentation.slides.map((slide) => (
         <div className = {makeClassName('sidebar-element', {
             'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
@@ -24,7 +25,17 @@ const SideBar = ({
                 <div className = {makeClassName('scaled-slide', {
                         'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
                     })}
-                    onClick = {() => dispatch(switchSlide, {slideId: slide.slideId})}
+                    onClick = {(e) => {
+                        if (e.ctrlKey) {
+                            dispatch(selectOneSlide, {slideId: slide.slideId})
+                        }
+                        else if (e.shiftKey) {
+                            dispatch(selectManySlide, {slideId: slide.slideId})
+                        }   
+                        else {
+                            dispatch(switchSlide, {slideId: slide.slideId})
+                        }
+                    }}
                 >
                     <SlideView
                         slideElements = {

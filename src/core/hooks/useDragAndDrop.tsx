@@ -12,7 +12,6 @@ export function useDragAndDrop(
     })
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        console.log('mouseDown')
         if (elementRef.current) 
         {
             window.addEventListener('mouseup', onMouseUp)
@@ -31,10 +30,8 @@ export function useDragAndDrop(
     }, [elementRef])
 
     const onMouseMove = (e: MouseEvent) => {
-        console.log('onMouseMove')
         const newX = e.clientX;
         const newY = e.clientY;
-        console.log(newX, newY)
         setElementPosition({
             x: newX,
             y: newY
@@ -46,7 +43,6 @@ export function useDragAndDrop(
     }
 
     const onMouseUp = (e: MouseEvent) => {
-        console.log('onMouseUp')
         const newX = e.clientX;
         const newY = e.clientY;
         {
@@ -63,8 +59,6 @@ export function useDragAndDrop(
     }
 
     useEffect(() => {
-        console.log('addEventListener onMouseDown')
-        console.log('addEventListener onMouseMove')
         
         
         //window.addEventListener('mouseup', onMouseUp)

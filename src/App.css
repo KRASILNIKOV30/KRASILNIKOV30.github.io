@@ -1,4 +1,4 @@
-.app {
+.app-content {
     display: flex;
     flex-direction: column;
 }
@@ -6,4 +6,15 @@
 .pres-view {
     display: flex;
     margin-top: 10px;
+}
+
+.preview-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.preview-container > .slide-container {
+    width: inherit;
+    height: inherit;
+    background: #202020;
 }

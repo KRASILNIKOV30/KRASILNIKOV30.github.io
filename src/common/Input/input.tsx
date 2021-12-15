@@ -23,10 +23,11 @@ export const Input = ({
                 'style': style
             })}
             placeholder={placeholder}
-            onKeyUp={(event) => {
-                if (event.key === 'Enter') {
-                    onKeyUp(event.currentTarget.value)
-                }}}
+            onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                    onKeyUp(e.currentTarget.value)
+                }
+            }}
         ></input>
     )
 }
