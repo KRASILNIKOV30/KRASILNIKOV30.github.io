@@ -14,10 +14,11 @@
 .sidebar-element {
     width: 270px;
     height: 184px;
+    background-color: #FFF;
 }
 
 .sidebar-element--selected {
-    background-color: #EAFFF3;
+    background-color: rgba(40, 36, 238, 0.1);
 }
 
 .scaled-slide {
@@ -42,7 +43,7 @@
 }
 
 .scaled-slide--selected::before {
-    border-color: #17A656;
+    border-color: #2824EE;
 }
 
 .scaled-slide-container::marker {
@@ -67,12 +68,12 @@
 }
 
 .slide-list::-webkit-scrollbar-track {
-    background-color: lightcoral;
+    background-color: #B2B2B2;
     border-radius: 30px;
 }
 
 .slide-list::-webkit-scrollbar-thumb {
-    background-color: lightseagreen;
+    background-color: #2824EE;
     border-radius: 30px;
 }
 
