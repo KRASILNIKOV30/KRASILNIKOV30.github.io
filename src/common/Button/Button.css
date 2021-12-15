@@ -23,11 +23,11 @@
 .button--style--outline:hover,
 .button--style--default:hover {
     cursor: pointer;
-    color: #184708;
+    color: #2824EE;
 }
 
 .button--style--default:hover {
-    background-color: #EAFFF3;
+    background-color: rgba(40, 36, 238, 0.1);
 }
 
 .button--style--outline {
@@ -35,7 +35,7 @@
 }
 
 .button--style--outline:hover {
-    border-color: #184708;
+    border-color: #2824EE;
 }
 
 .button--style--delete {
@@ -60,15 +60,16 @@
 
 .button--style--undo:hover {
     background: center no-repeat url('./icons/undo-focused.svg');
-    color: #184708;
+    color: #2824EE;
 }
 
 .button--style--undo:hover,
 .button--style--redo:hover,
 .button--style--delete:hover,
 .button--style--sign:hover {
-    background-color: #EAFFF3;
+    background-color: rgba(40, 36, 238, 0.1);
     cursor: pointer;
+    color: #2824EE;
 }
 
 .text_container {

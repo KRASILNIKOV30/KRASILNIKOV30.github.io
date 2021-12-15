@@ -38,17 +38,7 @@
     background: center no-repeat url('./icons/minus.svg');
 }
 
-.minus_value_container:hover {
-    cursor: pointer;
-    background: center no-repeat url('./icons/minus-hover.svg');
-}
-
 .plus_value_container {
     width: 20px;
     background: center no-repeat url('./icons/plus.svg');
-}
-
-.plus_value_container:hover {
-    cursor: pointer;
-    background: center no-repeat url('./icons/plus-hover.svg');
 }

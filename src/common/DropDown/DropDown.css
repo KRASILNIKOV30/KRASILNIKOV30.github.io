@@ -33,8 +33,8 @@
 }
 
 .drop_down--active {
-    border-color: #184708;
-    color: #184708;
+    border-color: #2824EE;
+    color: #2824EE;
 }
 
 .drop_down--text_container::after {
@@ -89,7 +89,7 @@
 
 .option--figure--active, .option--image--active, .option--text:hover {
     background: #EAFFF3;
-    color: #184708;
+    color: #2824EE;
 }
 
 .option--figure--active::after, .option--image--active::after {
