@@ -4,7 +4,7 @@ import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
 import { makeClassName } from '../core/functions/makeClassName'
 import { dispatch } from '../model/editor'
-import { changeSelectedSlide } from '../model/presentation'
+import { switchSlide } from '../model/slide'
 
 interface SideBarProps {
     editor: Editor
@@ -24,7 +24,7 @@ const SideBar = ({
                 <div className = {makeClassName('scaled-slide', {
                         'selected': editor.currentSlideIds.includes(slide.slideId, 0)
                     })}
-                    onClick = {() => dispatch(changeSelectedSlide, {slideId: slide.slideId})}
+                    onClick = {() => dispatch(switchSlide, {slideId: slide.slideId})}
                 >
                     <SlideView
                         slideElements = {

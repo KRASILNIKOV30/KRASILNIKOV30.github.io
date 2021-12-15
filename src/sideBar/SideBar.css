@@ -55,6 +55,25 @@
 
 .slide-list {
     margin-top: 11px;
+    max-height: 813px;
+    scrollbar-width: 10px;
+    overflow-y: auto;
+    width: 320px;
+}
+
+.slide-list::-webkit-scrollbar {
+    width: 10px;
+    height: 500px;
+}
+
+.slide-list::-webkit-scrollbar-track {
+    background-color: lightcoral;
+    border-radius: 30px;
+}
+
+.slide-list::-webkit-scrollbar-thumb {
+    background-color: lightseagreen;
+    border-radius: 30px;
 }
 
 
