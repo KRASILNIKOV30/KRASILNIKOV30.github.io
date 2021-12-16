@@ -12,7 +12,7 @@ type SlideBarProps = {
 function SlideEditor({
         slide 
     }: SlideBarProps) {
-    const slideRef = useRef<HTMLDivElement>(null)    
+    /* const slideRef = useRef<HTMLDivElement>(null)    
     const slideElementRef = useRef<HTMLElement>(null)
     useDragAndDrop(
         slideElementRef, 
@@ -22,7 +22,7 @@ function SlideEditor({
         },
         console.log
     )
-    console.log(slideElementRef.current)       
+    console.log(slideElementRef.current) */       
     const slideElements = slide.elements.map((slideElement) =>
         <li
                     
@@ -31,7 +31,7 @@ function SlideEditor({
             onClick = {console.log}
         >
             <SlidesElement
-                ref = {slideElementRef}
+                /* ref = {slideElementRef} */
                 slideElement = {slideElement}
             />
         </li>
@@ -39,7 +39,7 @@ function SlideEditor({
     return (
         <div 
             className="slide-container"
-            ref = {slideRef}
+            /* ref = {slideRef} */
         >
             <SlideView
                 slideElements = {slideElements}

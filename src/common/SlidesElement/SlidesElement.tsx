@@ -7,25 +7,32 @@ import React, { useState, useRef } from 'react';
 import { dispatch } from '../../model/editor'
 import { changeTextProps, changePosition } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
+import type { Position } from '../../model/types'
 
 interface SlidesElementProps {
-    ref?: React.RefObject<HTMLElement>
     slideElement: SlideElement 
 }
 
 const SlidesElement = ({
     slideElement,
-    ref,
 }: SlidesElementProps) => {
+    const slideElementRef = useRef<HTMLDivElement>(null);
+    const [elementPosition, setElementPosition] = useState({
+        x: slideElement.position.x,
+        y: slideElement.position.y
+    })
+    const position: Position = {
+        x: slideElement.position.x,
+        y: slideElement.position.y
+    }
 
-     /* useDragAndDrop(
-        slideElementRef, 
-        {
-            x: 350,
-            y: Number(slideElementRef.current?.style.top)   
-        },
-        console.log
-    ) */
+    useDragAndDrop({
+        elementRef: slideElementRef, 
+        position,
+        setElementPosition,
+        elementPosition,
+        changeModel: dispatch
+    })
 
     switch (slideElement.elementType) {
         case "text": 
@@ -33,8 +40,8 @@ const SlidesElement = ({
                 <div
                     className = 'slide-element'
                     style = {{
-                        'top': slideElement.position.y,
-                        'left': slideElement.position.x,
+                        'top': elementPosition.y,
+                        'left': elementPosition.x,
                     }}
                 >
                     <Text
@@ -59,11 +66,11 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                    //ref = {slideElementRef}
+                    ref = {slideElementRef}
                     className = 'slide-element'
                     style = {{
-                        'top': slideElement.position.y,
-                        'left': slideElement.position.x
+                        'top': elementPosition.y,
+                        'left': elementPosition.x
                     }}
                 >
                     <Figure
@@ -75,11 +82,11 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                    //ref = {slideElementRef}
+                    ref = {slideElementRef}
                     className = 'slide-element'
                     style = {{
-                        'top': slideElement.position.y,
-                        'left': slideElement.position.x,
+                        'top': elementPosition.y,
+                        'left': elementPosition.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
