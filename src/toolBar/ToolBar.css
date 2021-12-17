@@ -1,5 +1,6 @@
 .toolbar {
-    width: 1440px;
+    width: 99vw;
+    height: 19.53125vh;
     display: flex;
     flex-direction: column;
     position: relative;

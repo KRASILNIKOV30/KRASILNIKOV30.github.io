@@ -18,7 +18,7 @@ function App({ editor }: AppProps) {
                 editor.statePreview ?
                 <div 
                     className='preview-container'
-                    onKeyUp = {(e) => {
+                    onKeyDown = {(e) => {
                         if (e.key === 'Escape') {
                             dispatch(switchPreview, {})
                         }

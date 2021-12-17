@@ -65,7 +65,7 @@ let editor: Editor = {
                         }
                     },
                     {
-                        elementId: "5",
+                        elementId: "3",
                         elementType: "image",
                         position: {
                             x: 530,
@@ -84,7 +84,7 @@ let editor: Editor = {
                 ],
                 background: "#FFF2AF",
                 backgroundType: 'Base64',
-                selectedElementsIds: ['0']
+                selectedElementsIds: ['2']
             }, 
             {
                 slideId: "1",
