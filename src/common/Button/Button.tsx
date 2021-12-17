@@ -2,7 +2,7 @@ import './Button.css';
 import { makeClassName } from '../../core/functions/makeClassName';
 
 interface ButtonProps {
-    style: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'sign',
+    style: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'arrow_down' | 'arrow_up' | 'sign',
     text?: string,
     onClick: () => void
 }
