@@ -2,25 +2,27 @@ import './SlidesElement.css'
 import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
-import { uuid } from 'uuidv4';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition } from '../../model/element'
+import { changeTextProps } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 
 interface SlidesElementProps {
-    slideElement: SlideElement 
+    slideElement: SlideElement,
+    active: boolean
 }
 
 const SlidesElement = ({
     slideElement,
+    active
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null)
 
      useDragAndDrop(
         slideElementRef, 
-        {x: Number(slideElementRef.current?.style.left),
-         y: Number(slideElementRef.current?.style.top)   
+        {
+            x: Number(slideElementRef.current?.style.left),
+            y: Number(slideElementRef.current?.style.top)   
         },
         console.log
     )
@@ -30,12 +32,21 @@ const SlidesElement = ({
             return (
                 <div
                     ref = {slideElementRef}
-                    className = 'slide-element'
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <Text
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
@@ -59,12 +70,21 @@ const SlidesElement = ({
             return (
                 <div
                     ref = {slideElementRef}
-                    className = 'slide-element'
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <Figure
                         figure = {slideElement.figure!}
                         size = {slideElement.size}
@@ -75,7 +95,7 @@ const SlidesElement = ({
             return (
                 <div
                     ref = {slideElementRef}
-                    className = 'slide-element'
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
@@ -83,6 +103,15 @@ const SlidesElement = ({
                         'height': slideElement.size.height
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <img src = {slideElement.image?.urlImage}/>
                 </div>
             )    

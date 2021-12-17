@@ -46,6 +46,7 @@ const SideBar = ({
                                 > 
                                     <SlidesElement
                                         slideElement = {slideElement}
+                                        active = {slide.selectedElementsIds.includes(slideElement.elementId)}
                                     />
                                 </li> 
                             )}
