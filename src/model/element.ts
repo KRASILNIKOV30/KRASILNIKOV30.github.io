@@ -110,8 +110,6 @@ export type ChangePositionArgs = {
 }
 
 export function changePosition(editor: Editor, { newX, newY}: ChangePositionArgs): Editor {
-    console.log('changePosition have called')
-    console.log(newX, newY)
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);

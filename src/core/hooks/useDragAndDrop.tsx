@@ -1,24 +1,44 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
-import { changePosition } from "../../model/element";
-import type { Editor, Position } from '../../model/types'
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import type { Position } from '../../core/types/types'
 
 interface useDragAndDropProps {
     elementRef: React.RefObject<HTMLDivElement>, 
-    position: Position,
-    setElementPosition: React.Dispatch<React.SetStateAction<{ x: number; y: number; }>>,
-    elementPosition: Position,
-    changeModel: Function/* (func: Function, object: object) => void */
+    startObjectPosition: Position,
+    onMouseUpFunction: Function
 }
 
 export function useDragAndDrop({
         elementRef,
-        position, 
-        setElementPosition,
-        elementPosition,
-        changeModel
+        startObjectPosition, 
+        onMouseUpFunction: onMouseUpFunction
 }: useDragAndDropProps) {
-    let startX = 0;
-    let startY = 0;    
+    const [elementPosition, setElementPosition] = useState({
+        x: startObjectPosition.x,
+        y: startObjectPosition.y
+    })
+    const startClientX = useRef(0);
+    const startClientY = useRef(0);    
+
+    const onMouseMove = useCallback((e: MouseEvent) => {
+        const newX = startObjectPosition.x + e.clientX - startClientX.current;
+        const newY = startObjectPosition.y + e.clientY - startClientY.current;
+        setElementPosition({
+            x: newX,
+            y: newY
+        })
+    }, [])
+    
+    const onMouseUp = useCallback((e: MouseEvent) => {
+        const newX = startObjectPosition.x + e.clientX - startClientX.current;
+        const newY = startObjectPosition.y + e.clientY - startClientY.current;
+        window.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('mouseup', onMouseUp)
+        setElementPosition({
+            x: newX,
+            y: newY
+        })
+        onMouseUpFunction({newX, newY})
+    }, [])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         if (elementRef.current) 
@@ -26,32 +46,11 @@ export function useDragAndDrop({
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
             window.removeEventListener('mousedown', onMouseDown)
-            startX = e.clientX;
-            startY = e.clientY;
+            startClientX.current = e.clientX;
+            startClientY.current = e.clientY;
         }    
-    }, [elementRef])
-
-    const onMouseMove = (e: MouseEvent) => {
-        const newX = position.x + e.clientX - startX;
-        const newY = position.y + e.clientY - startY;
-        setElementPosition({
-            x: newX,
-            y: newY
-        })
-    }
-
-    const onMouseUp = (e: MouseEvent) => {
-        const newX = position.x + e.clientX - startX;
-        const newY = position.y + e.clientY - startY;
-        window.removeEventListener('mousemove', onMouseMove)
-        window.removeEventListener('mouseup', onMouseUp)
-        setElementPosition({
-            x: newX,
-            y: newY
-        })
-        changeModel(changePosition, {newX, newY})
-    }
-
+    }, [elementRef, onMouseMove, onMouseUp])
+    
     useEffect(() => {
         if (elementRef.current) {
             elementRef.current.style.left = `${elementPosition.x}px`;

@@ -1,4 +1,4 @@
-import { url } from "inspector"
+import { Size, Position } from '../core/types/types'
 
 type Editor = {
     presentation: Presentation;
@@ -36,16 +36,6 @@ type SlideElement = {
     figure?: FigureType
 }
 
-type Position = {
-    x: number;
-    y: number
-}
-
-type Size = {
-    width: number;
-    height: number
-}
-
 type ImageType = {
     urlImage: string;
     imageType: "url" | "Base64";
@@ -68,4 +58,4 @@ type FigureType = {
     fillColor: string
 }
 
-export type { TextType, SlideElement, Slide, Presentation, History, Editor, FigureType, Size, Position };
+export type { TextType, SlideElement, Slide, Presentation, History, Editor, FigureType};
