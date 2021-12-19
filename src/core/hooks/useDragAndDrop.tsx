@@ -1,62 +1,73 @@
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import type { Position } from '../../core/types/types'
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface useDragAndDropProps {
-    elementRef: React.RefObject<HTMLDivElement>, 
-    startObjectPosition: Position,
+    elementRef: React.RefObject<HTMLDivElement>,
     onMouseUpFunction: Function
 }
 
 export function useDragAndDrop({
         elementRef,
-        startObjectPosition, 
         onMouseUpFunction: onMouseUpFunction
 }: useDragAndDropProps) {
+    const isStartPosDeclared = useRef(false);
+    const startObjectPositionX = useRef<number>(0);
+    const startObjectPositionY = useRef<number>(0);
+
     const [elementPosition, setElementPosition] = useState({
-        x: startObjectPosition.x,
-        y: startObjectPosition.y
+        x: startObjectPositionX.current,
+        y: startObjectPositionY.current
     })
+
     const startClientX = useRef(0);
-    const startClientY = useRef(0);    
+    const startClientY = useRef(0); 
 
     const onMouseMove = useCallback((e: MouseEvent) => {
-        const newX = startObjectPosition.x + e.clientX - startClientX.current;
-        const newY = startObjectPosition.y + e.clientY - startClientY.current;
-        setElementPosition({
-            x: newX,
-            y: newY
-        })
+        if (isStartPosDeclared.current) {
+            let newX = startObjectPositionX.current + e.clientX - startClientX.current;
+            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
+            setElementPosition({
+                x: newX,
+                y: newY
+            })
+        }
     }, [])
     
     const onMouseUp = useCallback((e: MouseEvent) => {
-        const newX = startObjectPosition.x + e.clientX - startClientX.current;
-        const newY = startObjectPosition.y + e.clientY - startClientY.current;
-        window.removeEventListener('mousemove', onMouseMove)
-        window.removeEventListener('mouseup', onMouseUp)
-        setElementPosition({
-            x: newX,
-            y: newY
-        })
-        onMouseUpFunction({newX, newY})
+        if (isStartPosDeclared.current) {
+            let newX = startObjectPositionX.current + e.clientX - startClientX.current;
+            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
+            window.removeEventListener('mousemove', onMouseMove)
+            window.removeEventListener('mouseup', onMouseUp)
+            setElementPosition({
+                x: newX,
+                y: newY
+            })
+            onMouseUpFunction({newX, newY})
+               
+        }
     }, [])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current) 
-        {
+        if (elementRef.current) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mousedown', onMouseDown)
+            window.removeEventListener('mousedown', onMouseDown);
+            const strX = elementRef.current?.style.left;
+            const strY = elementRef.current?.style.top;
+            startObjectPositionX.current = Number(strX?.substring(0, strX.length - 2));
+            startObjectPositionY.current = Number(strY?.substring(0, strY.length - 2));
+            isStartPosDeclared.current = true
             startClientX.current = e.clientX;
             startClientY.current = e.clientY;
         }    
     }, [elementRef, onMouseMove, onMouseUp])
     
     useEffect(() => {
-        if (elementRef.current) {
+        if (elementRef.current && isStartPosDeclared.current) {
             elementRef.current.style.left = `${elementPosition.x}px`;
             elementRef.current.style.top = `${elementPosition.y}px`
         } 
-    }, [elementPosition])
+    }, [elementPosition, setElementPosition])
 
     useEffect(() => {
         if (elementRef.current) {

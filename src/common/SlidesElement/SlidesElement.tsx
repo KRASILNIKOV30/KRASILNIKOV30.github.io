@@ -16,15 +16,9 @@ const SlidesElement = ({
     slideElement,
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
-    
-    const startObjectPosition: Position = {
-        x: slideElement.position.x,
-        y: slideElement.position.y
-    }
 
     useDragAndDrop({
         elementRef: slideElementRef, 
-        startObjectPosition,
         onMouseUpFunction: (Coordinates: Position) => dispatch(changePosition, Coordinates)
     })
 
