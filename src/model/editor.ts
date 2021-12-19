@@ -1,4 +1,4 @@
-import { url } from "inspector";
+import { deepClone } from "../core/functions/deepClone";
 import { Editor } from "./types"
 
 let editor: Editor = {
@@ -145,4 +145,27 @@ function dispatch(modifyFn: Function, payload: object) {
     }
 }
 
-export { dispatch, getEditor, addEditorChangeHandler };
+function uploadDoc() {
+    const inputFile = document.createElement('input')
+    inputFile.type = 'file';
+    inputFile.style.display = 'none';
+    inputFile.accept = 'application/json';
+    inputFile.onchange = () => {
+        if (inputFile.files) {
+            const fileEditor = inputFile.files[0];
+            const reader = new FileReader();
+            reader.readAsText(fileEditor);
+            reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                    const newEditor = deepClone(JSON.parse(reader.result)) as Editor;
+                    setEditor(newEditor);
+                    editorChangeHandler()
+                }
+            };
+        }
+    }
+    inputFile.click();
+    inputFile.remove();
+}
+
+export { dispatch, getEditor, addEditorChangeHandler, uploadDoc };

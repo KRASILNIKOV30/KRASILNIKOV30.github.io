@@ -1,5 +1,5 @@
 import type { Editor, History, Presentation } from './types';
-import { deepClone } from '../core/functions/deepClone';
+import { deepClone } from '../core/functions/deepClone'
 
 export function addActionToHistory(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
@@ -31,11 +31,19 @@ function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
 }
 
 function saveDoc(editor: Editor): Editor {
-    return(editor)
-}
-
-function uploadDoc(editor: Editor): Editor {
-    return(editor)
+    const stringEditor = JSON.stringify(editor);
+    const fileEditor = new Blob(
+        [stringEditor], {
+            type: 'application/json'
+        }
+    )
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(fileEditor)
+    link.download = 'Presentation.json';
+    link.style.display = 'none';
+    link.click();
+    link.remove();
+    return (editor)
 }
 
 function exportDoc(editor: Editor): Editor {
@@ -77,4 +85,4 @@ function redo(editor: Editor): Editor {
     return(editor)
 }
 
-export { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo };
+export { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo };

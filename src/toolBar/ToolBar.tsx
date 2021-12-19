@@ -6,9 +6,9 @@ import { Knob } from "../common/Knob/Knob"
 import { Input } from "../common/Input/input" 
 
 import { Editor, SlideElement } from "../model/types"
-import { dispatch } from '../model/editor';
+import { dispatch, uploadDoc } from '../model/editor';
 
-import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../model/presentation";
+import { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo } from "../model/presentation";
 import { addSlide, removeSlides, switchSlidePositions } from "../model/slide";
 import { changeTextProps } from "../model/element"
 
@@ -81,7 +81,7 @@ function ToolBar({ editor }: ToolBarProps) {
                             <Button 
                                 style='outline' 
                                 text='Загрузить' 
-                                onClick={() => dispatch(uploadDoc, {})}
+                                onClick={() => uploadDoc()}
                             />
                         </div>
                         <div className='outline_button'>
