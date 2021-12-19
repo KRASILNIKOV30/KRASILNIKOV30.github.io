@@ -19,6 +19,7 @@ function SlideEditor({
         >
             <SlidesElement
                 slideElement = {slideElement}
+                active = {slide.selectedElementsIds.includes(slideElement.elementId)}
             />
         </li>
     )    
@@ -34,4 +35,4 @@ function SlideEditor({
     )
 }
 
-export { SlideEditor, SlidesElement }
+export { SlideEditor, SlidesElement}

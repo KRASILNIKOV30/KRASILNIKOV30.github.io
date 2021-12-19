@@ -9,7 +9,7 @@ import { Editor, SlideElement } from "../model/types"
 import { dispatch } from '../model/editor';
 
 import { changeTitle, saveDoc, uploadDoc, exportDoc, switchPreview, undo, redo } from "../model/presentation";
-import { addSlide, removeSlides } from "../model/slide";
+import { addSlide, removeSlides, switchSlidePositions } from "../model/slide";
 import { changeTextProps } from "../model/element"
 
 
@@ -106,21 +106,30 @@ function ToolBar({ editor }: ToolBarProps) {
                     <div className='icon_button'>
                         <Button
                             style='delete'
-                            text=''
                             onClick={() => dispatch(removeSlides, {})}
                         />
                     </div>
                     <div className='icon_button'>
                         <Button
+                            style='arrow_down'
+                            onClick={() => dispatch(switchSlidePositions, { orderShift: 1 })}
+                        />
+                    </div>
+                    <div className='icon_button'>
+                        <Button
+                            style='arrow_up'
+                            onClick={() => dispatch(switchSlidePositions, { orderShift: -1 })}
+                        />
+                    </div>
+                    <div className='icon_button'>
+                        <Button
                             style='undo'
-                            text=''
                             onClick={() => dispatch(undo, {})}
                         />
                     </div>
                     <div className='icon_button'>
                         <Button
                             style='redo'
-                            text=''
                             onClick={() => dispatch(redo, {})}
                         />
                     </div>

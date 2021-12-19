@@ -93,21 +93,40 @@ type SwitchSlideOrderArgs = {
 function switchSlidePositions(editor: Editor, { orderShift }: SwitchSlideOrderArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.presentation.currentSlideIds[0]);
-    if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
-        const tempSlide: Slide = newSlides[indexSlide + orderShift];
-    newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
-    newSlides.splice(indexSlide, 1, tempSlide);
+    if(orderShift > 0) {
+        for (let i = editor.presentation.currentSlideIds.length - 1; i >= 0; i--) {
+            const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[i]);
+            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+                const tempSlide: Slide = newSlides[indexSlide + orderShift];
+                newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
+                newSlides.splice(indexSlide, 1, tempSlide);
+            }
+            else {
+                return editor
+            }
+        }
+    }
+    else {
+        for (let i = 0; i < editor.presentation.currentSlideIds.length; i++) {
+            const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[i]);
+            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+                const tempSlide: Slide = newSlides[indexSlide + orderShift];
+                newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
+                newSlides.splice(indexSlide, 1, tempSlide);
+            }
+            else {
+                return editor
+            }
+        }
+    }
     return {
-        ...editor,
+         ...editor,
         history: newHistory,
         presentation: {
             ...editor.presentation,
             slides: newSlides
         }
-    }
-    }
-    else {return {...editor}}
+    }   
 }
 
 
@@ -116,18 +135,21 @@ type SetBackgroundArgs = {
 }
 
 function setBackground(editor: Editor, { background }: SetBackgroundArgs): Editor {
-    const newHistory: History = addActionToHistory(editor);
-    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.presentation.currentSlideIds[0]);
-    newSlides[indexSlide].background = background;
-    return {
-        ...editor,
-        history: newHistory,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
+    if (background !== '') {
+        const newHistory: History = addActionToHistory(editor);
+        const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+        const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.presentation.currentSlideIds[0]);
+        newSlides[indexSlide].background = background;
+        return {
+            ...editor,
+            history: newHistory,
+            presentation: {
+                ...editor.presentation,
+                slides: newSlides
+            }
         }
     }
+    else { return editor }
 }
 
-export { addSlide, removeSlides, switchSlide, setBackground, selectOneSlide, selectManySlide }
+export { addSlide, removeSlides, switchSlide, setBackground, selectOneSlide, selectManySlide, switchSlidePositions }

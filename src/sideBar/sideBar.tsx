@@ -14,9 +14,7 @@ const SideBar = ({
     editor
 }: SideBarProps) => {
     const slidesList = editor.presentation.slides.map((slide) => (
-        <div className = {makeClassName('sidebar-element', {
-            'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
-        })}>
+        <div className = 'sidebar-element'>
             <li
                 key = {slide.slideId}
                 className = 'scaled-slide-container'
@@ -45,6 +43,7 @@ const SideBar = ({
                                 > 
                                     <SlidesElement
                                         slideElement = {slideElement}
+                                        active = {false}
                                     />
                                 </li> 
                             )}

@@ -1,3 +1,8 @@
+.app {
+    width: 99vw;
+    height: 99vh;
+}
+
 .app-content {
     display: flex;
     flex-direction: column;
@@ -8,13 +13,15 @@
     margin-top: 10px;
 }
 
-.preview-container {
-    width: 100vw;
-    height: 100vh;
+.preview-container,
+.app-content {
+    width: inherit;
+    height: inherit;
 }
 
-.preview-container > .slide-container {
+.preview-container {
     width: inherit;
     height: inherit;
     background: #202020;
+    z-index: -1;
 }

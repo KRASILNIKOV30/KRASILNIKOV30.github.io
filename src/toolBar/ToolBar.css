@@ -1,5 +1,5 @@
 .toolbar {
-    width: 1440px;
+    width: auto;
     display: flex;
     flex-direction: column;
     position: relative;
@@ -37,14 +37,15 @@
 }
 
 .bottom_buttons_block {
+    width: auto;
     margin-top: 14px;
-    margin-left: 34px;
+    margin-left: 0.5vw;
     display: flex;
     flex-direction: row;
 }
 
 .slidebar_buttons_block {
-    margin-right: 113px;
+    margin-right: 8vw;
 }
 
 .slide_editor_buttons_block {
@@ -52,7 +53,7 @@
 }
 
 .result_buttons_block {
-    right: 50px;
+    right: 0;
     position: absolute;
 }
 

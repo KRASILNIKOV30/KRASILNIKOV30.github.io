@@ -10,8 +10,8 @@ const Circle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width + (2*figure.strokeWidth)
-    const height: number = size.height + (2*figure.strokeWidth) 
+    const width: number = size.width
+    const height: number = size.height
     return (
         <div>
             <svg
@@ -37,8 +37,8 @@ const Rectangle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width + (2*figure.strokeWidth)
-    const height: number = size.height + (2*figure.strokeWidth)
+    const width: number = size.width
+    const height: number = size.height
     return (
         <div>
             <svg
@@ -64,8 +64,8 @@ const Triangle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width + (2*figure.strokeWidth)
-    const height: number = size.height + (2*figure.strokeWidth)
+    const width: number = size.width
+    const height: number = size.height 
     const points: string = String(figure.strokeWidth) + ', ' + String(height-figure.strokeWidth) + ' ' + String(width/2) + ',' + String(figure.strokeWidth) + ' ' + String(width-figure.strokeWidth) + ',' + String(height-figure.strokeWidth)
     return (
         <div>

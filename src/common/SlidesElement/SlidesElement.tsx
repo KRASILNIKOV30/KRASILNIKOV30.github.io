@@ -9,11 +9,13 @@ import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 import type { Position } from '../../core/types/types'
 
 interface SlidesElementProps {
-    slideElement: SlideElement 
+    slideElement: SlideElement,
+    active: boolean
 }
 
 const SlidesElement = ({
     slideElement,
+    active
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
 
@@ -26,12 +28,22 @@ const SlidesElement = ({
         case "text": 
             return (
                 <div
-                    className = 'slide-element'
+                    ref = {active ? slideElementRef : null}
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <Text
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
@@ -54,13 +66,22 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                    ref = {slideElementRef}
-                    className = 'slide-element'
+                ref = {active ? slideElementRef : null}
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <Figure
                         figure = {slideElement.figure!}
                         size = {slideElement.size}
@@ -70,8 +91,8 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                    ref = {slideElementRef}
-                    className = 'slide-element'
+                ref = {active ? slideElementRef : null}
+                    className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
@@ -79,6 +100,15 @@ const SlidesElement = ({
                         'height': slideElement.size.height
                     }}
                 >
+                    {
+                        active &&
+                        <div className = 'points_container'>
+                            <div className="point point-top_left"></div>
+                            <div className="point point-top_right"></div>
+                            <div className="point point-bottom_left"></div>
+                            <div className="point point-bottom_right"></div>
+                        </div>
+                    }
                     <img src = {slideElement.image?.urlImage}/>
                 </div>
             )    

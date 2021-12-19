@@ -5,6 +5,8 @@ import { SideBar } from './sideBar/SideBar';
 import './App.css';
 import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';
+import { SlideView } from './common/Slide/Slide';
+import { SlidesElement } from './common/SlidesElement/SlidesElement'
 
 type AppProps = {
     editor: Editor;
@@ -12,21 +14,45 @@ type AppProps = {
 
 function App({ editor }: AppProps) {
     const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    const slidesList = editor.presentation.slides.map((slide) => (
+        <div>
+            <li
+                key = {slide.slideId}
+            >
+                <div>
+                    <SlideView
+                        slideElements = {
+                            slide.elements.map((slideElement) =>
+                                <li
+                                    key = {slideElement.elementId} 
+                                > 
+                                    <SlidesElement
+                                        slideElement = {slideElement}
+                                        active = {false}
+                                    />
+                                </li> 
+                            )}
+                        background = {slide.background}   
+                    />
+                </div>
+            </li>    
+        </div>
+    ))
     return (
         <div className="app">
             {
                 editor.statePreview ?
                 <div 
                     className='preview-container'
-                    onKeyUp = {(e) => {
+                    onKeyDown = {(e) => {
                         if (e.key === 'Escape') {
                             dispatch(switchPreview, {})
                         }
                     }}
                 > 
-                    <SlideEditor 
-                        slide = {editor.presentation.slides[indexSlide]}
-                    />
+                    <div>
+                        {slidesList[indexSlide]}
+                    </div>    
                 </div>
                 :
                 <div className='app-content'>
