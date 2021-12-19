@@ -46,7 +46,7 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                         />
                     </div>
                 </div>
-                {drawMode === 'fone' &&
+                {drawMode === 'backgroundSlide' &&
                     <div className="change_value">
                         <div className="secondary_text">
                             Изображение
@@ -55,7 +55,22 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                         <Button
                             style="outline"
                             text="Выбрать изображение"
-                            onClick={console.log}
+                            onClick={() => {
+                                const inputFile = document.createElement('input');
+                                inputFile.type = 'file';
+                                inputFile.style.display = 'none';
+                                inputFile.accept = 'image/*';
+                                inputFile.onchange = () => {
+                                    if (inputFile.files) {
+                                        const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        dispatch(setBackground, { background: urlImage });
+                                    }
+                                   
+                                }
+                                inputFile.click();
+                                inputFile.remove();
+                                onClick()
+                            }}
                         />
                     </div>
                 }
@@ -67,7 +82,7 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
 
                         <Knob
                             value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
-                            onClick={(value) => dispatch(changeStrokeWidth, {value})}
+                            onClick={(value) => dispatch(changeStrokeWidth, { newWidth: value })}
                         />
                     </div>
                 }

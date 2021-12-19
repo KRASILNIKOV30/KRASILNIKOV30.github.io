@@ -75,15 +75,10 @@ let editor: Editor = {
                             width: 100,
                             height: 100
                         },
-                        image: {
-                            urlImage: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
-                            imageType: 'url',
-                            ext: '.jpg'
-                        }
+                        image: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
                     }
                 ],
                 background: "#FFF2AF",
-                backgroundType: 'Base64',
                 selectedElementsIds: ['1']
             }, 
             {
@@ -100,15 +95,10 @@ let editor: Editor = {
                             width: 450,
                             height: 59
                         },
-                        image: {
-                            urlImage: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
-                            imageType: "url",
-                            ext: 'jpg'
-                        }
+                        image: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
                     }
                 ],
                 background: "#532232",
-                backgroundType: 'Base64',
                 selectedElementsIds: ['0']
             }
         ],

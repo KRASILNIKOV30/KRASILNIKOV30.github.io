@@ -10,7 +10,6 @@ function addSlide(editor: Editor): Editor {
         slideId: v4(),
         elements: [],
         background: "white",
-        backgroundType: "Base64",
         selectedElementsIds: []
     });
 

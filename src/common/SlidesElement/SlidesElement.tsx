@@ -109,7 +109,7 @@ const SlidesElement = ({
                             <div className="point point-bottom_right"></div>
                         </div>
                     }
-                    <img src = {slideElement.image?.urlImage}/>
+                    <img src = {slideElement.image}/>
                 </div>
             )    
     }

@@ -2,7 +2,7 @@ import './DropDown.css';
 import { makeClassName } from '../../core/functions/makeClassName';
 import { useState, useRef } from 'react';
 import { Button } from '../Button/Button';
-import { addObject } from '../../model/element';
+import { addObject, addImage } from '../../model/element';
 import { dispatch } from '../../model/editor';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
 
@@ -134,7 +134,19 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                             style = 'default'
                             text = 'С компьютера'
                             onClick = {() => {
-                                dispatch(addObject, { element: 'image' })
+                                const inputFile = document.createElement('input');
+                                inputFile.type = 'file';
+                                inputFile.style.display = 'none';
+                                inputFile.accept = 'image/*';
+                                inputFile.onchange = () => {
+                                    if (inputFile.files) {
+                                        const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        dispatch(addImage, { urlImage: urlImage })
+                                    }
+                                   
+                                }
+                                inputFile.click();
+                                inputFile.remove();
                                 onClick()
                             }}
                         />

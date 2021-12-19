@@ -22,14 +22,14 @@ function SlideEditor({
                 active = {slide.selectedElementsIds.includes(slideElement.elementId)}
             />
         </li>
-    )    
+    )
     return (
         <div 
             className="slide-container"
         >
             <SlideView
                 slideElements = {slideElements}
-                background = {slide.background}
+                background = {slide.background} 
             />
         </div>
     )

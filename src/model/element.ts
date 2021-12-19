@@ -11,7 +11,7 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
-    const NewEl: SlideElement = {
+    const newEl: SlideElement = {
         elementId: v4(),
         elementType: 'figure',
         position: {
@@ -25,7 +25,7 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
     }
     switch(element) {
         case 'rectangle': {
-            NewEl.figure = {
+            newEl.figure = {
                 form: 'rectangle',
                 strokeWidth: 1,
                 strokeColor: 'black',
@@ -34,7 +34,7 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
             break;
         }
         case 'triangle': {
-            NewEl.figure = {
+            newEl.figure = {
                 form: 'triangle',
                 strokeWidth: 1,
                 strokeColor: 'black',
@@ -43,7 +43,7 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
             break;
         }
         case 'circle': {
-            NewEl.figure = {
+            newEl.figure = {
                 form: 'circle',
                 strokeWidth: 1,
                 strokeColor: 'black',
@@ -51,18 +51,9 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
             }
             break;
         }
-        case 'image': {
-            NewEl.elementType = 'image';
-            NewEl.image = {
-                urlImage: 'ToDo',
-                imageType: 'Base64',
-                ext: 'png'
-            }
-            break;
-        }
         case 'text': {
-            NewEl.elementType = 'text';
-            NewEl.textProps = {
+            newEl.elementType = 'text';
+            newEl.textProps = {
                 font: 'Arial',
                 textColor: 'black',
                 bgColor: null,
@@ -73,7 +64,39 @@ function addObject(editor: Editor, { element }: AddObjectArgs): Editor {
             break;
         }
     }
-    newSlides[indexSlide].elements.push(NewEl);
+    newSlides[indexSlide].elements.push(newEl);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
+type addImageArgs = {
+    urlImage: string
+}
+
+function addImage(editor: Editor, { urlImage }: addImageArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    const newEl: SlideElement = {
+        elementId: v4(),
+        elementType: 'image',
+        position: {
+            x: 400,
+            y: 400
+        },
+        size: {
+            width: 100,
+            height: 100
+        },
+        image: urlImage
+    } 
+    newSlides[indexSlide].elements.push(newEl);
     return {
         ...editor,
         history: newHistory,
@@ -246,61 +269,67 @@ type ChangeColorArgs = {
 }
 
 function changeStrokeColor(editor: Editor, { newColor }: ChangeColorArgs): Editor {
-    const newHistory: History = addActionToHistory(editor);
-    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
-    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
-        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
-            const newElement: SlideElement = {
-                ...newSlides[indexSlide].elements[i],
-                figure: {
-                    form: newSlides[indexSlide].elements[i].figure!.form,
-                    strokeColor: newColor,
-                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
-                    fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
+    if (newColor) {
+        const newHistory: History = addActionToHistory(editor);
+        const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+        const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+        const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
+        for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+            if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+                const newElement: SlideElement = {
+                    ...newSlides[indexSlide].elements[i],
+                    figure: {
+                        form: newSlides[indexSlide].elements[i].figure!.form,
+                        strokeColor: newColor,
+                        strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
+                        fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
+                    }
                 }
+                newSlides[indexSlide].elements.splice(i, 1, newElement)
             }
-            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+        return {
+            ...editor,
+            history: newHistory,
+            presentation: {
+                ...editor.presentation,
+                slides: newSlides
+            }
         }
     }
-    return {
-        ...editor,
-        history: newHistory,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
-        }
-    }
+    else {return editor}
 }
 
 function changeFillColor(editor: Editor, { newColor }: ChangeColorArgs): Editor {
-    const newHistory: History = addActionToHistory(editor);
-    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
-    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
-    const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
-    for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
-        if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
-            const newElement: SlideElement = {
-                ...newSlides[indexSlide].elements[i],
-                figure: {
-                    form: newSlides[indexSlide].elements[i].figure!.form,
-                    strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
-                    strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
-                    fillColor: newColor
+    if (newColor) {
+        const newHistory: History = addActionToHistory(editor);
+        const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+        const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+        const selectedElementsId: Array<string> = editor.presentation.slides[indexSlide].selectedElementsIds.concat();
+        for (let i = 0; i < newSlides[indexSlide].elements.length; i++) {
+            if (selectedElementsId.includes(newSlides[indexSlide].elements[i].elementId) && (newSlides[indexSlide].elements[i].elementType == "figure") && (newSlides[indexSlide].elements[i].figure != undefined)) {
+                const newElement: SlideElement = {
+                    ...newSlides[indexSlide].elements[i],
+                    figure: {
+                        form: newSlides[indexSlide].elements[i].figure!.form,
+                        strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
+                        strokeWidth: newSlides[indexSlide].elements[i].figure!.strokeWidth,
+                        fillColor: newColor
+                    }
                 }
+                newSlides[indexSlide].elements.splice(i, 1, newElement)
             }
-            newSlides[indexSlide].elements.splice(i, 1, newElement)
+        }
+        return {
+            ...editor,
+            history: newHistory,
+            presentation: {
+                ...editor.presentation,
+                slides: newSlides
+            }
         }
     }
-    return {
-        ...editor,
-        history: newHistory,
-        presentation: {
-            ...editor.presentation,
-            slides: newSlides
-        }
-    }
+    else {return editor}
 }
 
 
@@ -329,4 +358,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
+export { addImage, addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
