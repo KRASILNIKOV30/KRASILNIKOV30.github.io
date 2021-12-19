@@ -23,8 +23,8 @@ export function useDragAndDrop({
 
     const onMouseMove = useCallback((e: MouseEvent) => {
         if (isStartPosDeclared.current) {
-            let newX = startObjectPositionX.current + e.clientX - startClientX.current;
-            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
+            const newX = startObjectPositionX.current + e.clientX - startClientX.current;
+            const newY = startObjectPositionY.current + e.clientY - startClientY.current;
             setElementPosition({
                 x: newX,
                 y: newY
@@ -34,8 +34,8 @@ export function useDragAndDrop({
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if (isStartPosDeclared.current) {
-            let newX = startObjectPositionX.current + e.clientX - startClientX.current;
-            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
+            const newX = startObjectPositionX.current + e.clientX - startClientX.current;
+            const newY = startObjectPositionY.current + e.clientY - startClientY.current;
             window.removeEventListener('mousemove', onMouseMove)
             window.removeEventListener('mouseup', onMouseUp)
             setElementPosition({
@@ -48,10 +48,9 @@ export function useDragAndDrop({
     }, [])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current) {
+        if (elementRef.current && e.defaultPrevented) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mousedown', onMouseDown);
             const strX = elementRef.current?.style.left;
             const strY = elementRef.current?.style.top;
             startObjectPositionX.current = Number(strX?.substring(0, strX.length - 2));

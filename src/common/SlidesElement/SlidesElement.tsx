@@ -4,9 +4,10 @@ import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition } from '../../model/element'
+import { changeTextProps, changePosition, changeSize } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
-import type { Position } from '../../core/types/types'
+import type { Position, Size } from '../../core/types/types'
+import { useResize } from '../../core/hooks/useResize';
 
 interface SlidesElementProps {
     slideElement: SlideElement,
@@ -18,11 +19,21 @@ const SlidesElement = ({
     active
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
+    const edgeRef = useRef<HTMLDivElement>(null)
 
     useDragAndDrop({
         elementRef: slideElementRef, 
-        onMouseUpFunction: (Coordinates: Position) => dispatch(changePosition, Coordinates)
+        onMouseUpFunction: (coordinates: Position) => dispatch(changePosition, coordinates)
     })
+
+    const edgeType = useRef('')
+
+    useResize({
+        elementRef: slideElementRef,
+        edgeType,
+        onMouseUpFunction: (size: Size) => dispatch(changeSize, size)
+    }) 
+     
 
     switch (slideElement.elementType) {
         case "text": 
@@ -33,12 +44,14 @@ const SlidesElement = ({
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
+                        'width': slideElement.size.width,
+                        'height': slideElement.size.height
                     }}
                 >
                     {
                         active &&
                         <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
+                            <div className="point point-top_left" ></div>
                             <div className="point point-top_right"></div>
                             <div className="point point-bottom_left"></div>
                             <div className="point point-bottom_right"></div>
@@ -70,21 +83,26 @@ const SlidesElement = ({
                     className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
-                        'left': slideElement.position.x
+                        'left': slideElement.position.x,
+                        'width': slideElement.size.width,
+                        'height': slideElement.size.height
                     }}
                 >
                     {
                         active &&
                         <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                            <div className="point point-top_left" onMouseDown={(e) => {edgeType.current = 'top-left'; e.preventDefault()}}></div>
+                            <div className="point point-top_right" onMouseDown={(e) => {edgeType.current = 'top-right'; e.preventDefault()}}></div>
+                            <div className="point point-bottom_left" onMouseDown={(e) => {edgeType.current = 'bottom-left'; e.preventDefault()}}></div>
+                            <div className="point point-bottom_right" onMouseDown={(e) => {edgeType.current = 'bottom-right'; e.preventDefault()}}></div>
                         </div>
                     }
                     <Figure
                         figure = {slideElement.figure!}
-                        size = {slideElement.size}
+                        size = {{
+                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
+                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
+                        }}
                     />
                 </div>
             )    
@@ -109,7 +127,13 @@ const SlidesElement = ({
                             <div className="point point-bottom_right"></div>
                         </div>
                     }
-                    <img src = {slideElement.image?.urlImage}/>
+                    <img 
+                        src = {slideElement.image?.urlImage}
+                        style={{
+                            'width': slideElement.size.width,
+                            'height': slideElement.size.height
+                        }}
+                    />
                 </div>
             )    
     }

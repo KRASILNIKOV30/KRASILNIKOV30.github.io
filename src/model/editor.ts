@@ -72,8 +72,8 @@ let editor: Editor = {
                             y: 50
                         },
                         size: {
-                            width: 100,
-                            height: 100
+                            width: 200,
+                            height: 200
                         },
                         image: {
                             urlImage: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
@@ -98,7 +98,7 @@ let editor: Editor = {
                         },
                         size: {
                             width: 450,
-                            height: 59
+                            height: 450
                         },
                         image: {
                             urlImage: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",

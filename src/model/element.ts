@@ -137,11 +137,11 @@ export function changePosition(editor: Editor, { newX, newY}: ChangePositionArgs
 }
 
 type ChangeSizeArgs = {
-    widthShift: number,
-    heightShift: number
+    newWidth: number,
+    newHeight: number
 }
 
-function changeSize(editor: Editor, { widthShift, heightShift }: ChangeSizeArgs): Editor {
+function changeSize(editor: Editor, { newWidth, newHeight }: ChangeSizeArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
@@ -151,8 +151,8 @@ function changeSize(editor: Editor, { widthShift, heightShift }: ChangeSizeArgs)
             const newElement: SlideElement = {
                 ...newSlides[indexSlide].elements[i],
                 size: {
-                    width: newSlides[indexSlide].elements[i].size.width + widthShift,
-                    height: newSlides[indexSlide].elements[i].size.height + heightShift
+                    width: newWidth,
+                    height: newHeight
                 }
             };
             newSlides[indexSlide].elements.splice(i, 1, newElement)
@@ -329,4 +329,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
+export { addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth, changeSize }
