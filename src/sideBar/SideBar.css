@@ -1,5 +1,5 @@
 .sidebar-container {
-    height: auto;
+    max-height: 75vh;
     width: 350px;
 }
 
@@ -55,7 +55,7 @@
 
 .slide-list {
     margin-top: 11px;
-    max-height: 813px;
+    max-height: inherit;
     scrollbar-width: 10px;
     overflow-y: auto;
     width: 320px;

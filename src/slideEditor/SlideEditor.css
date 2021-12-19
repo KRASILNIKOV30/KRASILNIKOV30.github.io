@@ -1,8 +1,6 @@
 .slide-container {
-    width: 100vw;
-    height: 79vh;
     width: 81vw;
-    height: 74vh;
+    height: 76vh;
     background: #ECECEC;
     display: flex;
     justify-content: center;

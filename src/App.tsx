@@ -1,11 +1,7 @@
 import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
-<<<<<<< Updated upstream
-import { SideBar } from './sideBar/SideBar';    
-=======
 import { SideBar } from './sideBar/SideBar';  
->>>>>>> Stashed changes
 import './App.css';
 import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';
