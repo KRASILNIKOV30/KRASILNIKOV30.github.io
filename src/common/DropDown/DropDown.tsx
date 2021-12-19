@@ -145,6 +145,14 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                                 onClick()
                             }}
                         />
+                        <Button 
+                            style = 'default'
+                            text = 'С Анапы 2007'
+                            onClick = {() => {
+                                dispatch(addObject, { element: 'image' })
+                                onClick()
+                            }}
+                        />
                     </div>
                 : null
         }

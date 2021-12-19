@@ -25,4 +25,5 @@
     width: inherit;
     height: inherit;
     background: #202020;
+    z-index: -1;
 }
