@@ -61,4 +61,4 @@ const SideBar = ({
         </div>
     )
 }
-export {SideBar}
+export { SideBar }
