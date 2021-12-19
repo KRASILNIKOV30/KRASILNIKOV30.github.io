@@ -19,9 +19,7 @@
     height: inherit;
 }
 
-
-
-.preview-container > .slide-container {
+.preview-container {
     width: inherit;
     height: inherit;
     background: #202020;

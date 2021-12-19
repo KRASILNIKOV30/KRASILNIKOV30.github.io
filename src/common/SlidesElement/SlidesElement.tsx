@@ -28,7 +28,7 @@ const SlidesElement = ({
         case "text": 
             return (
                 <div
-                    ref = {slideElementRef}
+                    ref = {active ? slideElementRef : null}
                     className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
@@ -66,7 +66,7 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                    ref = {slideElementRef}
+                ref = {active ? slideElementRef : null}
                     className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,
@@ -91,7 +91,7 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                    ref = {slideElementRef}
+                ref = {active ? slideElementRef : null}
                     className = {active ? 'slide_element-active' : 'slide_element'}
                     style = {{
                         'top': slideElement.position.y,

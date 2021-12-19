@@ -1,7 +1,6 @@
 .sidebar-container {
     height: auto;
     width: 350px;
-    z-index: -1;
 }
 
 .scaled-slide-container {

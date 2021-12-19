@@ -35,4 +35,4 @@ function SlideEditor({
     )
 }
 
-export { SlideEditor, SlidesElement }
+export { SlideEditor, SlidesElement}
