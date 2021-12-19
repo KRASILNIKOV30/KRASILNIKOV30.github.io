@@ -13,11 +13,8 @@ interface SideBarProps {
 const SideBar = ({
     editor
 }: SideBarProps) => {
-    console.log('Selected: ' + editor.presentation.currentSlideIds)
     const slidesList = editor.presentation.slides.map((slide) => (
-        <div className = {makeClassName('sidebar-element', {
-            'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
-        })}>
+        <div className = 'sidebar-element'>
             <li
                 key = {slide.slideId}
                 className = 'scaled-slide-container'

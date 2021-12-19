@@ -105,11 +105,11 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
 }
 
 export type ChangePositionArgs = {
-    xShift: number,
-    yShift: number
+    newX: number,
+    newY: number
 }
 
-export function changePosition(editor: Editor, { xShift, yShift}: ChangePositionArgs): Editor {
+export function changePosition(editor: Editor, { newX, newY}: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
@@ -119,8 +119,8 @@ export function changePosition(editor: Editor, { xShift, yShift}: ChangePosition
             const newElement: SlideElement = {
                 ...newSlides[indexSlide].elements[i],
                 position: {
-                    x: newSlides[indexSlide].elements[i].position.x + xShift,
-                    y: newSlides[indexSlide].elements[i].position.y + yShift
+                    x: newX,
+                    y: newY
                 }
             };
             newSlides[indexSlide].elements.splice(i, 1, newElement)

@@ -1,7 +1,7 @@
 import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
-import { SideBar } from './sideBar/sideBar';    
+import { SideBar } from './sideBar/SideBar';    
 import './App.css';
 import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';

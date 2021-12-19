@@ -9,9 +9,10 @@ type SlideBarProps = {
 
 function SlideEditor({
         slide 
-    }: SlideBarProps) {
+    }: SlideBarProps) {     
     const slideElements = slide.elements.map((slideElement) =>
         <li
+                    
             key = {slideElement.elementId}
             className = 'slideElement'
             onClick = {console.log}
@@ -23,7 +24,9 @@ function SlideEditor({
         </li>
     )    
     return (
-        <div className="slide-container">
+        <div 
+            className="slide-container"
+        >
             <SlideView
                 slideElements = {slideElements}
                 background = {slide.background}

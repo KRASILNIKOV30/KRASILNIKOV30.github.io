@@ -1,4 +1,6 @@
 import './Slide.css'
+import { useRef } from 'react'
+
 
 interface SlideViewProps {
     slideElements: Array<JSX.Element>,

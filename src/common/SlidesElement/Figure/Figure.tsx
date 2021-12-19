@@ -1,4 +1,5 @@
-import type { FigureType, Size } from '../../../model/types'
+import type { FigureType } from '../../../model/types'
+import type { Size } from '../../../core/types/types'
 
 interface FigureProps {
     figure: FigureType,

@@ -4,8 +4,9 @@ import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps } from '../../model/element'
+import { changeTextProps, changePosition } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
+import type { Position } from '../../core/types/types'
 
 interface SlidesElementProps {
     slideElement: SlideElement,
@@ -16,16 +17,12 @@ const SlidesElement = ({
     slideElement,
     active
 }: SlidesElementProps) => {
-    const slideElementRef = useRef<HTMLDivElement>(null)
+    const slideElementRef = useRef<HTMLDivElement>(null);
 
-     useDragAndDrop(
-        slideElementRef, 
-        {
-            x: Number(slideElementRef.current?.style.left),
-            y: Number(slideElementRef.current?.style.top)   
-        },
-        console.log
-    )
+    useDragAndDrop({
+        elementRef: slideElementRef, 
+        onMouseUpFunction: (Coordinates: Position) => dispatch(changePosition, Coordinates)
+    })
 
     switch (slideElement.elementType) {
         case "text": 
