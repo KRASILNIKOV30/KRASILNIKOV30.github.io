@@ -2,7 +2,7 @@ import './SlidesElement.css'
 import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import { dispatch } from '../../model/editor'
 import { changeTextProps, changePosition } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
