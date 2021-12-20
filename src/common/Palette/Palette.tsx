@@ -27,7 +27,7 @@ interface PaletteProps {
             paletteElementId: paletteElementId,
             isSelected: isSelected,
             color: colors[i],
-            className: `palette_element ${isSelected ? 'palette_element_selected' : ''}`, //{`${styles.palette_element} ${isSelected ? styles.palette_element_selected : ''}`}
+            className: `${styles.palette_element} ${isSelected ? styles.palette_element_selected : ''}`,
             onClick: (color) => {
                 setSelectedElId(paletteElementId);
                 sendValue(color)
@@ -45,7 +45,7 @@ interface PaletteProps {
     )
     return (
         <ul 
-            className = 'palette'
+            className = {styles.palette}
         >
             {listElements}
         </ul>

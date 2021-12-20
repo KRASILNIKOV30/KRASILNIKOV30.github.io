@@ -2,7 +2,7 @@ import styles from './SlidesElement.module.css'
 import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { dispatch } from '../../model/editor'
 import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
@@ -19,9 +19,14 @@ const SlidesElement = ({
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
 
+    console.log('render', slideElement.elementId)
+    const onMouseUpFunction = useCallback((coordinates: Position) => {
+       // dispatch(changePosition, coordinates)
+    }, [])
     useDragAndDrop({
+        id: slideElement.elementId,
         elementRef: slideElementRef, 
-        onMouseUpFunction: (Coordinates: Position) => dispatch(changePosition, Coordinates)
+        onMouseUpFunction,
     })
 
     switch (slideElement.elementType) {
@@ -76,7 +81,8 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                    ref = {active ? slideElementRef : null}
+                    ref = {slideElementRef}
+                    id = {slideElement.elementId}
                     className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
@@ -111,7 +117,7 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                    ref = {active ? slideElementRef : null}
+                    ref = {slideElementRef}
                     className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,

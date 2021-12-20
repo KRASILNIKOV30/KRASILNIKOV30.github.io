@@ -9,7 +9,8 @@ type SlideBarProps = {
 
 function SlideEditor({
         slide 
-    }: SlideBarProps) {     
+    }: SlideBarProps) {   
+    
     const slideElements = slide.elements.map((slideElement) =>
         <li
                     
