@@ -212,13 +212,13 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
     else if (textSelected && !figureSelected) {
         return (
             <div className={styles.optional_tools_container}>
-                <p>Шрифт</p>
+                <p className={styles.optional_tools_text}>Шрифт</p>
                 <Input
                     style="small"
                     placeholder={firstSelectedElement.textProps!.font}
                     onKeyUp={(value) => dispatch(changeTextProps, { font: value })}
                 /> 
-                <p>Размер шрифта</p>
+                <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
                     value={firstSelectedElement.textProps!.fontSize}    
                     onClick={(value) => dispatch(changeTextProps, { fontSize: value })}

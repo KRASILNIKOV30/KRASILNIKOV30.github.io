@@ -12,27 +12,3 @@
 body {  
   font: 'Montserrat', sans-serif;
 }
-
-.main-container {
-  width: 1440px;
-  height: 1024px;
-}
-
-.tool-bar-container {
-  height: 200px;
-}
-
-.pres-viewer {
-  height: 824px;
-  display: inline-flex;
-  justify-content: flex-start;
-}
-
-.slide-editor-container {
-  width: 1090px;
-}
-
-.side-bar-container {
-  width: 350px;
-}
-

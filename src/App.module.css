@@ -3,23 +3,23 @@
     height: 99vh;
 }
 
-.app-content {
+.app_content {
     display: flex;
     flex-direction: column;
 }
 
-.pres-view {
+.pres_view {
     display: flex;
     margin-top: 10px;
 }
 
-.preview-container,
-.app-content {
+.preview_container,
+.app_content {
     width: inherit;
     height: inherit;
 }
 
-.preview-container {
+.preview_container {
     width: inherit;
     height: inherit;
     background: #202020;

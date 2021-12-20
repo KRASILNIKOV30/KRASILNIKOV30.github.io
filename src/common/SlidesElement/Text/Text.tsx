@@ -36,7 +36,7 @@ export const Text = ({
                     onKeyUp(event.currentTarget.value)
                 }}}
             style = {{
-                'fontFamily': 'Montserrat',
+                'fontFamily': text.font,
                 'fontWeight': text.fontWeight,
                 'fontSize': text.fontSize,
                 'color': text.textColor,

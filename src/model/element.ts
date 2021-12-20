@@ -116,7 +116,7 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
-    newSlides[indexSlide].selectedElementsIds.push(elementId);
+    newSlides[indexSlide].selectedElementsIds = [elementId];
     return {
         ...editor,
         history: newHistory,
@@ -126,6 +126,21 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
         }
     }
 }
+
+function selectManyElements(editor: Editor, { elementId }: selectedElementsArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    newSlides[indexSlide].selectedElementsIds.push(elementId);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+} 
 
 export type ChangePositionArgs = {
     newX: number,
@@ -246,7 +261,7 @@ function changeStrokeWidth(editor: Editor, { newWidth }: ChangeStrokeWidthArgs):
                 ...newSlides[indexSlide].elements[i],
                 figure: {
                     form: newSlides[indexSlide].elements[i].figure!.form,
-                    strokeColor: newSlides[indexSlide].elements[i].figure!.form,
+                    strokeColor: newSlides[indexSlide].elements[i].figure!.strokeColor,
                     strokeWidth: newWidth,
                     fillColor: newSlides[indexSlide].elements[i].figure!.fillColor
                 }
@@ -358,4 +373,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addImage, addObject, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
+export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }

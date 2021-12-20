@@ -102,10 +102,11 @@
     font-size: 13px;
 }
 
-.optional_tools_container > p {
-    margin-right: 10px;
+.optional_tools_container > input {
+    margin-right: 30px;
 }
 
-.optional_tools_container > .input {
-    margin-right: 30px;
+.optional_tools_text {
+    margin: auto;
+    margin-right: 10px;
 }

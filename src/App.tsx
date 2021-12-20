@@ -2,7 +2,7 @@ import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
 import { SideBar } from './sideBar/SideBar';  
-import './App.css';
+import styles from './App.module.css';
 import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';
 import { SlideView } from './common/Slide/Slide';
@@ -39,11 +39,11 @@ function App({ editor }: AppProps) {
         </div>
     ))
     return (
-        <div className="app">
+        <div className={styles.app}>
             {
                 editor.statePreview ?
                 <div 
-                    className='preview-container'
+                    className={styles.preview_container}
                     onKeyDown = {(e) => {
                         if (e.key === 'Escape') {
                             dispatch(switchPreview, {})
@@ -55,11 +55,11 @@ function App({ editor }: AppProps) {
                     </div>    
                 </div>
                 :
-                <div className='app-content'>
+                <div className={styles.app_content}>
                     <ToolBar
                         editor = { editor }
                     />
-                    <div className='pres-view'>
+                    <div className={styles.pres_view}>
                         <SideBar
                             editor = {editor}           
                         />

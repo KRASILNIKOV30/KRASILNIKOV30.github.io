@@ -4,13 +4,13 @@ import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition } from '../../model/element'
+import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 import type { Position } from '../../core/types/types'
 
 interface SlidesElementProps {
     slideElement: SlideElement,
-    active: boolean
+    active: boolean,
 }
 
 const SlidesElement = ({
@@ -33,6 +33,16 @@ const SlidesElement = ({
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
+                    }}
+                    onClick = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
                     }}
                 >
                     {
@@ -72,6 +82,16 @@ const SlidesElement = ({
                         'top': slideElement.position.y,
                         'left': slideElement.position.x
                     }}
+                    onClick = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
+                    }}
                 >
                     {
                         active &&
@@ -98,6 +118,16 @@ const SlidesElement = ({
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
+                    }}
+                    onClick = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
                     }}
                 >
                     {

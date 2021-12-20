@@ -58,7 +58,7 @@ let editor: Editor = {
                         textProps: {
                             font: 'Montserrat',
                             textColor: "#000000",
-                            bgColor: "#ff9999",
+                            bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
                             fontWeight: "bold"
