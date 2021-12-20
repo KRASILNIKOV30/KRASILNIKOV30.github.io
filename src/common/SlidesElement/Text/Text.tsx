@@ -1,4 +1,4 @@
-import './Text.css';
+import styles from './Text.module.css';
 import type { TextType } from '../../../model/types'
 
 interface TextProps {
@@ -29,7 +29,7 @@ export const Text = ({
             autoFocus
             type = 'text'
             value = {text.textValue!}
-            className = 'text'
+            className = {styles.text}
             placeholder = {placeholder}
             onKeyUp = {(event) => {
                 if (event.key === 'Enter') {

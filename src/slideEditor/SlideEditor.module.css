@@ -1,4 +1,4 @@
-.slide-container {
+.slide_container {
     width: 81vw;
     height: 76vh;
     background: #ECECEC;
@@ -8,10 +8,10 @@
     align-self: stretch;
 }
 
-.slide-container > slide {
+.slide_container > slide {
     width: 10px;
 }
 
-.slideElement {
+.slide_element {
     list-style-type: none;
 }

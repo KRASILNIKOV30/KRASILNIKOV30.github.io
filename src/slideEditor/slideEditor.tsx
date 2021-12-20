@@ -1,4 +1,4 @@
-import './SlideEditor.css';
+import styles from './SlideEditor.module.css';
 import { SlidesElement } from "../common/SlidesElement/SlidesElement";
 import type { Slide } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
@@ -14,7 +14,7 @@ function SlideEditor({
         <li
                     
             key = {slideElement.elementId}
-            className = 'slideElement'
+            className = {styles.slide_element}
             onClick = {console.log}
         >
             <SlidesElement
@@ -25,7 +25,7 @@ function SlideEditor({
     )
     return (
         <div 
-            className="slide-container"
+            className={styles.slide_container}
         >
             <SlideView
                 slideElements = {slideElements}

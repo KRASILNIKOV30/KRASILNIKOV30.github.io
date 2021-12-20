@@ -1,4 +1,4 @@
-import './Knob.css';
+import styles from './Knob.module.css';
 
 interface KnobProps {
     value: number,
@@ -10,17 +10,17 @@ export const Knob = ({
     onClick
 }: KnobProps) => {
     return (
-        <table className="table">
-            <tr className='table_string'>
+        <table className={styles.table}>
+            <tr className={styles.row}>
                 <td 
-                    className='minus_value_container'
+                    className={styles.minus}
                     onClick={() => {
                         onClick(--value)
                     }}
                 ></td>
-                <td className='value_container'>{value}</td>
+                <td className={styles.value}>{value}</td>
                 <td 
-                    className='plus_value_container'
+                    className={styles.plus}
                     onClick={() => {
                         onClick(++value)
                     }}

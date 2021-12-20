@@ -13,7 +13,7 @@ import { addSlide, removeSlides, switchSlidePositions } from "../model/slide";
 import { changeTextProps } from "../model/element"
 
 
-import "./ToolBar.css"
+import styles from "./ToolBar.module.css"
 import { EditColorWindow } from "./editColorWindow/EditColorWindow";
 
 type ToolBarProps = {
@@ -46,13 +46,13 @@ function ToolBar({ editor }: ToolBarProps) {
             editor.presentation.slides[indexSlide].selectedElementsIds[0])!;
 
     return (
-        <div className='toolbar'>
-            <div className='top_block'>
-                <img className='logo'
+        <div className={styles.toolbar}>
+            <div className={styles.top_block}>
+                <img className={styles.logo}
 
                 />
-                <div className='top_block_second'>
-                    <div className="rename_container">
+                <div className={styles.top_block_second}>
+                    <div className={styles.rename_container}>
                     {
                         rename ?
                             <Input 
@@ -65,26 +65,26 @@ function ToolBar({ editor }: ToolBarProps) {
                                 }}
                                 placeholder = 'Введите название...'
                              />
-                            : <p className='name'>{ editor.presentation.title }</p>
+                            : <p className={styles.name}>{ editor.presentation.title }</p>
 
                     }
                     </div>
-                    <div className='top_buttons_block'>
-                        <div className='outline_button'>
+                    <div className={styles.top_buttons_block}>
+                        <div className={styles.outline_button}>
                             <Button 
                                 style='outline' 
                                 text='Сохранить' 
                                 onClick={() => dispatch(saveDoc, {})}
                             />
                         </div>
-                        <div className='outline_button'>
+                        <div className={styles.outline_button}>
                             <Button 
                                 style='outline' 
                                 text='Загрузить' 
                                 onClick={() => uploadDoc()}
                             />
                         </div>
-                        <div className='outline_button'>
+                        <div className={styles.outline_button}>
                             <Button 
                                 style='outline' 
                                 text='Переименовать' 
@@ -94,51 +94,51 @@ function ToolBar({ editor }: ToolBarProps) {
                     </div>
                 </div>
             </div>
-            <div className='bottom_buttons_block'>
-                <div className='slidebar_buttons_block'>
-                    <div className='icon_button'>
+            <div className={styles.bottom_buttons_block}>
+                <div className={styles.slidebar_buttons_block}>
+                    <div className={styles.icon_button}>
                         <Button
                             style='sign'
                             text='+'
                             onClick={() => dispatch(addSlide, {})}
                         />
                     </div>
-                    <div className='icon_button'>
+                    <div className={styles.icon_button}>
                         <Button
                             style='delete'
                             onClick={() => dispatch(removeSlides, {})}
                         />
                     </div>
-                    <div className='icon_button'>
+                    <div className={styles.icon_button}>
                         <Button
                             style='arrow_down'
                             onClick={() => dispatch(switchSlidePositions, { orderShift: 1 })}
                         />
                     </div>
-                    <div className='icon_button'>
+                    <div className={styles.icon_button}>
                         <Button
                             style='arrow_up'
                             onClick={() => dispatch(switchSlidePositions, { orderShift: -1 })}
                         />
                     </div>
-                    <div className='icon_button'>
+                    <div className={styles.icon_button}>
                         <Button
                             style='undo'
                             onClick={() => dispatch(undo, {})}
                         />
                     </div>
-                    <div className='icon_button'>
+                    <div className={styles.icon_button}>
                         <Button
                             style='redo'
                             onClick={() => dispatch(redo, {})}
                         />
                     </div>
                 </div>
-                <div className='slide_editor_buttons_block'>
-                    <div className='dropdown'>
+                <div className={styles.slide_editor_buttons_block}>
+                    <div className={styles.dropdown}>
                         <DropDown />
                     </div>
-                    <div className='outline_button'>
+                    <div className={styles.outline_button}>
                         <Button
                             style='outline'
                             text='Фон'
@@ -152,15 +152,15 @@ function ToolBar({ editor }: ToolBarProps) {
                         onClick = {(newMode) => setDrawBlock(newMode)}
                     />
                 </div>
-                <div className='result_buttons_block'>
-                    <div className='outline_button'>
+                <div className={styles.result_buttons_block}>
+                    <div className={styles.outline_button}>
                         <Button
                             style='outline'
                             text='Просмотр'
                             onClick={() => dispatch(switchPreview, {})}
                         />
                     </div>
-                    <div className='outline_button'>
+                    <div className={styles.outline_button}>
                         <Button
                             style='outline'
                             text='Экспорт'
@@ -191,15 +191,15 @@ interface OptionalTools {
 function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick }: OptionalTools) {
     if (!textSelected && figureSelected){
         return (
-            <div className="optional_tools_container">
-                <div className = 'outline_button'>
+            <div className={styles.optional_tools_container}>
+                <div className = {styles.outline_button}>
                     <Button
                         style = 'outline'
                         text = 'Заливка фигуры'
                         onClick = {() => onClick('fillFigure')}
                     />
                 </div>
-                <div className='outline_button'>
+                <div className={styles.outline_button}>
                     <Button
                         style='outline'
                         text='Контур фигуры'
@@ -211,7 +211,7 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
     }
     else if (textSelected && !figureSelected) {
         return (
-            <div className="optional_tools_container">
+            <div className={styles.optional_tools_container}>
                 <p>Шрифт</p>
                 <Input
                     style="small"
@@ -227,7 +227,7 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
         )
     }
     else {
-        return (<div className="optional_tools_container"></div>)
+        return (<div className={styles.optional_tools_container}></div>)
     }
 }
 

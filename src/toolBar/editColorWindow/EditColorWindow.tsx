@@ -4,7 +4,7 @@ import { SlideElement } from "../../model/types"
 import { Button } from "../../common/Button/Button";
 import { Knob } from "../../common/Knob/Knob";
 import { Palette } from "../../common/Palette/Palette";
-import "./EditColorWindow.css";
+import styles from "./EditColorWindow.module.css";
 import { changeStrokeColor, changeFillColor, changeStrokeWidth } from "../../model/element";
 import { setBackground } from '../../model/slide';
 import { dispatch } from '../../model/editor';
@@ -15,29 +15,29 @@ interface EditColorWindowProps {
     onClick: () => void
 }
 
-function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorWindowProps) {
+function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
     return (
-        <div className='edit_color_window'>
-            <div className="frame">
+        <div className={styles.edit_color_window}>
+            <div className={styles.frame}>
                 {drawMode === 'backgroundSlide' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Фон
                     </div>
                 }
                 {drawMode === 'fillFigure' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Заливка
                     </div>
                 }
                 {drawMode === 'strokeFigure' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Контур
                     </div>
                 }
-                <hr className="hr"/>
-                <div className="palette_block">
-                    <div className="secondary_text">
+                <hr className={styles.hr} />
+                <div className={styles.palette_block}>
+                    <div className={styles.secondary_text}>
                         Цвет
                     </div>
                     <div>
@@ -47,8 +47,8 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                     </div>
                 </div>
                 {drawMode === 'backgroundSlide' &&
-                    <div className="change_value">
-                        <div className="secondary_text">
+                    <div className={styles.change_value}>
+                        <div className={styles.secondary_text}>
                             Изображение
                         </div>
 
@@ -75,8 +75,8 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                     </div>
                 }
                 {drawMode === 'strokeFigure' &&
-                    <div className="change_value">
-                        <div className="secondary_text">
+                    <div className={styles.change_value}>
+                        <div className={styles.secondary_text}>
                             Толщина
                         </div>
 
@@ -86,8 +86,8 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                         />
                     </div>
                 }
-                <hr className="hr"/>
-                <div className="ready_button">
+                <hr className={styles.hr} />
+                <div className={styles.ready_button}>
                     <Button
                         style="default"
                         text="Готово"

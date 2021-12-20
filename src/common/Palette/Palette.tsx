@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { makeClassName } from '../../core/functions/makeClassName';
-import './Palette.css';
+import styles from './Palette.module.css';
+import './PaletteElement.css';
 
 type PaletteElement = {
     paletteElementId: string;
@@ -27,9 +27,7 @@ interface PaletteProps {
             paletteElementId: paletteElementId,
             isSelected: isSelected,
             color: colors[i],
-            className: makeClassName('paletteElement', {
-                'selected': isSelected
-            }),
+            className: `palette_element ${isSelected ? 'palette_element_selected' : ''}`, //{`${styles.palette_element} ${isSelected ? styles.palette_element_selected : ''}`}
             onClick: (color) => {
                 setSelectedElId(paletteElementId);
                 sendValue(color)
@@ -39,8 +37,8 @@ interface PaletteProps {
     const listElements = paletteElements.map((paletteElement) => 
         <li 
             key = {paletteElement.paletteElementId}
-            className = {paletteElement.className}
             style = {{"background": paletteElement.color}}
+            className = {paletteElement.className}
             onClick = {() => paletteElement.onClick(paletteElement.color)} 
         >
         </li>

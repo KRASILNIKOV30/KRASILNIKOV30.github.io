@@ -1,4 +1,4 @@
-import './Slide.css'
+import styles from './Slide.module.css'
 
 interface SlideViewProps {
     slideElements: Array<JSX.Element>,
@@ -12,7 +12,7 @@ export const SlideView = ({
     const stringStile: string = background[0] !== '#' ? '0 0/cover url(' + background + ')' : background;
     return (
         <div 
-            className = "slide"
+            className = {styles.slide}
             style = {{"background": stringStile}}
         >
             <ul>{slideElements}</ul>                

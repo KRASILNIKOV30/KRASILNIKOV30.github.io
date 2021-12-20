@@ -1,4 +1,4 @@
-import './SlidesElement.css'
+import styles from './SlidesElement.module.css'
 import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
@@ -29,7 +29,7 @@ const SlidesElement = ({
             return (
                 <div
                     ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
@@ -37,11 +37,11 @@ const SlidesElement = ({
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
                     <Text
@@ -66,8 +66,8 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    ref = {active ? slideElementRef : null}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x
@@ -75,11 +75,11 @@ const SlidesElement = ({
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
                     <Figure
@@ -91,8 +91,8 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    ref = {active ? slideElementRef : null}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
@@ -102,11 +102,11 @@ const SlidesElement = ({
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
                     <img src = {slideElement.image}/>

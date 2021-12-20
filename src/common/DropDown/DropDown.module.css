@@ -1,4 +1,4 @@
-.drop_down_container {
+.container {
     width: 135px;
     font-family: Montserrat;
     font-weight: 500;
@@ -32,23 +32,23 @@
     cursor: pointer;
 }
 
-.drop_down--active {
+.drop_down_active {
     border-color: #2824EE;
     color: #2824EE;
 }
 
-.drop_down--text_container::after {
+.text_container::after {
     content: url('./icons/arrow.svg');
     width: 11px;
     height: 6px;
     margin-left: 7px;
 }
 
-.drop_down--text_container--active::after {
+.text_container_active::after {
     content: url('./icons/arrow-active.svg');
 }
 
-.drop_down_options_container {
+.options_container {
     width: auto;
     height: auto;
     padding: 7px 0;
@@ -64,7 +64,7 @@
     top: 35px;
 }
 
-.option--figure, .option--image, .option--text {
+.figure, .image, .text {
     width: 135px;
     height: 35px;
     background: none;
@@ -76,27 +76,27 @@
     justify-content: space-between;
 }
 
-.option--figure:hover, .option--image:hover, .option--text:hover {
+.figure:hover, .image:hover, .text:hover {
     cursor: pointer;
 }
 
-.option--figure::after, .option--image::after {
+.figure::after, .image::after {
     content: url('./icons/arrow--left.svg');
     width: 6px;
     height: 11px;
     margin-right: 10px;
 }
 
-.option--figure--active, .option--image--active, .option--text:hover {
+.figure_active, .image_active, .text:hover {
     background: rgba(40, 36, 238, 0.1);
     color: #2824EE;
 }
 
-.option--figure--active::after, .option--image--active::after {
+.figure_active::after, .image_active::after {
     content: url('./icons/arrow--left-active.svg');
 }
 
-.option--figure--types {
+.figure_types {
     width: auto;
     height: auto;
     background: #FFFFFF;
@@ -108,55 +108,55 @@
     display: flex;
 }
 
-.option--figure--types--rectangle, .option--figure--types--triangle, .option--figure--types--circle {
+.rectangle, .triangle, .circle {
     width: 35px;
     height: 35px;
     background-color: #FFFFFF;
     border-radius: 5px;
 }
 
-.option--figure--types--rectangle {
+.rectangle {
     background-image: url('./icons/rectangle.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--figure--types--triangle {
+.triangle {
     background-image: url('./icons/triangle.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--figure--types--circle {
+.circle {
     background-image: url('./icons/circle.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--figure--types--rectangle:hover, .option--figure--types--triangle:hover, .option--figure--types--circle:hover {
+.rectangle:hover, .triangle:hover, .circle:hover {
     cursor: pointer;
     background-color: rgba(40, 36, 238, 0.1);
 }
 
-.option--figure--types--rectangle:hover {
+.rectangle:hover {
     background-image: url('./icons/rectangle-hover.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--figure--types--triangle:hover {
+.triangle:hover {
     background-image: url('./icons/triangle-hover.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--figure--types--circle:hover {
+.circle:hover {
     background-image: url('./icons/circle-hover.svg');
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.option--image--types {
+.image_types {
     width: auto;
     height: auto;
 
