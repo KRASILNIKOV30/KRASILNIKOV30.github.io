@@ -139,7 +139,13 @@ const SlidesElement = ({
                             <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
-                    <img src = {slideElement.image}/>
+                    <img
+                        src = {slideElement.image}
+                        style={{
+                            'width': slideElement.size.width,
+                            'height': slideElement.size.height
+                        }}
+                    />
                 </div>
             )    
     }

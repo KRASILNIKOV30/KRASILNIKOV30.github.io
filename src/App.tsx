@@ -1,6 +1,6 @@
 import { Editor } from './model/types';
 import { ToolBar } from './toolBar/ToolBar';
-import { SlideEditor } from './slideEditor/slideEditor';
+import { SlideEditor } from './slideEditor/SlideEditor';
 import { SideBar } from './sideBar/SideBar';  
 import styles from './App.module.css';
 import { dispatch } from './model/editor';

@@ -92,10 +92,10 @@ let editor: Editor = {
                             y: 30
                         },
                         size: {
-                            width: 450,
-                            height: 59
+                            width: 400,
+                            height: 450
                         },
-                        image: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
+                        image: "https://www.infotech12.ru/images/olympiad/slider/kozlov.jpg",
                     }
                 ],
                 background: "#532232",

@@ -9,7 +9,7 @@ function addSlide(editor: Editor): Editor {
     newSlides.push({
         slideId: v4(),
         elements: [],
-        background: "white",
+        background: '#FFFFFF',
         selectedElementsIds: []
     });
 
