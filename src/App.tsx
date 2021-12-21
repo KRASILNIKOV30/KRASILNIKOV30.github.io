@@ -1,12 +1,13 @@
 import { Editor } from './model/types';
-import { ToolBar } from './toolBar/ToolBar';
-import { SlideEditor } from './slideEditor/SlideEditor';
-import { SideBar } from './sideBar/SideBar';  
+import { ToolBar } from './toolBar/ToolBar';  
 import styles from './App.module.css';
 import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';
 import { SlideView } from './common/Slide/Slide';
 import { SlidesElement } from './common/SlidesElement/SlidesElement'
+import { SideBar } from './sideBar/sideBar';
+import './hotKeys';
+import { SlideEditor } from './slideEditor/slideEditor';
 
 type AppProps = {
     editor: Editor;

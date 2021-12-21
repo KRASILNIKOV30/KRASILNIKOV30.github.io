@@ -49,7 +49,7 @@ function ToolBar({ editor }: ToolBarProps) {
         <div className={styles.toolbar}>
             <div className={styles.top_block}>
                 <img className={styles.logo}
-
+                    src=""
                 />
                 <div className={styles.top_block_second}>
                     <div className={styles.rename_container}>
@@ -180,6 +180,8 @@ function ToolBar({ editor }: ToolBarProps) {
         </div>
         
     )}
+
+    
 
 interface OptionalTools {
     textSelected: boolean,
