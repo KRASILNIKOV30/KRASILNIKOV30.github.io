@@ -1,5 +1,4 @@
-import { makeClassName } from '../../core/functions/makeClassName';
-import './input.css';
+import styles from './input.module.css';
 
 interface InputProps {
     style: 'small' | 'big',
@@ -19,9 +18,7 @@ export const Input = ({
             autoFocus={style === 'big'}
             type='text'
             value={value}
-            className={makeClassName('input', {
-                'style': style
-            })}
+            className={`${styles.input} ${style === 'big' ? styles.big: styles.small}`}
             placeholder={placeholder}
             onKeyUp={(e) => {
                 if (e.key === 'Enter') {

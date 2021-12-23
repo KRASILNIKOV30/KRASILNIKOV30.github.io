@@ -1,8 +1,7 @@
-import './DropDown.css';
-import { makeClassName } from '../../core/functions/makeClassName';
+import styles from './DropDown.module.css';
 import { useState, useRef } from 'react';
 import { Button } from '../Button/Button';
-import { addObject } from '../../model/element';
+import { addObject, addImage } from '../../model/element';
 import { dispatch } from '../../model/editor';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
 
@@ -13,19 +12,15 @@ export const DropDown = () => {
     useClickOutside(dropDownRef, () => setOpened(false));
     
     return (
-        <div className = 'drop_down_container'
+        <div className = {styles.container}
             ref={dropDownRef}
         >
             <div
-                className = {makeClassName('drop_down', {
-                    'active': opened
-                })}
+                className = {`${styles.drop_down} ${opened && styles.drop_down_active}`}
                 onClick = {() => setOpened(!opened)}
             >
                 <div
-                    className = {makeClassName('drop_down--text_container', {
-                        'active': opened
-                    })}
+                    className = {`${styles.text_container} ${opened && styles.text_container_active}`}
                 >
                     Вставка
                 </div>
@@ -49,10 +44,9 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
     const [activeFigure, setActiveFigure] = useState(false);
     const [activeImage, setActiveImage] = useState(false);
     return (
-        <div className='drop_down_options_container'>
-            <div className = {makeClassName('option--figure', {
-                    'active': activeFigure
-                })}
+        <div className={styles.options_container}>
+            <div
+                className = {`${styles.figure} ${activeFigure && styles.figure_active}`}
                 onClick = {() => {
                     setActiveFigure(!activeFigure);
                     setActiveImage(false);
@@ -60,9 +54,8 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
             >
                 Фигура
             </div>
-            <div className = {makeClassName('option--image', {
-                    'active': activeImage
-                })}
+            <div 
+                className = {`${styles.image} ${activeImage && styles.image}`}
                 onClick = {() => {
                     setActiveImage(!activeImage);
                     setActiveFigure(false);
@@ -70,7 +63,8 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
             >
                 Изображение
             </div>
-            <div className = 'option--text'
+            <div
+                className = {styles.text}
                 onClick = {() => {
                     dispatch(addObject, { element: 'text' })
                     setActiveImage(false);
@@ -81,8 +75,8 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
                 Текст
             </div>
             <DropDownOptionsToAdd 
-                activeFigure = { activeFigure }
-                activeImage = { activeImage }
+                activeFigure = {activeFigure}
+                activeImage = {activeImage}
                 onClick = {onClick}
             />
         </div>
@@ -97,27 +91,27 @@ interface DropDownOptionsToAddProps {
 
 const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOptionsToAddProps) => {
     return (
-        <div className='DropDownOptionsToAdd_container'>
+        <div className={styles.options_to_add_container}>
             {
             activeFigure 
                 ?
-                    <div className = 'option--figure--types'>
+                    <div className = {styles.figure_types}>
                         <div 
-                            className='option--figure--types--rectangle'
+                            className={styles.rectangle}
                             onClick = {() => {
                                 dispatch(addObject, { element: 'rectangle' })
                                 onClick()
                             }}>
                         </div>
                         <div 
-                            className='option--figure--types--triangle'
+                            className={styles.triangle}
                             onClick = {() => {
                                 dispatch(addObject, { element: 'triangle' })
                                 onClick()
                             }}>
                         </div>
                         <div 
-                            className='option--figure--types--circle'
+                            className={styles.circle}
                             onClick = {() => {
                                 dispatch(addObject, { element: 'circle' })
                                 onClick()
@@ -129,12 +123,24 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
         {
             activeImage
                 ?
-                    <div className = 'option--image--types'>
+                    <div className = {styles.image_types}>
                         <Button 
                             style = 'default'
                             text = 'С компьютера'
                             onClick = {() => {
-                                dispatch(addObject, { element: 'image' })
+                                const inputFile = document.createElement('input');
+                                inputFile.type = 'file';
+                                inputFile.style.display = 'none';
+                                inputFile.accept = 'image/*';
+                                inputFile.onchange = () => {
+                                    if (inputFile.files) {
+                                        const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        dispatch(addImage, { urlImage: urlImage })
+                                    }
+                                   
+                                }
+                                inputFile.click();
+                                inputFile.remove();
                                 onClick()
                             }}
                         />
@@ -149,8 +155,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                             style = 'default'
                             text = 'С Анапы 2007'
                             onClick = {() => {
-                                dispatch(addObject, { element: 'image' })
-                                onClick()
+                                dispatch(addImage, { urlImage: 'https://cdn.photosight.ru/sight/2007/08/27/2270629.jpg' })
                             }}
                         />
                     </div>

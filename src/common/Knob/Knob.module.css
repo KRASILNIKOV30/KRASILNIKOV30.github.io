@@ -10,13 +10,13 @@
     flex-wrap: nowrap;
 }
 
-.table_string {
+.row {
     width: inherit;
     height: 100%;
     margin-top: -1px;
 }
 
-.value_container {
+.value {
     width: 49px;
     height: 35px;
 
@@ -33,12 +33,17 @@
     vertical-align: center;
 }
 
-.minus_value_container {
+.minus {
     width: 20px;
     background: center no-repeat url('./icons/minus.svg');
 }
 
-.plus_value_container {
+.plus {
     width: 20px;
     background: center no-repeat url('./icons/plus.svg');
+}
+
+.minus:hover,
+.plus:hover {
+    cursor: pointer;
 }

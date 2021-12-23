@@ -1,4 +1,4 @@
-import { url } from "inspector";
+import { deepClone } from "../core/functions/deepClone";
 import { Editor } from "./types"
 
 let editor: Editor = {
@@ -58,7 +58,7 @@ let editor: Editor = {
                         textProps: {
                             font: 'Montserrat',
                             textColor: "#000000",
-                            bgColor: "#ff9999",
+                            bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
                             fontWeight: "bold"
@@ -75,15 +75,10 @@ let editor: Editor = {
                             width: 200,
                             height: 200
                         },
-                        image: {
-                            urlImage: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
-                            imageType: 'url',
-                            ext: '.jpg'
-                        }
+                        image: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
                     }
                 ],
                 background: "#FFF2AF",
-                backgroundType: 'Base64',
                 selectedElementsIds: ['1']
             }, 
             {
@@ -97,18 +92,13 @@ let editor: Editor = {
                             y: 30
                         },
                         size: {
-                            width: 450,
+                            width: 400,
                             height: 450
                         },
-                        image: {
-                            urlImage: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg",
-                            imageType: "url",
-                            ext: 'jpg'
-                        }
+                        image: "https://www.infotech12.ru/images/olympiad/slider/kozlov.jpg",
                     }
                 ],
                 background: "#532232",
-                backgroundType: 'Base64',
                 selectedElementsIds: ['0']
             }
         ],
@@ -145,4 +135,27 @@ function dispatch(modifyFn: Function, payload: object) {
     }
 }
 
-export { dispatch, getEditor, addEditorChangeHandler };
+function uploadDoc() {
+    const inputFile = document.createElement('input')
+    inputFile.type = 'file';
+    inputFile.style.display = 'none';
+    inputFile.accept = 'application/json';
+    inputFile.onchange = () => {
+        if (inputFile.files) {
+            const fileEditor = inputFile.files[0];
+            const reader = new FileReader();
+            reader.readAsText(fileEditor);
+            reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                    const newEditor = deepClone(JSON.parse(reader.result)) as Editor;
+                    setEditor(newEditor);
+                    editorChangeHandler()
+                }
+            };
+        }
+    }
+    inputFile.click();
+    inputFile.remove();
+}
+
+export { dispatch, getEditor, addEditorChangeHandler, uploadDoc };

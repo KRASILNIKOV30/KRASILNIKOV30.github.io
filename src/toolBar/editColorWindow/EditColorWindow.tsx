@@ -4,7 +4,7 @@ import { SlideElement } from "../../model/types"
 import { Button } from "../../common/Button/Button";
 import { Knob } from "../../common/Knob/Knob";
 import { Palette } from "../../common/Palette/Palette";
-import "./EditColorWindow.css";
+import styles from "./EditColorWindow.module.css";
 import { changeStrokeColor, changeFillColor, changeStrokeWidth } from "../../model/element";
 import { setBackground } from '../../model/slide';
 import { dispatch } from '../../model/editor';
@@ -15,29 +15,29 @@ interface EditColorWindowProps {
     onClick: () => void
 }
 
-function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorWindowProps) {
+function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
     return (
-        <div className='edit_color_window'>
-            <div className="frame">
+        <div className={styles.edit_color_window}>
+            <div className={styles.frame}>
                 {drawMode === 'backgroundSlide' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Фон
                     </div>
                 }
                 {drawMode === 'fillFigure' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Заливка
                     </div>
                 }
                 {drawMode === 'strokeFigure' &&
-                    <div className="head_text">
+                    <div className={styles.head_text}>
                         Контур
                     </div>
                 }
-                <hr className="hr"/>
-                <div className="palette_block">
-                    <div className="secondary_text">
+                <hr className={styles.hr} />
+                <div className={styles.palette_block}>
+                    <div className={styles.secondary_text}>
                         Цвет
                     </div>
                     <div>
@@ -46,33 +46,48 @@ function EditColorWindow({ drawMode, onClick, firstSelectedElement }: EditColorW
                         />
                     </div>
                 </div>
-                {drawMode === 'fone' &&
-                    <div className="change_value">
-                        <div className="secondary_text">
+                {drawMode === 'backgroundSlide' &&
+                    <div className={styles.change_value}>
+                        <div className={styles.secondary_text}>
                             Изображение
                         </div>
 
                         <Button
                             style="outline"
                             text="Выбрать изображение"
-                            onClick={console.log}
+                            onClick={() => {
+                                const inputFile = document.createElement('input');
+                                inputFile.type = 'file';
+                                inputFile.style.display = 'none';
+                                inputFile.accept = 'image/*';
+                                inputFile.onchange = () => {
+                                    if (inputFile.files) {
+                                        const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        dispatch(setBackground, { background: urlImage });
+                                    }
+                                   
+                                }
+                                inputFile.click();
+                                inputFile.remove();
+                                onClick()
+                            }}
                         />
                     </div>
                 }
                 {drawMode === 'strokeFigure' &&
-                    <div className="change_value">
-                        <div className="secondary_text">
+                    <div className={styles.change_value}>
+                        <div className={styles.secondary_text}>
                             Толщина
                         </div>
 
                         <Knob
                             value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
-                            onClick={(value) => dispatch(changeStrokeWidth, {value})}
+                            onClick={(value) => dispatch(changeStrokeWidth, { newWidth: value })}
                         />
                     </div>
                 }
-                <hr className="hr"/>
-                <div className="ready_button">
+                <hr className={styles.hr} />
+                <div className={styles.ready_button}>
                     <Button
                         style="default"
                         text="Готово"

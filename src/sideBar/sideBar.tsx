@@ -1,8 +1,7 @@
-import './SideBar.css'
+import styles from './SideBar.module.css'
 import type { Editor } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
-import { makeClassName } from '../core/functions/makeClassName'
 import { dispatch } from '../model/editor'
 import { switchSlide, selectOneSlide, selectManySlide } from '../model/slide'
 
@@ -14,14 +13,13 @@ const SideBar = ({
     editor
 }: SideBarProps) => {
     const slidesList = editor.presentation.slides.map((slide) => (
-        <div className = 'sidebar-element'>
+        <div className = {styles.sidebar_element}>
             <li
                 key = {slide.slideId}
-                className = 'scaled-slide-container'
+                className = {styles.scaled_slide_container}
             >
-                <div className = {makeClassName('scaled-slide', {
-                        'selected': editor.presentation.currentSlideIds.includes(slide.slideId, 0)
-                    })}
+                <div
+                    className = {`${styles.scaled_slide} ${editor.presentation.currentSlideIds.includes(slide.slideId, 0)? styles.scaled_slide_selected: ''}`}
                     onClick = {(e) => {
                         if (e.ctrlKey) {
                             dispatch(selectOneSlide, {slideId: slide.slideId})
@@ -39,7 +37,7 @@ const SideBar = ({
                             slide.elements.map((slideElement) =>
                                 <li
                                     key = {slideElement.elementId} 
-                                    className = 'slideElement'
+                                    className = {styles.slide_element}
                                 > 
                                     <SlidesElement
                                         slideElement = {slideElement}
@@ -54,11 +52,9 @@ const SideBar = ({
         </div>
     ))
     return (
-        <div
-            className = 'sidebar-container'
-        >
-            <ol className = 'slide-list'>{slidesList}</ol>
+        <div className = {styles.sidebar_container} >
+            <ol className = {styles.slide_list}>{slidesList}</ol>
         </div>
     )
 }
-export {SideBar}
+export { SideBar }

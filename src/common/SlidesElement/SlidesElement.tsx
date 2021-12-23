@@ -1,17 +1,18 @@
-import './SlidesElement.css'
+import styles from './SlidesElement.module.css'
 import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
-import { useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition, changeSize } from '../../model/element'
-import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
-import type { Position, Size } from '../../core/types/types'
+import { changeTextProps, changePosition, selectElement, selectManyElements, removeSelection, changeSize } from '../../model/element';
 import { useResize } from '../../core/hooks/useResize';
+import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
+import type { Position, Size } from '../../core/types/types';
+import { useClickOutside } from '../../core/hooks/useClickOutside'
 
 interface SlidesElementProps {
     slideElement: SlideElement,
-    active: boolean
+    active: boolean,
 }
 
 const SlidesElement = ({
@@ -21,9 +22,26 @@ const SlidesElement = ({
     const slideElementRef = useRef<HTMLDivElement>(null);
     const edgeRef = useRef<HTMLDivElement>(null)
 
+    const isOnShift = useRef<boolean>(false)
+    const clickOutsideFunction = () => {
+        window.onmousedown = (e) => {
+            isOnShift.current = e.shiftKey;
+        }
+        if (active && !isOnShift.current) {
+            dispatch(removeSelection, { elementId: slideElement.elementId })
+        } else {
+            return(null)
+        }
+    }
+
+    useClickOutside(slideElementRef, clickOutsideFunction);
+    
+    const onMouseUpFunction = useCallback((coordinates: Position) => {
+        dispatch(changePosition, coordinates)
+    }, [])
     useDragAndDrop({
         elementRef: slideElementRef, 
-        onMouseUpFunction: (coordinates: Position) => dispatch(changePosition, coordinates)
+        onMouseUpFunction,
     })
 
     const edgeType = useRef('')
@@ -39,38 +57,39 @@ const SlidesElement = ({
         case "text": 
             return (
                 <div
-                    ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    ref = {slideElementRef}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
+                    onMouseDown = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
+                    }}
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left" ></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
                     <Text
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
                             if (value !== '') {
-                                dispatch(changeTextProps, {
-                                    textPropsValue: {
-                                        textColor: slideElement.textProps?.textColor,
-                                        bgColor: slideElement.textProps?.bgColor,
-                                        textValue: value,
-                                        fontSize: slideElement.textProps?.fontSize,
-                                        fontWeight: slideElement.textProps?.fontWeight
-                                    },
-                                    SelectedElementIds: [slideElement.elementId]
-                                });
+                                dispatch(changeTextProps, {textValue: value});
                             }
                         }}
                     />
@@ -79,22 +98,33 @@ const SlidesElement = ({
         case "figure":
             return (
                 <div
-                ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    ref = {slideElementRef}
+                    id = {slideElement.elementId}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
+                    onMouseDown = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
+                    }}
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left" onMouseDown={(e) => {edgeType.current = 'top-left'; e.preventDefault()}}></div>
-                            <div className="point point-top_right" onMouseDown={(e) => {edgeType.current = 'top-right'; e.preventDefault()}}></div>
-                            <div className="point point-bottom_left" onMouseDown={(e) => {edgeType.current = 'bottom-left'; e.preventDefault()}}></div>
-                            <div className="point point-bottom_right" onMouseDown={(e) => {edgeType.current = 'bottom-right'; e.preventDefault()}}></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
                     <Figure
@@ -109,26 +139,36 @@ const SlidesElement = ({
         case "image":
             return (
                 <div
-                ref = {active ? slideElementRef : null}
-                    className = {active ? 'slide_element-active' : 'slide_element'}
+                    ref = {slideElementRef}
+                    className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
+                    onMouseDown = {(e) => {
+                        if (!active) {
+                            if (e.ctrlKey || e.shiftKey) {
+                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                            }
+                            else {
+                                dispatch(selectElement, { elementId: slideElement.elementId })
+                            }
+                        }
+                    }}
                 >
                     {
                         active &&
-                        <div className = 'points_container'>
-                            <div className="point point-top_left"></div>
-                            <div className="point point-top_right"></div>
-                            <div className="point point-bottom_left"></div>
-                            <div className="point point-bottom_right"></div>
+                        <div className = {styles.points_container}>
+                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
                         </div>
                     }
-                    <img 
-                        src = {slideElement.image?.urlImage}
+                    <img
+                        src = {slideElement.image}
                         style={{
                             'width': slideElement.size.width,
                             'height': slideElement.size.height

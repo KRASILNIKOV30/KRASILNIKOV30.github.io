@@ -21,7 +21,6 @@ type Slide = {
     slideId: string;
     elements: Array<SlideElement>;
     background: string;
-    backgroundType: "url" | "Base64";
     selectedElementsIds: Array<string>
 }
 
@@ -31,15 +30,9 @@ type SlideElement = {
     position: Position; 
     isSelected?: boolean;
     size: Size; 
-    image?: ImageType;
+    image?: string;
     textProps?: TextType;
     figure?: FigureType
-}
-
-type ImageType = {
-    urlImage: string;
-    imageType: "url" | "Base64";
-    ext: string
 }
 
 type TextType = {

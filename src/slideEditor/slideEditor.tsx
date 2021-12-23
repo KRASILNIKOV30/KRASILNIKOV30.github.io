@@ -1,4 +1,4 @@
-import './SlideEditor.css';
+import styles from './SlideEditor.module.css';
 import { SlidesElement } from "../common/SlidesElement/SlidesElement";
 import type { Slide } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
@@ -9,12 +9,13 @@ type SlideBarProps = {
 
 function SlideEditor({
         slide 
-    }: SlideBarProps) {     
+    }: SlideBarProps) {   
+    
     const slideElements = slide.elements.map((slideElement) =>
         <li
                     
             key = {slideElement.elementId}
-            className = 'slideElement'
+            className = {styles.slide_element}
             onClick = {console.log}
         >
             <SlidesElement
@@ -22,14 +23,14 @@ function SlideEditor({
                 active = {slide.selectedElementsIds.includes(slideElement.elementId)}
             />
         </li>
-    )    
+    )
     return (
         <div 
-            className="slide-container"
+            className={styles.slide_container}
         >
             <SlideView
                 slideElements = {slideElements}
-                background = {slide.background}
+                background = {slide.background} 
             />
         </div>
     )

@@ -1,4 +1,4 @@
-import './Text.css';
+import styles from './Text.module.css';
 import type { TextType } from '../../../model/types'
 
 interface TextProps {
@@ -25,23 +25,22 @@ export const Text = ({
         text.bgColor = '#FFFFFF'
     }
     return (
-        <input
+        <textarea
             autoFocus
-            type = 'text'
-            value = {text.textValue!}
-            className = 'text'
+            //value = {text.textValue!}
+            className = {styles.text}
             placeholder = {placeholder}
             onKeyUp = {(event) => {
                 if (event.key === 'Enter') {
                     onKeyUp(event.currentTarget.value)
                 }}}
             style = {{
-                'fontFamily': 'Montserrat',
+                'fontFamily': text.font,
                 'fontWeight': text.fontWeight,
                 'fontSize': text.fontSize,
                 'color': text.textColor,
                 'background': text.bgColor
             }}    
-        ></input>
+        ></textarea>
     )
 }

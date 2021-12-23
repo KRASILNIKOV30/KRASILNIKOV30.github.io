@@ -1,8 +1,6 @@
-.slide-container {
-    width: 100vw;
-    height: 79vh;
+.slide_container {
     width: 81vw;
-    height: 74vh;
+    height: 76vh;
     background: #ECECEC;
     display: flex;
     justify-content: center;
@@ -10,10 +8,10 @@
     align-self: stretch;
 }
 
-.slide-container > slide {
+.slide_container > slide {
     width: 10px;
 }
 
-.slideElement {
+.slide_element {
     list-style-type: none;
 }

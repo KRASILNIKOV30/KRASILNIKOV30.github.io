@@ -3,6 +3,7 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    z-index: 1;
 }
 
 .top_buttons_block {
@@ -31,6 +32,7 @@
 }
 
 .logo {
+    background: center no-repeat url('./logo/logo.svg');
     margin-left: 20px;
     width: 135px;
     width: 135px;
@@ -45,7 +47,7 @@
 }
 
 .slidebar_buttons_block {
-    margin-right: 8vw;
+    margin-right: 1.7vw;
 }
 
 .slide_editor_buttons_block {
@@ -53,8 +55,18 @@
 }
 
 .result_buttons_block {
-    right: 0;
-    position: absolute;
+    margin-left: auto;
+    width: auto;
+}
+
+.result_buttons_block > * {
+    margin-bottom: 5px;
+}
+
+@media screen and (min-width: 1776px) {
+    .result_buttons_block > * {
+        margin-bottom: 0;
+    }
 }
 
 .outline_button {
@@ -85,7 +97,6 @@
 
 .optional_tools_container {
     display: flex;
-    align-items: center;
     
     font-family: Montserrat;
     font-style: normal;
@@ -93,10 +104,11 @@
     font-size: 13px;
 }
 
-.optional_tools_container > p {
-    margin-right: 10px;
+.optional_tools_container > input {
+    margin-right: 30px;
 }
 
-.optional_tools_container > .input {
-    margin-right: 30px;
+.optional_tools_text {
+    margin: auto;
+    margin-right: 10px;
 }
