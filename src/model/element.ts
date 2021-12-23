@@ -1,5 +1,5 @@
 import type { Editor, SlideElement, Slide, History } from './types';
-import { addActionToHistory } from './presentation';
+import { addActionToHistory } from './editor';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 

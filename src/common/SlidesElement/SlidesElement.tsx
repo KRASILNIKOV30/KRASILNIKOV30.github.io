@@ -3,7 +3,7 @@ import { Figure } from "./Figure/Figure"
 import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useRef } from 'react';
-import { dispatch } from '../../model/editor'
+import { dispatch } from '../../model/editor_state'
 import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 import type { Position } from '../../core/types/types'

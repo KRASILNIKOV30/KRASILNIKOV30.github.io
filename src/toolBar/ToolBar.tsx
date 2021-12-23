@@ -6,10 +6,10 @@ import { Knob } from "../common/Knob/Knob"
 import { Input } from "../common/Input/input" 
 
 import { Editor, SlideElement } from "../model/types"
-import { dispatch, uploadDoc } from '../model/editor';
+import { dispatch, uploadDoc } from '../model/editor_state';
 
-import { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo } from "../model/presentation";
-import { addSlide, removeSlides, switchSlidePositions } from "../model/slide";
+import { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo } from "../model/editor";
+import { addSlide, removeSlides, switchSlidePositions } from "../model/presentation";
 import { changeTextProps } from "../model/element"
 
 

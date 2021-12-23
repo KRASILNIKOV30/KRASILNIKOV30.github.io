@@ -6,8 +6,8 @@ import { Knob } from "../../common/Knob/Knob";
 import { Palette } from "../../common/Palette/Palette";
 import styles from "./EditColorWindow.module.css";
 import { changeStrokeColor, changeFillColor, changeStrokeWidth } from "../../model/element";
-import { setBackground } from '../../model/slide';
-import { dispatch } from '../../model/editor';
+import { setBackground } from '../../model/presentation';
+import { dispatch } from '../../model/editor_state';
 
 interface EditColorWindowProps {
     firstSelectedElement: SlideElement

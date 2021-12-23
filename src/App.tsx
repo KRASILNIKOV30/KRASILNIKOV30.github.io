@@ -3,8 +3,8 @@ import { ToolBar } from './toolBar/ToolBar';
 import { SlideEditor } from './slideEditor/slideEditor';
 import { SideBar } from './sideBar/SideBar';  
 import styles from './App.module.css';
-import { dispatch } from './model/editor';
-import { switchPreview } from './model/presentation';
+import { dispatch } from './model/editor_state';
+import { switchPreview } from './model/editor';
 import { SlideView } from './common/Slide/Slide';
 import { SlidesElement } from './common/SlidesElement/SlidesElement'
 

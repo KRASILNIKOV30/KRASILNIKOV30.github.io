@@ -3,7 +3,7 @@ import { Size, Position } from '../core/types/types'
 type Editor = {
     presentation: Presentation;
     history: History;
-    statePreview: boolean
+    statePreview: boolean;
 } 
 
 type History = {

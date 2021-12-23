@@ -2,7 +2,7 @@ import styles from './DropDown.module.css';
 import { useState, useRef } from 'react';
 import { Button } from '../Button/Button';
 import { addObject, addImage } from '../../model/element';
-import { dispatch } from '../../model/editor';
+import { dispatch } from '../../model/editor_state';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
 
 export const DropDown = () => {

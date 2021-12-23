@@ -1,88 +1,180 @@
-import type { Editor, History, Presentation } from './types';
-import { deepClone } from '../core/functions/deepClone'
+import type { Editor, Slide, History, Presentation } from './types';
+import { addActionToHistory } from './editor';
+import { deepClone } from '../core/functions/deepClone';
+import { v4 } from 'uuid';
+import { ActionType } from './store';
 
-export function addActionToHistory(editor: Editor): History {
-    const newHistory = deepClone(editor.history) as History;
-    const presentation = deepClone(editor.presentation) as Presentation;
-    if(newHistory.undoStack.length === 100) {
-        newHistory.undoStack.shift();
+function changeTitle(presentation: Presentation, title: string): Presentation {
+    return {
+        ...presentation,
+        title: title,
     }
-    while(newHistory.redoStack.length !== 0) {
-        newHistory.redoStack.pop();
-    }
-    newHistory.undoStack.push(presentation);
-    return (newHistory)
 }
 
-type ChangeTitleArgs = {
-    title: string;
-}
-
-function changeTitle(editor: Editor, { title }: ChangeTitleArgs): Editor {
+function addSlide(editor: Editor): Editor {
     const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    newSlides.push({
+        slideId: v4(),
+        elements: [],
+        background: "white",
+        selectedElementsIds: []
+    });
+
     return {
         ...editor,
         history: newHistory,
         presentation: {
             ...editor.presentation,
-            title: title,
-        } 
+            slides: newSlides
+        }
     }
 }
 
-function saveDoc(editor: Editor): Editor {
-    const stringEditor = JSON.stringify(editor);
-    const fileEditor = new Blob(
-        [stringEditor], {
-            type: 'application/json'
+function removeSlides(editor: Editor): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    editor.presentation.currentSlideIds.forEach(idToDelete => {
+        if (newSlides.length >= 2) {
+            newSlides.splice(newSlides.findIndex(slide => slide.slideId === idToDelete), 1)
         }
-    )
-    const link = document.createElement('a')
-    link.href = URL.createObjectURL(fileEditor)
-    link.download = 'Presentation.json';
-    link.style.display = 'none';
-    link.click();
-    link.remove();
-    return (editor)
-}
-
-function exportDoc(editor: Editor): Editor {
-    return(editor)
-}
-
-function switchPreview(editor: Editor): Editor {
+    })
     return {
         ...editor,
-        statePreview: !editor.statePreview
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides,
+            currentSlideIds: [newSlides[0].slideId]
+        }
     }
 }
 
-function undo(editor: Editor): Editor {
-    if (editor.history.undoStack.length !== 0) {
-        const newHistory = deepClone(editor.history) as History;
-        const newPresentation: Presentation = newHistory.undoStack.pop()!;
-        newHistory.redoStack.push(editor.presentation);
+type SelectSlideArgs = {
+    slideId: string;
+}
+
+function switchSlide(editor: Editor, { slideId }: SelectSlideArgs): Editor {
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            currentSlideIds: [slideId]
+        }
+    }
+}
+
+
+function selectOneSlide(editor: Editor, { slideId }: SelectSlideArgs): Editor {
+    const newCurrentSlideIds = editor.presentation.currentSlideIds.concat();
+    newCurrentSlideIds.push(slideId);
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            currentSlideIds: newCurrentSlideIds
+        }
+    }
+}
+
+function selectManySlide(editor: Editor, { slideId }: SelectSlideArgs): Editor {
+    const newCurrentSlideIds = editor.presentation.currentSlideIds.concat();
+    const firstIndex = editor.presentation.slides.findIndex(slide => slide.slideId === newCurrentSlideIds[newCurrentSlideIds.length - 1])
+    const indexSelected = editor.presentation.slides.findIndex(slide => slide.slideId === slideId)
+    for (let i = firstIndex + 1; i <= indexSelected; i++) {
+        newCurrentSlideIds.push(editor.presentation.slides[i].slideId)
+    }
+    return {
+        ...editor,
+        presentation: {
+            ...editor.presentation,
+            currentSlideIds: newCurrentSlideIds
+        }
+    }
+}
+
+type SwitchSlideOrderArgs = {
+    orderShift: number
+}
+
+function switchSlidePositions(editor: Editor, { orderShift }: SwitchSlideOrderArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    if(orderShift > 0) {
+        for (let i = editor.presentation.currentSlideIds.length - 1; i >= 0; i--) {
+            const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[i]);
+            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+                const tempSlide: Slide = newSlides[indexSlide + orderShift];
+                newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
+                newSlides.splice(indexSlide, 1, tempSlide);
+            }
+            else {
+                return editor
+            }
+        }
+    }
+    else {
+        for (let i = 0; i < editor.presentation.currentSlideIds.length; i++) {
+            const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[i]);
+            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+                const tempSlide: Slide = newSlides[indexSlide + orderShift];
+                newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
+                newSlides.splice(indexSlide, 1, tempSlide);
+            }
+            else {
+                return editor
+            }
+        }
+    }
+    return {
+         ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }   
+}
+
+
+type SetBackgroundArgs = {
+    background: string;
+}
+
+function setBackground(editor: Editor, { background }: SetBackgroundArgs): Editor {
+    if (background !== '') {
+        const newHistory: History = addActionToHistory(editor);
+        const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+        const indexSlide: number = newSlides.findIndex(slide => slide.slideId == editor.presentation.currentSlideIds[0]);
+        newSlides[indexSlide].background = background;
         return {
             ...editor,
             history: newHistory,
-            presentation: newPresentation
+            presentation: {
+                ...editor.presentation,
+                slides: newSlides
+            }
         }
     }
-    return(editor)
+    else { return editor }
 }
 
-function redo(editor: Editor): Editor {
-    if (editor.history.redoStack.length !== 0) {
-        const newHistory = deepClone(editor.history) as History;
-        const newPresentation: Presentation = newHistory.redoStack.pop()!;
-        newHistory.undoStack.push(editor.presentation);
-        return {
-            ...editor, 
-            history: newHistory,
-            presentation: newPresentation
-        }
+function changeTitleAction(newTitle: string) {
+    return {
+        type: 'CHANGE_TITLE',
+        newTitle
     }
-    return(editor)
 }
 
-export { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo };
+function slidesReducer(state: Presentation, action: ActionType): Presentation {
+    switch (action.type) {
+        case 'CHANGE_TITLE': 
+            return action.newTitle !== undefined ? changeTitle(state, action.newTitle): state
+        default:
+            return state;
+    }
+}
+
+export { slidesReducer }
+
+export { addSlide, removeSlides, switchSlide, setBackground, selectOneSlide, selectManySlide, switchSlidePositions }

@@ -2,8 +2,8 @@ import styles from './SideBar.module.css'
 import type { Editor } from '../model/types'
 import { SlideView } from '../common/Slide/Slide'
 import { SlidesElement } from '../common/SlidesElement/SlidesElement'
-import { dispatch } from '../model/editor'
-import { switchSlide, selectOneSlide, selectManySlide } from '../model/slide'
+import { dispatch } from '../model/editor_state'
+import { switchSlide, selectOneSlide, selectManySlide } from '../model/presentation'
 
 interface SideBarProps {
     editor: Editor
