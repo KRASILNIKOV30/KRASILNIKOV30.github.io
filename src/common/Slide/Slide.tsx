@@ -9,7 +9,6 @@ export const SlideView = ({
     slideElements,
     background,
 }: SlideViewProps) => {
-    console.log('SlideView render')  
     const stringStile: string = background[0] !== '#' ? '0 0/cover url(' + background + ')' : background;
     return (
         <div 
