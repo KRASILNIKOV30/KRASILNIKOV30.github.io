@@ -127,6 +127,28 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
     }
 }
 
+type removeSelectionArgs = {
+    elementId: string;
+}
+
+
+function removeSelection(editor: Editor, { elementId }: removeSelectionArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    const indexElement: number = newSlides[indexSlide].selectedElementsIds.findIndex(elementsId => elementsId === elementId)
+    newSlides[indexSlide].selectedElementsIds = [elementId];
+    newSlides[indexSlide].selectedElementsIds.splice(indexElement, 1);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 function selectManyElements(editor: Editor, { elementId }: selectedElementsArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
@@ -373,4 +395,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
+export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth, removeSelection }

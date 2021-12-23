@@ -4,9 +4,10 @@ import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useCallback, useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
+import { changeTextProps, changePosition, selectElement, selectManyElements, removeSelection } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
-import type { Position } from '../../core/types/types'
+import type { Position } from '../../core/types/types';
+import { useClickOutside } from '../../core/hooks/useClickOutside'
 
 interface SlidesElementProps {
     slideElement: SlideElement,
@@ -18,6 +19,20 @@ const SlidesElement = ({
     active
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
+
+    const isOnShift = useRef<boolean>(false)
+    const clickOutsideFunction = () => {
+        window.onmousedown = (e) => {
+            isOnShift.current = e.shiftKey;
+        }
+        if (active && !isOnShift.current) {
+            dispatch(removeSelection, { elementId: slideElement.elementId })
+        } else {
+            return(null)
+        }
+    }
+
+    useClickOutside(slideElementRef, clickOutsideFunction);
     
     const onMouseUpFunction = useCallback((coordinates: Position) => {
         dispatch(changePosition, coordinates)
