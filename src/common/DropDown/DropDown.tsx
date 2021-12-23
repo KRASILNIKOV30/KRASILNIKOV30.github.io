@@ -155,7 +155,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                             style = 'default'
                             text = 'С Анапы 2007'
                             onClick = {() => {
-                                onClick()
+                                dispatch(addImage, { urlImage: 'https://cdn.photosight.ru/sight/2007/08/27/2270629.jpg' })
                             }}
                         />
                     </div>
