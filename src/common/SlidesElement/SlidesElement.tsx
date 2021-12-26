@@ -33,7 +33,7 @@ const SlidesElement = ({
         }
     }
 
-    useClickOutside(slideElementRef, clickOutsideFunction);
+   /*  useClickOutside(slideElementRef, clickOutsideFunction); */
     
     const onMouseUpFunction = useCallback((coordinates: Position) => {
         dispatch(changePosition, coordinates)
@@ -107,6 +107,7 @@ const SlidesElement = ({
                         </div>
                     }
                     <Text
+                        size = {slideElement.size}
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
                             if (value !== '') {

@@ -52,7 +52,7 @@ let editor: Editor = {
                             y: 50
                         },
                         size: {
-                            width: 50,
+                            width: 200,
                             height: 50
                         },
                         textProps: {
@@ -84,7 +84,7 @@ let editor: Editor = {
             {
                 slideId: "1",
                 elements: [
-                    {
+                    /* {
                         elementId: "0",
                         elementType: "image",
                         position: {
@@ -96,7 +96,7 @@ let editor: Editor = {
                             height: 450
                         },
                         image: "https://www.infotech12.ru/images/olympiad/slider/kozlov.jpg",
-                    }
+                    } */
                 ],
                 background: "#532232",
                 selectedElementsIds: ['0']
@@ -128,7 +128,6 @@ function addEditorChangeHandler(handler: Function) {
 function dispatch(modifyFn: Function, payload: object) {
     const newEditor = modifyFn(editor, payload)
     setEditor(newEditor)
-
     if (editorChangeHandler)
     {
         editorChangeHandler()

@@ -51,4 +51,8 @@ type FigureType = {
     fillColor: string
 }
 
-export type { TextType, SlideElement, Slide, Presentation, History, Editor, FigureType};
+type ImageType = {
+    src: string;
+}
+
+export type { TextType, ImageType, SlideElement, Slide, Presentation, History, Editor, FigureType};

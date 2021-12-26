@@ -1,12 +1,17 @@
 .text {
     width: auto;
     box-sizing: border-box;
+    border: hidden;
+    resize: none;
+    visibility: inherit;
+    background-color: transparent;
+    overflow: hidden;
 }
 
 .text:hover {
     cursor: pointer;
 }
 
-.text:hover {
-    background-color: #EAFFF3;
+.text:focus {
+    outline: none;
 }

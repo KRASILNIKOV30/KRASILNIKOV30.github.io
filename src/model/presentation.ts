@@ -1,5 +1,6 @@
 import type { Editor, History, Presentation } from './types';
 import { deepClone } from '../core/functions/deepClone'
+import { exportPDF } from './export';
 
 export function addActionToHistory(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
@@ -47,6 +48,7 @@ function saveDoc(editor: Editor): Editor {
 }
 
 function exportDoc(editor: Editor): Editor {
+    exportPDF(editor.presentation.slides)
     return(editor)
 }
 
