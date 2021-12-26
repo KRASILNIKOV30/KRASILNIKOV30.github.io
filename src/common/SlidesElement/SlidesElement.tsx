@@ -1,28 +1,41 @@
-import styles from './SlidesElement.module.css'
-import { Figure } from "./Figure/Figure"
-import { Text } from "./Text/Text"
-import type { SlideElement } from "../../model/types"
 import { useRef } from 'react';
-import { dispatch } from '../../model/editor_state'
-import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
+import styles from './SlidesElement.module.css'
+import Figure from "./Figure/Figure"
+import Text from "./Text/Text"
+import type { Editor, SlideElement } from "../../model/types"
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 import type { Position } from '../../core/types/types'
+import type { AppDispatch } from '../../model/store';
+import { changePosition, changeTextProps, selectElement, selectManyElements } from '../../model/actionCreators';
+import { connect } from 'react-redux';
 
-interface SlidesElementProps {
-    slideElement: SlideElement,
+type SlidesElementProps = {
+    slideElement: SlideElement | undefined,
     active: boolean,
+    changePosition: (newX: number, newY: number) => void,
+    selectElement: (elementId: string) => void,
+    selectManyElements: (elementId: string) => void,
+    changeTextValue: (value: string) => void
 }
 
 const SlidesElement = ({
     slideElement,
-    active
+    active,
+    changePosition,
+    selectElement,
+    selectManyElements,
+    changeTextValue
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
 
     useDragAndDrop({
         elementRef: slideElementRef, 
-        onMouseUpFunction: (Coordinates: Position) => dispatch(changePosition, Coordinates)
+        onMouseUpFunction: (Coordinates: Position) => changePosition(Coordinates.x, Coordinates.y)
     })
+
+    if(slideElement === undefined) {
+        return (<div></div>)
+    }
 
     switch (slideElement.elementType) {
         case "text": 
@@ -37,10 +50,10 @@ const SlidesElement = ({
                     onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
-                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                                selectManyElements(slideElement.elementId)
                             }
                             else {
-                                dispatch(selectElement, { elementId: slideElement.elementId })
+                                selectElement(slideElement.elementId)
                             }
                         }
                     }}
@@ -58,16 +71,7 @@ const SlidesElement = ({
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
                             if (value !== '') {
-                                dispatch(changeTextProps, {
-                                    textPropsValue: {
-                                        textColor: slideElement.textProps?.textColor,
-                                        bgColor: slideElement.textProps?.bgColor,
-                                        textValue: value,
-                                        fontSize: slideElement.textProps?.fontSize,
-                                        fontWeight: slideElement.textProps?.fontWeight
-                                    },
-                                    SelectedElementIds: [slideElement.elementId]
-                                });
+                                changeTextValue(value)
                             }
                         }}
                     />
@@ -85,10 +89,10 @@ const SlidesElement = ({
                     onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
-                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                                selectManyElements(slideElement.elementId)
                             }
                             else {
-                                dispatch(selectElement, { elementId: slideElement.elementId })
+                                selectElement(slideElement.elementId)
                             }
                         }
                     }}
@@ -122,10 +126,10 @@ const SlidesElement = ({
                     onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
-                                dispatch(selectManyElements, { elementId: slideElement.elementId })
+                                selectManyElements(slideElement.elementId)
                             }
                             else {
-                                dispatch(selectElement, { elementId: slideElement.elementId })
+                                selectElement(slideElement.elementId)
                             }
                         }
                     }}
@@ -141,9 +145,26 @@ const SlidesElement = ({
                     }
                     <img src = {slideElement.image}/>
                 </div>
-            )    
+            )
     }
     
 }
 
-export { SlidesElement }
+function mapStateToProps(state: Editor, ownProps: {slideId: string, elementId: string, active: boolean}) {
+    const indexSlide: number = state.presentation.slides.findIndex(slide => slide.slideId === ownProps.slideId);
+    return {
+        slideElement: state.presentation.slides[indexSlide].elements.find(slidesElement => slidesElement.elementId === ownProps.elementId),
+        active: ownProps.active
+    }
+}
+
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        changePosition: (newX: number, newY: number) => dispatch(changePosition(newX, newY)),
+        selectElement: (elementId: string) => dispatch(selectElement(elementId)),
+        selectManyElements: (elementId: string) => dispatch(selectManyElements(elementId)),
+        changeTextValue: (value: string) => changeTextProps(undefined, undefined, undefined, value)
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SlidesElement)

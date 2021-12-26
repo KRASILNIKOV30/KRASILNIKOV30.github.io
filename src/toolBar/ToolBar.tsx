@@ -1,39 +1,63 @@
 import { useState } from "react";
+import { connect } from 'react-redux';
+import { AppDispatch, uploadDocFunction } from '../model/store'
 
-import { Button } from "../common/Button/Button"
-import { DropDown } from "../common/DropDown/DropDown"
-import { Knob } from "../common/Knob/Knob"
-import { Input } from "../common/Input/input" 
+import Button from "../common/Button/Button"
+import DropDown from "../common/DropDown/DropDown"
+import Knob from "../common/Knob/Knob"
+import Input from "../common/Input/input" 
 
-import { Editor, SlideElement } from "../model/types"
-import { dispatch, uploadDoc } from '../model/editor_state';
-
-import { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo } from "../model/editor";
-import { addSlide, removeSlides, switchSlidePositions } from "../model/presentation";
-import { changeTextProps } from "../model/element"
-
+import { Editor, Slide, SlideElement } from "../model/types"
 
 import styles from "./ToolBar.module.css"
-import { EditColorWindow } from "./editColorWindow/EditColorWindow";
+import EditColorWindow from "./editColorWindow/EditColorWindow";
+import { addSlide, changeTextProps, changeTitle, exportDoc, redo, removeSlides, saveDoc, switchPreview, switchSlidePositions, undo } from "../model/actionCreators";
 
 type ToolBarProps = {
-    editor: Editor
+    slide: Slide,
+    title: string,
+    saveDoc: () => void,
+    uploadDoc: () => void,
+    addSlide: () => void,
+    removeSlides: () => void,
+    switchSlidePositions: (orderShift: number) => void,
+    undo: () => void,
+    redo: () => void,
+    switchPreview: () => void,
+    exportDoc: () => void,
+    changeTextFont: (font: string) => void,
+    changeTextSize: (fontSize: number) => void,
+    changeTitle: (newTitle: string) => void,
 }
 
-function ToolBar({ editor }: ToolBarProps) {
+const ToolBar = ({
+    slide,
+    title,
+    saveDoc,
+    uploadDoc,
+    addSlide,
+    removeSlides,
+    switchSlidePositions,
+    undo,
+    redo,
+    switchPreview,
+    exportDoc,
+    changeTextFont,
+    changeTextSize,
+    changeTitle
+}: ToolBarProps) => {
     const [rename, setRename] = useState(false);
 
-    const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
     let textSelected = true;
     let figureSelected = true;
-    editor.presentation.slides[indexSlide].selectedElementsIds.forEach(id => 
+    slide.selectedElementsIds.forEach(id => 
         {
-            if(editor.presentation.slides[indexSlide].elements.
+            if(slide.elements.
                 find(element => element.elementId === id)?.elementType === 'figure')
             {
                 textSelected = false;
             }
-            else if (editor.presentation.slides[indexSlide].elements.
+            else if (slide.elements.
                 find(element => element.elementId === id)?.elementType === 'text')
             {
                 figureSelected = false;
@@ -41,10 +65,9 @@ function ToolBar({ editor }: ToolBarProps) {
         }   
     )
     const [drawBlock, setDrawBlock] = useState('absent')
-    const firstSelectedElement: SlideElement = editor.presentation.slides[indexSlide].elements.
+    const firstSelectedElement: SlideElement = slide.elements.
         find(element => element.elementId === 
-            editor.presentation.slides[indexSlide].selectedElementsIds[0])!;
-
+            slide.selectedElementsIds[0])!;
     return (
         <div className={styles.toolbar}>
             <div className={styles.top_block}>
@@ -59,13 +82,13 @@ function ToolBar({ editor }: ToolBarProps) {
                                 style="big"
                                 onKeyUp = {(value) => {
                                     if (value !== '') {
-                                        dispatch(changeTitle, { title: value });
+                                        changeTitle(value);
                                     }
                                     setRename(false)
                                 }}
                                 placeholder = 'Введите название...'
                              />
-                            : <p className={styles.name}>{ editor.presentation.title }</p>
+                            : <p className={styles.name}>{ title }</p>
 
                     }
                     </div>
@@ -74,7 +97,7 @@ function ToolBar({ editor }: ToolBarProps) {
                             <Button 
                                 style='outline' 
                                 text='Сохранить' 
-                                onClick={() => dispatch(saveDoc, {})}
+                                onClick={() => saveDoc()}
                             />
                         </div>
                         <div className={styles.outline_button}>
@@ -100,37 +123,37 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='sign'
                             text='+'
-                            onClick={() => dispatch(addSlide, {})}
+                            onClick={() => addSlide()}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
                             style='delete'
-                            onClick={() => dispatch(removeSlides, {})}
+                            onClick={() => removeSlides}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
                             style='arrow_down'
-                            onClick={() => dispatch(switchSlidePositions, { orderShift: 1 })}
+                            onClick={() => switchSlidePositions(1)}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
                             style='arrow_up'
-                            onClick={() => dispatch(switchSlidePositions, { orderShift: -1 })}
+                            onClick={() => switchSlidePositions(-1)}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
                             style='undo'
-                            onClick={() => dispatch(undo, {})}
+                            onClick={() => undo()}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
                             style='redo'
-                            onClick={() => dispatch(redo, {})}
+                            onClick={() => redo()}
                         />
                     </div>
                 </div>
@@ -150,6 +173,8 @@ function ToolBar({ editor }: ToolBarProps) {
                         figureSelected = {figureSelected}
                         firstSelectedElement = {firstSelectedElement}
                         onClick = {(newMode) => setDrawBlock(newMode)}
+                        changeTextFont={changeTextFont}
+                        changeTextSize={changeTextSize}
                     />
                 </div>
                 <div className={styles.result_buttons_block}>
@@ -157,14 +182,14 @@ function ToolBar({ editor }: ToolBarProps) {
                         <Button
                             style='outline'
                             text='Просмотр'
-                            onClick={() => dispatch(switchPreview, {})}
+                            onClick={() => switchPreview()}
                         />
                     </div>
                     <div className={styles.outline_button}>
                         <Button
                             style='outline'
                             text='Экспорт'
-                            onClick={() => dispatch(exportDoc, {})}
+                            onClick={() => exportDoc()}
                         />
                     </div>
                 </div>
@@ -185,10 +210,12 @@ interface OptionalTools {
     textSelected: boolean,
     figureSelected: boolean,
     firstSelectedElement: SlideElement,
-    onClick: (newMode: string) => void
+    onClick: (newMode: string) => void,
+    changeTextFont: (font: string) => void,
+    changeTextSize: (fontSize: number) => void,
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick }: OptionalTools) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize }: OptionalTools) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -216,12 +243,12 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
                 <Input
                     style="small"
                     placeholder={firstSelectedElement.textProps!.font}
-                    onKeyUp={(value) => dispatch(changeTextProps, { font: value })}
+                    onKeyUp={(value) => changeTextFont(value)}
                 /> 
                 <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
                     value={firstSelectedElement.textProps!.fontSize}    
-                    onClick={(value) => dispatch(changeTextProps, { fontSize: value })}
+                    onClick={(value) => changeTextSize(value)}
                 />
             </div>
         )
@@ -231,4 +258,29 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
     }
 }
 
-export { ToolBar }
+function mapStateToProps(state: Editor) {
+    const indexSlide: number = state.presentation.slides.findIndex(slide => slide.slideId === state.presentation.currentSlideIds[0]);
+    return { 
+        slide: state.presentation.slides[indexSlide],
+        title: state.presentation.title
+    }
+}
+
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        saveDoc: () => dispatch(saveDoc()),
+        uploadDoc: () => uploadDocFunction(),
+        addSlide: () => dispatch(addSlide()),
+        removeSlides: () => dispatch(removeSlides()),
+        switchSlidePositions: (orderShift: number) => dispatch(switchSlidePositions(orderShift)),
+        undo: () => dispatch(undo()),
+        redo: () => dispatch(redo()),
+        switchPreview: () => dispatch(switchPreview()),
+        exportDoc: () => dispatch(exportDoc()),
+        changeTextFont: (font: string) => dispatch(changeTextProps(font)),
+        changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontSize)),
+        changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToolBar)

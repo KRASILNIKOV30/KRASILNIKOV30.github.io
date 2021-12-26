@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import styles from './Button.module.css';
 
 interface ButtonProps {
@@ -6,7 +7,7 @@ interface ButtonProps {
     onClick: () => void
 }
 
-export const Button = ({
+const Button = ({
     style,
     text = '',
     onClick
@@ -33,3 +34,5 @@ export const Button = ({
         </button>
     )
 }
+
+export default connect()(Button)

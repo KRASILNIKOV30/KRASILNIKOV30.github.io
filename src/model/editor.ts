@@ -31,6 +31,10 @@ function saveDocReducer(editor: Editor): Editor {
     return (editor)
 }
 
+function uploadDocReducer(editor: Editor, newEditor: Editor): Editor {
+    return (newEditor)
+}
+
 function exportDocReducer(editor: Editor): Editor {
     return(editor)
 }
@@ -70,37 +74,7 @@ function redoReducer(editor: Editor): Editor {
     return(editor)
 }
 
-function saveDoc() {
-    return {
-        type: 'SAVE_DOCUMENT',
-    }
-}
-
-function exportDoc() {
-    return {
-        type: 'EXPORT_DOCUMENT',
-    }
-}
-
-function switchPreview() {
-    return {
-        type: 'SWITCH_PREVIEW'
-    }
-}
-
-function undo() {
-    return {
-        type: 'UNDO'
-    }
-}
-
-function redo() {
-    return {
-        type: 'REDO'
-    }
-}
-
-function presentationReducer(state: Editor, action: ActionType): Editor {
+function editorReducer(state: Editor, action: ActionType): Editor {
     switch (action.type) {
         case 'SAVE_DOCUMENT':
             return saveDocReducer(state)
@@ -111,10 +85,12 @@ function presentationReducer(state: Editor, action: ActionType): Editor {
         case 'UNDO': 
             return undoReducer(state)
         case 'REDO':
-            return redoReducer(state)
+            return redoReducer(state);
+        case 'UPLOAD_DOC':
+            return action.newEditor? uploadDocReducer(state, action.newEditor): state
         default:
             return state
     }
 }
 
-export { presentationReducer, redo, undo, switchPreview, exportDoc, saveDoc, addActionToHistory }
+export { editorReducer, addActionToHistory }

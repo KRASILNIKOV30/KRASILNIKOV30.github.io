@@ -1,5 +1,6 @@
 import type { FigureType } from '../../../model/types'
 import type { Size } from '../../../core/types/types'
+import { connect } from 'react-redux'
 
 interface FigureProps {
     figure: FigureType,
@@ -122,4 +123,5 @@ const Figure = ({
             )    
     }
 }
-export {Figure}
+
+export default connect()(Figure)

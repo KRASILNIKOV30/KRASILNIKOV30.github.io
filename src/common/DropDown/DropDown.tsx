@@ -1,11 +1,17 @@
 import styles from './DropDown.module.css';
 import { useState, useRef } from 'react';
-import { Button } from '../Button/Button';
-import { addObject, addImage } from '../../model/element';
-import { dispatch } from '../../model/editor_state';
+import Button from '../Button/Button';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
+import { AppDispatch } from '../../model/store';
+import { addImage, addObject } from '../../model/actionCreators';
+import { connect } from 'react-redux';
 
-export const DropDown = () => {
+interface DropDownProps {
+    addObject: (element: string) => void,
+    addImage: (urlImage: string) => void,
+}
+
+const DropDown = ({addObject, addImage}: DropDownProps) => {
     const [opened, setOpened] = useState(false);
     const dropDownRef = useRef<HTMLDivElement>(null)
 
@@ -29,6 +35,8 @@ export const DropDown = () => {
                 opened
                     ?  <DropDownOptions 
                         onClick = {() => setOpened(false)}
+                        addImage={addImage}
+                        addObject={addObject}
                     /> 
                     :  null
             }
@@ -37,10 +45,12 @@ export const DropDown = () => {
 }
 
 interface DropDownOptionsProps {
-    onClick: () => void
+    onClick: () => void,
+    addObject: (element: string) => void,
+    addImage: (urlImage: string) => void,
 }
 
-const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
+const DropDownOptions = ({onClick, addObject, addImage}: DropDownOptionsProps) => {
     const [activeFigure, setActiveFigure] = useState(false);
     const [activeImage, setActiveImage] = useState(false);
     return (
@@ -66,7 +76,7 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
             <div
                 className = {styles.text}
                 onClick = {() => {
-                    dispatch(addObject, { element: 'text' })
+                    addObject('text')
                     setActiveImage(false);
                     setActiveFigure(false);
                     onClick();
@@ -78,6 +88,8 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
                 activeFigure = {activeFigure}
                 activeImage = {activeImage}
                 onClick = {onClick}
+                addObject={addObject}
+                addImage={addImage}
             />
         </div>
     )
@@ -86,7 +98,9 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
 interface DropDownOptionsToAddProps {
     activeFigure: boolean,
     activeImage: boolean,
-    onClick: () => void
+    onClick: () => void,
+    addObject: (element: string) => void,
+    addImage: (urlImage: string) => void,
 }
 
 const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOptionsToAddProps) => {
@@ -99,21 +113,21 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                         <div 
                             className={styles.rectangle}
                             onClick = {() => {
-                                dispatch(addObject, { element: 'rectangle' })
+                                addObject('rectangle')
                                 onClick()
                             }}>
                         </div>
                         <div 
                             className={styles.triangle}
                             onClick = {() => {
-                                dispatch(addObject, { element: 'triangle' })
+                                addObject('triangle')
                                 onClick()
                             }}>
                         </div>
                         <div 
                             className={styles.circle}
                             onClick = {() => {
-                                dispatch(addObject, { element: 'circle' })
+                                addObject('circle')
                                 onClick()
                             }}>
                         </div>
@@ -135,7 +149,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                                 inputFile.onchange = () => {
                                     if (inputFile.files) {
                                         const urlImage = URL.createObjectURL(inputFile.files[0])
-                                        dispatch(addImage, { urlImage: urlImage })
+                                        addImage(urlImage)
                                     }
                                    
                                 }
@@ -162,6 +176,14 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                 : null
         }
         </div>
-        
     )
 }
+
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        addObject: (element: string) => dispatch(addObject(element)),
+        addImage: (urlImage: string) => dispatch(addImage(urlImage)),
+    }
+}
+
+export default connect(null ,mapDispatchToProps)(DropDown)

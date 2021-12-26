@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import styles from './input.module.css';
 
 interface InputProps {
@@ -7,7 +8,7 @@ interface InputProps {
     onKeyUp: (value: string) => void
 }
 
-export const Input = ({
+const Input = ({
     style,
     value,
     onKeyUp,
@@ -28,3 +29,5 @@ export const Input = ({
         ></input>
     )
 }
+
+export default connect()(Input)

@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import styles from './Knob.module.css';
 
 interface KnobProps {
@@ -5,7 +6,7 @@ interface KnobProps {
     onClick: (value: number) => void
 }
 
-export const Knob = ({
+const Knob = ({
     value,
     onClick
 }: KnobProps) => {
@@ -29,3 +30,5 @@ export const Knob = ({
         </table>
     )
 }
+
+export default connect()(Knob)

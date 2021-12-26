@@ -1,7 +1,10 @@
 import { createStore } from 'redux';
 import { Editor } from "./types"
-import { addActionToHistory, presentationReducer } from './editor'
-import { slidesReducer } from './presentation';
+import { addActionToHistory, editorReducer } from './editor'
+import { presentationReducer } from './presentation';
+import { slideReducer } from './slide'
+import { deepClone } from '../core/functions/deepClone';
+import { uploadDoc } from './actionCreators';
 
 let initialState: Editor = {
     presentation: {
@@ -115,20 +118,71 @@ let initialState: Editor = {
 
 export type ActionType = {
     type: string,
-    newTitle?: string
+    newTitle?: string,
+    slideId?: string,
+    orderShift?: number,
+    background?: string,
+    element?: string,
+    urlImage?: string,
+    elementId?: string,
+    changePositionCoordinates?: {
+        newX: number,
+        newY: number
+    },
+    ChangeSizeArgs?: {
+        widthShift: number,
+        heightShift: number
+    },
+    ChangeTextArgs?: {
+        font?: string
+        textColor?: string,
+        bgColor?: string,
+        textValue?: string,
+        fontSize?: number,
+        fontWeight?: "light" | "regular" | "bold"
+    },
+    newWidth?: number,
+    newColor?: string,
+    newEditor?: Editor
+}
+
+export function uploadDocFunction() {
+    const inputFile = document.createElement('input')
+    inputFile.type = 'file';
+    inputFile.style.display = 'none';
+    inputFile.accept = 'application/json';
+    inputFile.onchange = () => {
+        if (inputFile.files) {
+            const fileEditor = inputFile.files[0];
+            const reader = new FileReader();
+            reader.readAsText(fileEditor);
+            reader.onload = () => {
+                if (typeof reader.result === 'string') {
+                    const newEditor = deepClone(JSON.parse(reader.result)) as Editor;
+                    store.dispatch(uploadDoc(newEditor));
+                }
+            };
+        }
+    }
+    inputFile.click();
+    inputFile.remove();
 }
 
 function mainReducer(state = initialState, action: ActionType): Editor {
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
                                 && (action.type !== 'EXPORT_DOCUMENT')
                                 && (action.type !== 'SWITCH_PREVIEW');
+    const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId == state.presentation.currentSlideIds[0]);
     return { 
-        ...presentationReducer(state, action),
+        ...editorReducer(state, action),
         history: addInHistory? addActionToHistory(state): state.history,
         presentation: {
-            ...slidesReducer(state.presentation, action)
+            ...presentationReducer(state.presentation, action),
+            slides: state.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(state.presentation.slides[indexCurrentSlide], action))
         }
     }
 }
 
-let store = createStore(mainReducer, initialState)
+export let store = createStore(mainReducer, initialState)
+
+export type AppDispatch = typeof store.dispatch

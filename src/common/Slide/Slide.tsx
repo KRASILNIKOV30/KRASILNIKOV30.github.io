@@ -1,3 +1,4 @@
+import { connect } from 'react-redux';
 import styles from './Slide.module.css'
 
 interface SlideViewProps {
@@ -5,7 +6,7 @@ interface SlideViewProps {
     background: string
 }
 
-export const SlideView = ({
+const SlideView = ({
     slideElements,
     background,
 }: SlideViewProps) => {
@@ -19,3 +20,5 @@ export const SlideView = ({
         </div>
     )
 }
+
+export default connect()(SlideView)

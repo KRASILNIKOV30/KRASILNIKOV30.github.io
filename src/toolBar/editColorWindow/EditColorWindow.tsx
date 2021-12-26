@@ -1,21 +1,25 @@
 import { useState } from "react";
 
 import { SlideElement } from "../../model/types"
-import { Button } from "../../common/Button/Button";
-import { Knob } from "../../common/Knob/Knob";
-import { Palette } from "../../common/Palette/Palette";
+import Button from "../../common/Button/Button";
+import Knob from "../../common/Knob/Knob";
+import Palette from "../../common/Palette/Palette";
 import styles from "./EditColorWindow.module.css";
-import { changeStrokeColor, changeFillColor, changeStrokeWidth } from "../../model/element";
-import { setBackground } from '../../model/presentation';
-import { dispatch } from '../../model/editor_state';
+import { connect } from "react-redux";
+import { AppDispatch } from "../../model/store";
+import { changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground } from "../../model/actionCreators";
 
 interface EditColorWindowProps {
     firstSelectedElement: SlideElement
     drawMode: string,
-    onClick: () => void
+    onClick: () => void,
+    changeStrokeColor: (newColor: string) => void,
+    changeFillColor: (newColor: string) => void,
+    changeStrokeWidth: (newWidth: number) => void,
+    setBackground: (background: string) => void
 }
 
-function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorWindowProps) {
+function editColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
     return (
         <div className={styles.edit_color_window}>
@@ -63,7 +67,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorW
                                 inputFile.onchange = () => {
                                     if (inputFile.files) {
                                         const urlImage = URL.createObjectURL(inputFile.files[0])
-                                        dispatch(setBackground, { background: urlImage });
+                                        setBackground(urlImage)
                                     }
                                    
                                 }
@@ -82,7 +86,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorW
 
                         <Knob
                             value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
-                            onClick={(value) => dispatch(changeStrokeWidth, { newWidth: value })}
+                            onClick={(value) => changeStrokeWidth(value)}
                         />
                     </div>
                 }
@@ -93,22 +97,32 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick }: EditColorW
                         text="Готово"
                         onClick={() => {
                             switch(drawMode) {
-                            case 'backgroundSlide':
-                                dispatch(setBackground, { background: selectedColor });
-                                break
-                            case 'fillFigure':
-                                dispatch(changeFillColor, { newColor: selectedColor });
-                                break
-                            case 'strokeFigure':
-                                dispatch(changeStrokeColor, { newColor: selectedColor });
-                                break
-                            }
+                                case 'backgroundSlide':
+                                    setBackground(selectedColor);
+                                    break
+                                case 'fillFigure':
+                                    changeFillColor(selectedColor);
+                                    break
+                                case 'strokeFigure':
+                                    changeStrokeColor(selectedColor);
+                                    break
+                                }
                             onClick()
                         }}
                     />
                 </div>
             </div>
         </div>
-    )}
+    )
+}
 
-export { EditColorWindow }
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        changeStrokeColor: (newColor: string) => dispatch(changeStrokeColor(newColor)),
+        changeFillColor: (newColor: string) => dispatch(changeFillColor(newColor)),
+        changeStrokeWidth: (newWidth: number) => dispatch(changeStrokeWidth(newWidth)),
+        setBackground: (background: string) => dispatch(setBackground(background))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(editColorWindow)

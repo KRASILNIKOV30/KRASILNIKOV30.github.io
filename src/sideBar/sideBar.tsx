@@ -1,34 +1,44 @@
 import styles from './SideBar.module.css'
-import type { Editor } from '../model/types'
-import { SlideView } from '../common/Slide/Slide'
-import { SlidesElement } from '../common/SlidesElement/SlidesElement'
-import { dispatch } from '../model/editor_state'
-import { switchSlide, selectOneSlide, selectManySlide } from '../model/presentation'
+import type { Editor, Slide } from '../model/types'
+import SlideView from '../common/Slide/Slide'
+import SlidesElement from '../common/SlidesElement/SlidesElement'
+import { AppDispatch } from '../model/store'
+import { selectManySlides, selectOneSlide, switchSlide } from '../model/actionCreators'
+import { connect } from 'react-redux'
+
 
 interface SideBarProps {
-    editor: Editor
+    slides: Array<Slide>,
+    currentSlideIds: Array<string>,
+    switchSlide: (slideId: string) => void,
+    selectOneSlide: (slideId: string) => void,
+    selectManySlides: (slideId: string) => void
 }
 
 const SideBar = ({
-    editor
+    slides,
+    currentSlideIds,
+    switchSlide,
+    selectOneSlide,
+    selectManySlides
 }: SideBarProps) => {
-    const slidesList = editor.presentation.slides.map((slide) => (
+    const slidesList = slides.map((slide) => (
         <div className = {styles.sidebar_element}>
             <li
                 key = {slide.slideId}
                 className = {styles.scaled_slide_container}
             >
                 <div
-                    className = {`${styles.scaled_slide} ${editor.presentation.currentSlideIds.includes(slide.slideId, 0)? styles.scaled_slide_selected: ''}`}
+                    className = {`${styles.scaled_slide} ${currentSlideIds.includes(slide.slideId, 0)? styles.scaled_slide_selected: ''}`}
                     onClick = {(e) => {
                         if (e.ctrlKey) {
-                            dispatch(selectOneSlide, {slideId: slide.slideId})
+                            selectOneSlide(slide.slideId)
                         }
                         else if (e.shiftKey) {
-                            dispatch(selectManySlide, {slideId: slide.slideId})
+                            selectManySlides(slide.slideId)
                         }   
                         else {
-                            dispatch(switchSlide, {slideId: slide.slideId})
+                            switchSlide(slide.slideId)
                         }
                     }}
                 >
@@ -40,7 +50,8 @@ const SideBar = ({
                                     className = {styles.slide_element}
                                 > 
                                     <SlidesElement
-                                        slideElement = {slideElement}
+                                        slideId = {slide.slideId}
+                                        elementId= {slideElement.elementId}
                                         active = {false}
                                     />
                                 </li> 
@@ -57,4 +68,20 @@ const SideBar = ({
         </div>
     )
 }
-export { SideBar }
+
+function mapStateToProps(state: Editor) {
+    return {
+        slides: state.presentation.slides,
+        currentSlideIds: state.presentation.currentSlideIds
+    }
+}
+
+const mapDispatchToProps = (dispatch: AppDispatch) => {
+    return {
+        switchSlide: (slideId: string) => dispatch(switchSlide(slideId)),
+        selectOneSlide: (slideId: string) => dispatch(selectOneSlide(slideId)),
+        selectManySlides: (slideId: string) => dispatch(selectManySlides(slideId))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar)

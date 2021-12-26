@@ -1,5 +1,6 @@
 import styles from './Text.module.css';
 import type { TextType } from '../../../model/types'
+import { connect } from 'react-redux';
 
 interface TextProps {
     text: TextType,
@@ -7,7 +8,7 @@ interface TextProps {
     onKeyUp: (value: string) => void
 }
 
-export const Text = ({
+const Text = ({
     text,
     onKeyUp,
     placeholder
@@ -45,3 +46,5 @@ export const Text = ({
         ></input>
     )
 }
+
+export default connect()(Text)

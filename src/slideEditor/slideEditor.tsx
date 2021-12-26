@@ -1,7 +1,8 @@
 import styles from './SlideEditor.module.css';
-import { SlidesElement } from "../common/SlidesElement/SlidesElement";
-import type { Slide } from '../model/types'
-import { SlideView } from '../common/Slide/Slide'
+import SlidesElement from "../common/SlidesElement/SlidesElement";
+import type { Editor, Slide } from '../model/types'
+import SlideView from '../common/Slide/Slide'
+import { connect } from 'react-redux';
 
 type SlideBarProps = {
     slide: Slide
@@ -11,16 +12,17 @@ function SlideEditor({
         slide 
     }: SlideBarProps) {     
     const slideElements = slide.elements.map((slideElement) =>
-        <li
-                    
+        <li             
             key = {slideElement.elementId}
             className = {styles.slide_element}
             onClick = {console.log}
         >
             <SlidesElement
-                slideElement = {slideElement}
-                active = {slide.selectedElementsIds.includes(slideElement.elementId)}
+                slideId={slide.slideId}
+                elementId={slideElement.elementId}
+                active={slide.selectedElementsIds.includes(slideElement.elementId)}
             />
+            
         </li>
     )
     return (
@@ -35,4 +37,11 @@ function SlideEditor({
     )
 }
 
-export { SlideEditor, SlidesElement}
+function mapStateToProps(state: Editor) {
+    const indexSlide: number = state.presentation.slides.findIndex(slide => slide.slideId === state.presentation.currentSlideIds[0]);
+    return {
+        slide: state.presentation.slides[indexSlide]
+    }
+}
+
+export default connect(mapStateToProps)(SlideEditor)
