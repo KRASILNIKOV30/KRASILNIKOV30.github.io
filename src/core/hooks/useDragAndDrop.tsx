@@ -34,15 +34,10 @@ export function useDragAndDrop({
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if (isStartPosDeclared.current) {
-<<<<<<< HEAD
-            const newX = startObjectPositionX.current + e.clientX - startClientX.current;
-            const newY = startObjectPositionY.current + e.clientY - startClientY.current;
-=======
             const shiftX = e.clientX - startClientX.current;
             const shiftY = e.clientY - startClientY.current
             let newX = startObjectPositionX.current + e.clientX - startClientX.current;
             let newY = startObjectPositionY.current + e.clientY - startClientY.current;
->>>>>>> ToolBar
             window.removeEventListener('mousemove', onMouseMove)
             window.removeEventListener('mouseup', onMouseUp)
             setElementPosition({
@@ -78,7 +73,7 @@ export function useDragAndDrop({
         if (elementRef.current) {
             elementRef.current.addEventListener('mousedown', onMouseDown)
         } 
-    }, [onMouseDown])
+    }, [onMouseDown, elementRef])
 
     return () => {
         if (elementRef.current) {

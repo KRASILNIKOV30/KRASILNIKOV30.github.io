@@ -49,7 +49,7 @@ let editor: Editor = {
                         elementType: "text",
                         position: {
                             x: 234,
-                            y: 111
+                            y: 50
                         },
                         size: {
                             width: 50,

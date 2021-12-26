@@ -395,4 +395,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth, removeSelection }
+export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth, removeSelection, changeSize }

@@ -20,7 +20,6 @@ const SlidesElement = ({
     active
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
-    const edgeRef = useRef<HTMLDivElement>(null)
 
     const isOnShift = useRef<boolean>(false)
     const clickOutsideFunction = () => {
@@ -41,18 +40,40 @@ const SlidesElement = ({
     }, [])
     useDragAndDrop({
         elementRef: slideElementRef, 
-        onMouseUpFunction,
+        onMouseUpFunction: onMouseUpFunction,
     })
 
-    const edgeType = useRef('')
+    let edgeRef = useRef<HTMLDivElement>(null);
+
+    type CornersType = {
+        topLeft: React.RefObject<HTMLDivElement>,
+        topRight: React.RefObject<HTMLDivElement>,
+        bottomLeft: React.RefObject<HTMLDivElement>,
+        bottomRight: React.RefObject<HTMLDivElement>
+    }
+
+    const topLeftRef = useRef<HTMLDivElement>(null);
+    const topRightRef = useRef<HTMLDivElement>(null);
+    const bottomLeftRef = useRef<HTMLDivElement>(null);
+    const bottomRightRef = useRef<HTMLDivElement>(null);
+
+    const corners: CornersType = {
+        topLeft: topLeftRef,
+        topRight: topRightRef,
+        bottomLeft: bottomLeftRef,
+        bottomRight: bottomRightRef
+    }
 
     useResize({
         elementRef: slideElementRef,
-        edgeType,
-        onMouseUpFunction: (size: Size) => dispatch(changeSize, size)
+        edgeRef,
+        corners,
+        onMouseUpFunctions: [
+            (size: Size) => dispatch(changeSize, size),
+            (coordinates: Position) => dispatch(changePosition, coordinates)
+        ]
     }) 
-     
-
+    
     switch (slideElement.elementType) {
         case "text": 
             return (
@@ -79,10 +100,10 @@ const SlidesElement = ({
                     {
                         active &&
                         <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
                         </div>
                     }
                     <Text
@@ -121,10 +142,10 @@ const SlidesElement = ({
                     {
                         active &&
                         <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
                         </div>
                     }
                     <Figure
@@ -161,10 +182,10 @@ const SlidesElement = ({
                     {
                         active &&
                         <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`}></div>
+                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
                         </div>
                     }
                     <img
