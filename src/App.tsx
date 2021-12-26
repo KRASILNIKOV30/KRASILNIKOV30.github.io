@@ -9,7 +9,7 @@ import { AppDispatch } from './model/store';
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
 
-type AppProps = {
+interface AppProps {
     editor: Editor,
     switchPreview: () => void
 }

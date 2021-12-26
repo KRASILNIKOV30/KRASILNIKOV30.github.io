@@ -103,7 +103,7 @@ interface DropDownOptionsToAddProps {
     addImage: (urlImage: string) => void,
 }
 
-const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOptionsToAddProps) => {
+const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, addImage }: DropDownOptionsToAddProps) => {
     return (
         <div className={styles.options_to_add_container}>
             {
@@ -186,4 +186,4 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     }
 }
 
-export default connect(null ,mapDispatchToProps)(DropDown)
+export default connect(null, mapDispatchToProps)(DropDown)

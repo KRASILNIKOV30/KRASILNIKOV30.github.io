@@ -1,4 +1,4 @@
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Editor } from "./types"
 import { addActionToHistory, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
@@ -169,6 +169,7 @@ export function uploadDocFunction() {
 }
 
 function mainReducer(state: Editor = initialState, action: ActionType): Editor {
+    console.log('mainReducerCalled with an action: ' + JSON.stringify(action))
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
                                 && (action.type !== 'EXPORT_DOCUMENT')
                                 && (action.type !== 'SWITCH_PREVIEW')
@@ -184,12 +185,13 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     return newState
 }
 
+
 export let store = createStore(mainReducer, initialState)
 
 const unsubscribe = store.subscribe(() => 
     {
         const newState = store.getState()
-        console.log(JSON.stringify(newState))
+        console.log(newState.presentation.title)
     } 
 )
 
