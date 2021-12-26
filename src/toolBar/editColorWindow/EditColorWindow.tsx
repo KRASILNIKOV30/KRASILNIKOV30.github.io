@@ -19,7 +19,7 @@ interface EditColorWindowProps {
     setBackground: (background: string) => void
 }
 
-function editColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground }: EditColorWindowProps) {
+function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
     return (
         <div className={styles.edit_color_window}>
@@ -125,4 +125,4 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(editColorWindow)
+export default connect(null, mapDispatchToProps)(EditColorWindow)

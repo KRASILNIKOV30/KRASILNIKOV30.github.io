@@ -9,7 +9,7 @@ function saveDoc() {
 
 function uploadDoc(newEditor: Editor) {
     return {
-        type: 'UPLOAD_DOC',
+        type: 'UPLOAD_DOCUMENT',
         newEditor
     }
 }

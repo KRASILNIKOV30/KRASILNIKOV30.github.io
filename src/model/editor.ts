@@ -86,7 +86,7 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return undoReducer(state)
         case 'REDO':
             return redoReducer(state);
-        case 'UPLOAD_DOC':
+        case 'UPLOAD_DOCUMENT':
             return action.newEditor? uploadDocReducer(state, action.newEditor): state
         default:
             return state

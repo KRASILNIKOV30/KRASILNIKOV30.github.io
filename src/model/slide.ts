@@ -140,13 +140,13 @@ function changeSizeReducer(slide: Slide, widthShift: number, heightShift: number
 }
 
 function changeTextPropsReducer(
-    slide: Slide,
-    font: string,
-    textColor: string,
-    bgColor: string,
-    textValue: string,
-    fontSize: number,
-    fontWeight: "light" | "regular" | "bold"   
+    slide: Slide | undefined,
+    font: string | undefined,
+    textColor: string | undefined,
+    bgColor: string | undefined,
+    textValue: string | undefined,
+    fontSize: number | undefined,
+    fontWeight: "light" | "regular" | "bold" | undefined   
 ): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();

@@ -168,21 +168,29 @@ export function uploadDocFunction() {
     inputFile.remove();
 }
 
-function mainReducer(state = initialState, action: ActionType): Editor {
+function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
                                 && (action.type !== 'EXPORT_DOCUMENT')
-                                && (action.type !== 'SWITCH_PREVIEW');
+                                && (action.type !== 'SWITCH_PREVIEW')
+                                && (action.type !== 'UPLOAD_DOCUMENT')
+                                && (action.type !== 'SWITCH_PREVIEW')
+                                && (action.type !== 'UNDO')
+                                && (action.type !== 'REDO');
     const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId == state.presentation.currentSlideIds[0]);
-    return { 
-        ...editorReducer(state, action),
-        history: addInHistory? addActionToHistory(state): state.history,
-        presentation: {
-            ...presentationReducer(state.presentation, action),
-            slides: state.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(state.presentation.slides[indexCurrentSlide], action))
-        }
-    }
+    const newState: Editor = editorReducer(state, action);
+    if (addInHistory) {newState.history = addActionToHistory(state)}
+    newState.presentation = presentationReducer(state.presentation, action);
+    newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(state.presentation.slides[indexCurrentSlide], action))
+    return newState
 }
 
 export let store = createStore(mainReducer, initialState)
+
+const unsubscribe = store.subscribe(() => 
+    {
+        const newState = store.getState()
+        console.log(JSON.stringify(newState))
+    } 
+)
 
 export type AppDispatch = typeof store.dispatch
