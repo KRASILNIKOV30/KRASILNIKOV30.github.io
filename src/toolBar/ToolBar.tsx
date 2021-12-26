@@ -129,7 +129,7 @@ const ToolBar = ({
                     <div className={styles.icon_button}>
                         <Button
                             style='delete'
-                            onClick={() => removeSlides}
+                            onClick={() => removeSlides()}
                         />
                     </div>
                     <div className={styles.icon_button}>

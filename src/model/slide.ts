@@ -250,19 +250,19 @@ function deleteSelectedReducer(slide: Slide): Slide {
 function slideReducer(state: Slide, action: ActionType): Slide {
     switch (action.type) {
         case 'SET_BACKGROUND':
-            return action.background !== undefined? setBackgroundReducer(state, action.background): state;
+            return action.background !== undefined? setBackgroundReducer(state, action.background): deepClone(state) as Slide;
         case 'ADD_OBJECT':
-            return action.element !== undefined? addObjectReducer(state, action.element): state;
+            return action.element !== undefined? addObjectReducer(state, action.element): deepClone(state) as Slide;
         case 'ADD_IMAGE':
-            return action.urlImage !== undefined? addImageReducer(state, action.urlImage): state;
+            return action.urlImage !== undefined? addImageReducer(state, action.urlImage): deepClone(state) as Slide;
         case 'SELECT_ELEMENT':
-            return action.elementId !== undefined? selectElementReducer(state, action.elementId): state;
+            return action.elementId !== undefined? selectElementReducer(state, action.elementId): deepClone(state) as Slide;
         case 'SELECT_MANY_ELEMENTS':
-            return action.elementId !== undefined? selectManyElementsReducer(state, action.elementId): state;
-        case 'CHANGE_POSITIONc':
-            return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.newX, action.changePositionCoordinates.newY): state;
+            return action.elementId !== undefined? selectManyElementsReducer(state, action.elementId): deepClone(state) as Slide;
+        case 'CHANGE_POSITION':
+            return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.newX, action.changePositionCoordinates.newY): deepClone(state) as Slide;
         case 'CHANGE_SIZE':
-            return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.widthShift, action.ChangeSizeArgs.heightShift): state;
+            return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.widthShift, action.ChangeSizeArgs.heightShift): deepClone(state) as Slide;
         case 'CHANGE_TEXT_PROPS':
             return action.ChangeTextArgs !== undefined? changeTextPropsReducer(state,
                 action.ChangeTextArgs.font,
@@ -271,17 +271,17 @@ function slideReducer(state: Slide, action: ActionType): Slide {
                 action.ChangeTextArgs.textColor,
                 action.ChangeTextArgs.fontSize,
                 action.ChangeTextArgs.fontWeight
-            ): state;
+            ): deepClone(state) as Slide;
         case 'CHANGE_STROKE_WIDTH':
-            return action.newWidth !== undefined? changeStrokeWidthReducer(state, action.newWidth): state;
+            return action.newWidth !== undefined? changeStrokeWidthReducer(state, action.newWidth): deepClone(state) as Slide;
         case 'CHANGE_STROKE_COLOR': 
-            return action.newColor !== undefined? changeStrokeColorReducer(state, action.newColor): state;
+            return action.newColor !== undefined? changeStrokeColorReducer(state, action.newColor): deepClone(state) as Slide;
         case 'CHANGE_FILL_COLOR':
-            return action.newColor !== undefined? changeFillColorReducer(state, action.newColor): state;
+            return action.newColor !== undefined? changeFillColorReducer(state, action.newColor): deepClone(state) as Slide;
         case 'DELETE_SELECTED':
             return deleteSelectedReducer(state)
         default:
-            return state;
+            return deepClone(state) as Slide;
     }
 }
 

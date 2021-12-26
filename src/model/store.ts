@@ -1,6 +1,6 @@
 import { createStore, combineReducers } from 'redux';
 import { Editor } from "./types"
-import { addActionToHistory, editorReducer } from './editor'
+import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
@@ -169,7 +169,6 @@ export function uploadDocFunction() {
 }
 
 function mainReducer(state: Editor = initialState, action: ActionType): Editor {
-    console.log('mainReducerCalled with an action: ' + JSON.stringify(action))
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
                                 && (action.type !== 'EXPORT_DOCUMENT')
                                 && (action.type !== 'SWITCH_PREVIEW')
@@ -179,20 +178,15 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
                                 && (action.type !== 'REDO');
     const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId == state.presentation.currentSlideIds[0]);
     const newState: Editor = editorReducer(state, action);
-    if (addInHistory) {newState.history = addActionToHistory(state)}
-    newState.presentation = presentationReducer(state.presentation, action);
-    newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(state.presentation.slides[indexCurrentSlide], action))
+    if (addInHistory) {newState.history = addActionToHistoryReducer(state)}
+    newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
+    console.log('BEFORE pres ' + JSON.stringify(newState.presentation.slides))
+    newState.presentation = presentationReducer(newState.presentation, action);
+    console.log('AFTER pres ' + JSON.stringify(newState.presentation.slides))
     return newState
 }
 
 
 export let store = createStore(mainReducer, initialState)
-
-const unsubscribe = store.subscribe(() => 
-    {
-        const newState = store.getState()
-        console.log(newState.presentation.title)
-    } 
-)
 
 export type AppDispatch = typeof store.dispatch

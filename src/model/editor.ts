@@ -2,7 +2,7 @@ import type { Editor, History, Presentation } from './types';
 import { deepClone } from '../core/functions/deepClone'
 import { ActionType } from './store';
 
-function addActionToHistory(editor: Editor): History {
+function addActionToHistoryReducer(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
     const presentation = deepClone(editor.presentation) as Presentation;
     if(newHistory.undoStack.length === 100) {
@@ -16,7 +16,8 @@ function addActionToHistory(editor: Editor): History {
 }
 
 function saveDocReducer(editor: Editor): Editor {
-    const stringEditor = JSON.stringify(editor);
+    const newEditor = deepClone(editor) as Editor;
+    const stringEditor = JSON.stringify(newEditor);
     const fileEditor = new Blob(
         [stringEditor], {
             type: 'application/json'
@@ -28,7 +29,7 @@ function saveDocReducer(editor: Editor): Editor {
     link.style.display = 'none';
     link.click();
     link.remove();
-    return (editor)
+    return (newEditor)
 }
 
 function uploadDocReducer(editor: Editor, newEditor: Editor): Editor {
@@ -36,42 +37,46 @@ function uploadDocReducer(editor: Editor, newEditor: Editor): Editor {
 }
 
 function exportDocReducer(editor: Editor): Editor {
-    return(editor)
+    const newEditor = deepClone(editor) as Editor;
+    return(newEditor)
 }
 
 function switchPreviewReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
     return {
-        ...editor,
+        ...newEditor,
         statePreview: !editor.statePreview
     }
 }
 
 function undoReducer(editor: Editor): Editor {
-    if (editor.history.undoStack.length !== 0) {
-        const newHistory = deepClone(editor.history) as History;
+    const newEditor = deepClone(editor) as Editor;
+    if (newEditor.history.undoStack.length !== 0) {
+        const newHistory = deepClone(newEditor.history) as History;
         const newPresentation: Presentation = newHistory.undoStack.pop()!;
-        newHistory.redoStack.push(editor.presentation);
+        newHistory.redoStack.push(newEditor.presentation);
         return {
-            ...editor,
+            ...newEditor,
             history: newHistory,
             presentation: newPresentation
         }
     }
-    return(editor)
+    return(newEditor)
 }
 
 function redoReducer(editor: Editor): Editor {
-    if (editor.history.redoStack.length !== 0) {
-        const newHistory = deepClone(editor.history) as History;
+    const newEditor = deepClone(editor) as Editor;
+    if (newEditor.history.redoStack.length !== 0) {
+        const newHistory = deepClone(newEditor.history) as History;
         const newPresentation: Presentation = newHistory.redoStack.pop()!;
-        newHistory.undoStack.push(editor.presentation);
+        newHistory.undoStack.push(newEditor.presentation);
         return {
-            ...editor, 
+            ...newEditor, 
             history: newHistory,
             presentation: newPresentation
         }
     }
-    return(editor)
+    return(newEditor)
 }
 
 function editorReducer(state: Editor, action: ActionType): Editor {
@@ -87,10 +92,10 @@ function editorReducer(state: Editor, action: ActionType): Editor {
         case 'REDO':
             return redoReducer(state);
         case 'UPLOAD_DOCUMENT':
-            return action.newEditor? uploadDocReducer(state, action.newEditor): state
+            return action.newEditor? uploadDocReducer(state, action.newEditor): deepClone(state) as Editor
         default:
-            return state
+            return deepClone(state) as Editor
     }
 }
 
-export { editorReducer, addActionToHistory }
+export { editorReducer, addActionToHistoryReducer }
