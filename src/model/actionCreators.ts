@@ -61,28 +61,28 @@ function removeSlides() {
 function switchSlide(slideId: string) {
     return {
         type: 'SWITCH_SLIDE',
-        slideId: slideId
+        slideId
     }
 }
 
 function selectOneSlide(slideId: string) {
     return {
         type: 'SELECT_ONE_SLIDE',
-        slideId: slideId
+        slideId
     }
 }
 
 function selectManySlides(slideId: string) {
     return {
         type: 'SELECT_MANY_SLIDE',
-        slideId: slideId
+        slideId
     }
 }
 
 function switchSlidePositions(orderShift: number) {
     return {
         type: 'SWITCH_SLIDE_POSITIONS',
-        orderShift: orderShift
+        orderShift
     }
 }
 
@@ -90,44 +90,44 @@ function switchSlidePositions(orderShift: number) {
 function setBackground(background: string) {
     return {
         type: 'SET_BACKGROUND',
-        background: background
+        background
     }
 }
 
 function addObject(element: string) {
     return {
         type: 'ADD_OBJECT',
-        element: element
+        element
     }
 }
 
 function addImage(urlImage: string) {
     return {
         type: 'ADD_IMAGE',
-        urlImage: urlImage
+        urlImage
     }
 }
 
 function selectElement(elementId: string) {
     return {
         type: 'SELECT_ELEMENT',
-        elementId: elementId
+        elementId
     }
 }
 
 function selectManyElements(elementId: string) {
     return {
         type: 'SELECT_MANY_ELEMENTS',
-        elementId: elementId
+        elementId
     }
 }
 
-function changePosition(newX: number, newY: number) {
+function changePosition(xShift: number, yShift: number) {
     return {
         type: 'CHANGE_POSITION',
         changePositionCoordinates: {
-            newX: newX,
-            newY: newY
+            xShift,
+            yShift
         }
     }
 }
@@ -136,8 +136,8 @@ function changeSize(widthShift: number, heightShift: number) {
     return {
         type: 'CHANGE_SIZE',
         ChangeSizeArgs: {
-            widthShift: widthShift,
-            heightShift: heightShift
+            widthShift,
+            heightShift
         }
     }
 }
@@ -153,12 +153,12 @@ function changeTextProps(
     return {
         type: 'CHANGE_TEXT_PROPS',
         ChangeTextArgs: {
-            font: font,
-            textColor: textColor,
-            bgColor: bgColor,
-            textValue: textValue,
-            fontSize: fontSize,
-            fontWeight: fontWeight
+            font,
+            textColor,
+            bgColor,
+            textValue,
+            fontSize,
+            fontWeight
         }
     }
 }
@@ -166,27 +166,34 @@ function changeTextProps(
 function changeStrokeWidth(newWidth: number) {
     return {
         type: 'CHANGE_STROKE_WIDTH',
-        newWidth: newWidth
+        newWidth
     }
 }
 
 function changeStrokeColor(newColor: string) {
     return {
         type: 'CHANGE_STROKE_COLOR',
-        newColor: newColor
+        newColor
     }
 }
 
 function changeFillColor(newColor: string) {
     return {
         type: 'CHANGE_FILL_COLOR',
-        newColor: newColor
+        newColor
     }
 }
 
 function deleteSelected() {
     return {
         type: 'DELETE_SELECTED'
+    }
+}
+
+function removeSelection(elementId: string) {
+    return {
+        type: 'REMOVE_SELECTION',
+        elementId
     }
 }
 

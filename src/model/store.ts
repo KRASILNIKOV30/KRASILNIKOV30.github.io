@@ -126,8 +126,8 @@ export type ActionType = {
     urlImage?: string,
     elementId?: string,
     changePositionCoordinates?: {
-        newX: number,
-        newY: number
+        xShift: number,
+        yShift: number
     },
     ChangeSizeArgs?: {
         widthShift: number,

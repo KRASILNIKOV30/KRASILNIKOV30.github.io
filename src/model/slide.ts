@@ -91,6 +91,13 @@ function addImageReducer(slide: Slide, urlImage: string): Slide {
     return newSlide
 }
 
+function removeSelectionReducer(slide: Slide, elementId: string): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    const elementIndex = newSlide.selectedElementsIds.findIndex((id) => id === elementId)
+    newSlide.selectedElementsIds.splice(elementIndex, 1)
+    return newSlide
+}
+
 function selectElementReducer(slide: Slide, elementId: string): Slide {
     const newSlide = deepClone(slide) as Slide;
     newSlide.selectedElementsIds = [elementId];
@@ -103,7 +110,7 @@ function selectManyElementsReducer(slide: Slide, elementId: string): Slide {
     return newSlide
 } 
 
-function changePositionReducer(slide: Slide, newX: number, newY: number): Slide {
+function changePositionReducer(slide: Slide, xShift: number, yShift: number): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for(let i = 0; i < newSlide.elements.length; i++) {
@@ -111,8 +118,8 @@ function changePositionReducer(slide: Slide, newX: number, newY: number): Slide 
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 position: {
-                    x: newX,
-                    y: newY
+                    x: newSlide.elements[i].position.x + xShift,
+                    y: newSlide.elements[i].position.y + yShift
                 }
             };
             newSlide.elements.splice(i, 1, newElement)
@@ -260,7 +267,7 @@ function slideReducer(state: Slide, action: ActionType): Slide {
         case 'SELECT_MANY_ELEMENTS':
             return action.elementId !== undefined? selectManyElementsReducer(state, action.elementId): deepClone(state) as Slide;
         case 'CHANGE_POSITION':
-            return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.newX, action.changePositionCoordinates.newY): deepClone(state) as Slide;
+            return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.xShift, action.changePositionCoordinates.yShift): deepClone(state) as Slide;
         case 'CHANGE_SIZE':
             return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.widthShift, action.ChangeSizeArgs.heightShift): deepClone(state) as Slide;
         case 'CHANGE_TEXT_PROPS':
@@ -279,7 +286,9 @@ function slideReducer(state: Slide, action: ActionType): Slide {
         case 'CHANGE_FILL_COLOR':
             return action.newColor !== undefined? changeFillColorReducer(state, action.newColor): deepClone(state) as Slide;
         case 'DELETE_SELECTED':
-            return deleteSelectedReducer(state)
+            return deleteSelectedReducer(state);
+        case 'REMOVE_SELECTION': 
+            return action.elementId !== undefined? removeSelectionReducer(state, action.elementId): deepClone(state) as Slide;
         default:
             return deepClone(state) as Slide;
     }

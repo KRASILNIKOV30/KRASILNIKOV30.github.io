@@ -1,13 +1,13 @@
 import { Editor } from './model/types';
 import ToolBar from './toolBar/ToolBar';
-import SlideEditor from './slideEditor/slideEditor';
-import SideBar from './sideBar/SideBar';  
+import SlideEditor from './slideEditor/slideEditor';  
 import styles from './App.module.css';
 import SlideView from './common/Slide/Slide';
 import SlidesElement from './common/SlidesElement/SlidesElement'
 import { AppDispatch } from './model/store';
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
+import SideBar from './sideBar/SideBar';
 
 interface AppProps {
     editor: Editor,

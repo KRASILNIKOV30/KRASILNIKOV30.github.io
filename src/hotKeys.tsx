@@ -1,29 +1,26 @@
-import { dispatch, uploadDoc } from './model/editor';
-
-import { changeTitle, saveDoc, exportDoc, switchPreview, undo, redo } from "./model/presentation";
-import { addSlide, removeSlides, switchSlidePositions } from "./model/slide";
-import { changeTextProps } from "./model/element"
+import { addSlide, redo, switchPreview, undo } from './model/actionCreators';
+import { store } from './model/store'
 
 document.addEventListener('keydown', function(event) {
-if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
-dispatch(undo, {})
-}
+    if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+        store.dispatch(undo())
+    }
 });
 
 document.addEventListener('keydown', function(event) {
-if (event.code == 'KeyY' && (event.ctrlKey || event.metaKey)) {
-dispatch(redo, {})
-}
+    if (event.code == 'KeyY' && (event.ctrlKey || event.metaKey)) {
+        store.dispatch(redo())
+    }
 });
 
 document.addEventListener('keydown', function(event) {
-if (event.altKey) {
-dispatch(switchPreview, {})
-}
+    if (event.altKey) {
+        store.dispatch(switchPreview())
+    }
 });
 
 document.addEventListener('keydown', function(event) {
-if (event.code == 'KeyN' && (event.ctrlKey || event.metaKey)) {
-dispatch(addSlide, {})
-}
+    if (event.code == 'KeyN' && (event.ctrlKey || event.metaKey)) {
+        store.dispatch(addSlide())
+    }
 });

@@ -53,9 +53,7 @@ const SlidesElement = ({
         onMouseUpFunction: (Coordinates: Position) => changePosition(Coordinates.x, Coordinates.y)
     })
 
-    if(slideElement === undefined) {
-        return (<div></div>)
-    }
+   
 
     let edgeRef = useRef<HTMLDivElement>(null);
 
@@ -87,6 +85,10 @@ const SlidesElement = ({
             (coordinates: Position) => changePosition(coordinates.x, coordinates.y)
         ]
     }) 
+
+    if(slideElement === undefined) {
+        return (<div></div>)
+    }
     
     switch (slideElement.elementType) {
         case "text": 
