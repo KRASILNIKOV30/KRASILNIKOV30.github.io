@@ -64,7 +64,7 @@ let editor: Editor = {
                             fontWeight: "bold"
                         }
                     },
-                    {
+                    /* {
                         elementId: "3",
                         elementType: "image",
                         position: {
@@ -76,7 +76,7 @@ let editor: Editor = {
                             height: 200
                         },
                         image: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
-                    }
+                    } */
                 ],
                 background: "#FFF2AF",
                 selectedElementsIds: ['1']

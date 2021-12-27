@@ -1,6 +1,7 @@
 import { Slide, SlideElement } from "./types";
 import { jsPDF } from 'jspdf'
 import CanvasTextWrapper from 'canvas-text-wrapper';
+import { uuid } from "uuidv4";
 
 function getBase64FromPicture(image: SlideElement): Promise<string> {
     return new Promise((resolve) => {
@@ -152,13 +153,26 @@ function setBackgroundColor(doc: jsPDF, color: string) {
 async function addSlides(doc: jsPDF, slides: Array<Slide>) {
     for (let i = 0; i < slides.length; i++) {
         const slide = slides[i];
-        if (typeof(slide.background) === 'string')
+        if (slide.background.length <= 7)
         {
             setBackgroundColor(doc, slide.background)
         }
         else
         {
-            await setBackgroundImage(doc, slide.background);
+            const bgImage: SlideElement = {
+                elementId: uuid(),
+                position: {
+                    x: 0,
+                    y: 0
+                },
+                elementType: 'image',
+                size: {
+                    width: 818,
+                    height: 582
+                },
+                image: slide.background
+            } 
+            await setBackgroundImage(doc, bgImage);
         }
         await addObjectsOnPage(doc, slide.elements);
         doc.addPage();
