@@ -2,6 +2,7 @@ import type { Slide, Presentation } from './types';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 import { ActionType } from './store';
+import { exportPDF } from './export';
 
 function changeTitleReducer(presentation: Presentation, title: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;

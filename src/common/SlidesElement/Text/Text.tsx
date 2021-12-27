@@ -1,8 +1,11 @@
 import styles from './Text.module.css';
 import type { TextType } from '../../../model/types'
 import { connect } from 'react-redux';
+import { Size } from '../../../core/types/types';
+import { useState } from 'react';
 
 interface TextProps {
+    size: Size
     text: TextType,
     placeholder?: string,
     onKeyUp: (value: string) => void
@@ -10,9 +13,12 @@ interface TextProps {
 
 const Text = ({
     text,
+    size,
     onKeyUp,
     placeholder
 }: TextProps) => {
+    const [textValue, setTextValue] = useState(text.textValue)
+
     if (!text.fontSize) {
         text.fontSize = 10;        
     }
@@ -26,24 +32,23 @@ const Text = ({
         text.bgColor = '#FFFFFF'
     }
     return (
-        <input
-            autoFocus
-            type = 'text'
-            value = {text.textValue!}
+        <textarea
+            //value = {textValue}
             className = {styles.text}
-            placeholder = {placeholder}
-            onKeyUp = {(event) => {
-                if (event.key === 'Enter') {
+            onChange = {(event) => {
                     onKeyUp(event.currentTarget.value)
-                }}}
+                    setTextValue(event.currentTarget.value)
+                }}
             style = {{
                 'fontFamily': text.font,
                 'fontWeight': text.fontWeight,
                 'fontSize': text.fontSize,
                 'color': text.textColor,
-                'background': text.bgColor
+                //'background': text.bgColor,
+                'width': size.width,
+                'height': size.height
             }}    
-        ></input>
+        >{textValue}</textarea>
     )
 }
 

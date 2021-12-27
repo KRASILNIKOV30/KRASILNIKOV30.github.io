@@ -18,23 +18,23 @@
 }
 
 .point_top_left {
-    top: -1.5%;
-    left: -1.5%;
+    top: -6px;
+    left: -6px;
 }
 
 .point_top_right {
-    top: -1.5%;
-    left: 99%;
+    top: -6px;
+    right: -6px;
 }
 
 .point_bottom_left {
-    top: 99%;
-    left: -1.5%;
+    bottom: -6px;
+    left: -6px;
 }
 
 .point_bottom_right {
-    top: 99%;
-    left: 99%;
+    bottom: -6px;
+    right: -6px;
 }
 
 .point_top_left,

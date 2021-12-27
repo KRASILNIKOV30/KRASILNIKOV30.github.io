@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface useDragAndDropProps {
     elementRef: React.RefObject<HTMLDivElement>,
-    onMouseUpFunction: Function
+    onMouseUpFunction: Function,
 }
 
 export function useDragAndDrop({
@@ -23,17 +23,19 @@ export function useDragAndDrop({
 
     const onMouseMove = useCallback((e: MouseEvent) => {
         if (isStartPosDeclared.current) {
-            let newX = startObjectPositionX.current + e.clientX - startClientX.current;
-            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
+            const newX = startObjectPositionX.current + e.clientX - startClientX.current;
+            const newY = startObjectPositionY.current + e.clientY - startClientY.current;
             setElementPosition({
                 x: newX,
                 y: newY
             })
         }
-    }, [])
+    }, [setElementPosition])
     
     const onMouseUp = useCallback((e: MouseEvent) => {
         if (isStartPosDeclared.current) {
+            const shiftX = e.clientX - startClientX.current;
+            const shiftY = e.clientY - startClientY.current
             let newX = startObjectPositionX.current + e.clientX - startClientX.current;
             let newY = startObjectPositionY.current + e.clientY - startClientY.current;
             window.removeEventListener('mousemove', onMouseMove)
@@ -42,16 +44,14 @@ export function useDragAndDrop({
                 x: newX,
                 y: newY
             })
-            onMouseUpFunction({newX, newY})
-               
+           onMouseUpFunction({shiftX, shiftY})   
         }
-    }, [])
+    }, [onMouseUpFunction])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current) {
+        if (elementRef.current && e.defaultPrevented) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mousedown', onMouseDown);
             const strX = elementRef.current?.style.left;
             const strY = elementRef.current?.style.top;
             startObjectPositionX.current = Number(strX?.substring(0, strX.length - 2));
@@ -73,7 +73,7 @@ export function useDragAndDrop({
         if (elementRef.current) {
             elementRef.current.addEventListener('mousedown', onMouseDown)
         } 
-    }, [onMouseDown])
+    }, [onMouseDown, elementRef])
 
     return () => {
         if (elementRef.current) {

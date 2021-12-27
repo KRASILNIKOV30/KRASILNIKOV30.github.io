@@ -72,7 +72,7 @@ const ToolBar = ({
         <div className={styles.toolbar}>
             <div className={styles.top_block}>
                 <img className={styles.logo}
-
+                    src=""
                 />
                 <div className={styles.top_block_second}>
                     <div className={styles.rename_container}>
@@ -205,6 +205,8 @@ const ToolBar = ({
         </div>
         
     )}
+
+    
 
 interface OptionalTools {
     textSelected: boolean,

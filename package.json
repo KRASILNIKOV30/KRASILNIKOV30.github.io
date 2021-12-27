@@ -10,6 +10,8 @@
     "@types/node": "^12.20.32",
     "@types/react": "^17.0.29",
     "@types/react-dom": "^17.0.9",
+    "canvas-text-wrapper": "^0.10.2",
+    "jspdf": "^2.5.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.6",
