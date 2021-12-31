@@ -179,7 +179,7 @@ async function addSlides(doc: jsPDF, slides: Array<Slide>) {
     }
 }
 
-export async function exportPDF(slides: Array<Slide>) {
+export async function exportPDF(slides: Array<Slide>, title: string) {
     const slideSize = [818, 582];
     const doc = new jsPDF({
         unit: "px",
@@ -188,7 +188,7 @@ export async function exportPDF(slides: Array<Slide>) {
     });
     await addSlides(doc, slides);
     doc.deletePage(doc.getNumberOfPages());
-    doc.save('test.pdf');
+    doc.save(title);
 }
 
 export {}

@@ -18,7 +18,7 @@ function addSlideReducer(presentation: Presentation): Presentation {
     newSlides.push({
         slideId: v4(),
         elements: [],
-        background: "white",
+        background: "#FFFFFF",
         selectedElementsIds: []
     });
     return {

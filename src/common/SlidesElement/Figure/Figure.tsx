@@ -11,26 +11,24 @@ const Circle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width
-    const height: number = size.height
+    const width: number = size.width + figure.strokeWidth;
+    const height: number = size.height + figure.strokeWidth;
     return (
-        <div>
-            <svg
-                width = {width}
-                height = {height}
+        <svg
+            width = {width}
+            height = {height}
+        >
+            <ellipse
+                rx = {(size.width - figure.strokeWidth) / 2}
+                ry = {(size.height - figure.strokeWidth) / 2}
+                cx = {size.width / 2}
+                cy = {size.height / 2}
+                fill = {figure.fillColor}
+                stroke = {figure.strokeColor}
+                strokeWidth = {figure.strokeWidth}
             >
-                <ellipse
-                    rx = {size.width/2}
-                    ry = {size.height/2}
-                    cx = {width/2}
-                    cy = {height/2}
-                    fill = {figure.fillColor}
-                    stroke = {figure.strokeColor}
-                    strokeWidth = {figure.strokeWidth}
-                >
-                </ellipse>
-            </svg>
-        </div>
+            </ellipse>
+        </svg>
     )
 }
 
@@ -38,26 +36,24 @@ const Rectangle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width
-    const height: number = size.height
+    const width: number = size.width + figure.strokeWidth;
+    const height: number = size.height + figure.strokeWidth;
     return (
-        <div>
-            <svg
-                width = {width}
-                height = {height}
+        <svg
+            width = {width}
+            height = {height}
+        >
+            <rect   
+                x = {figure.strokeWidth/2}
+                y = {figure.strokeWidth/2}
+                width = {size.width-figure.strokeWidth}
+                height = {size.height-figure.strokeWidth}
+                fill = {figure.fillColor}
+                stroke = {figure.strokeColor}
+                strokeWidth = {figure.strokeWidth}
             >
-                <rect
-                    x = {figure.strokeWidth}
-                    y = {figure.strokeWidth}
-                    width = {size.width}
-                    height = {size.height}
-                    fill = {figure.fillColor}
-                    stroke = {figure.strokeColor}
-                    strokeWidth = {figure.strokeWidth}
-                >
-                </rect>
-            </svg>
-        </div>
+            </rect>
+        </svg>
     )
 }
 
@@ -65,24 +61,22 @@ const Triangle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width
-    const height: number = size.height 
-    const points: string = String(figure.strokeWidth) + ', ' + String(height-figure.strokeWidth) + ' ' + String(width/2) + ',' + String(figure.strokeWidth) + ' ' + String(width-figure.strokeWidth) + ',' + String(height-figure.strokeWidth)
+    const width: number = size.width + figure.strokeWidth;
+    const height: number = size.height + figure.strokeWidth;
+    const points: string = String(figure.strokeWidth) + ', ' + String(height-figure.strokeWidth * 2) + ' ' + String(width/2) + ',' + String(figure.strokeWidth) + ' ' + String(width-figure.strokeWidth) + ',' + String(height-figure.strokeWidth * 2)
     return (
-        <div>
-            <svg
-                width = {width}
-                height = {height}
+        <svg
+            width = {width}
+            height = {height}
+        >
+            <polygon
+                points = {points}
+                fill = {figure.fillColor}
+                stroke = {figure.strokeColor}
+                strokeWidth = {figure.strokeWidth}
             >
-                <polygon
-                    points = {points}
-                    fill = {figure.fillColor}
-                    stroke = {figure.strokeColor}
-                    strokeWidth = {figure.strokeWidth}
-                >
-                </polygon>
-            </svg>
-        </div>
+            </polygon>
+        </svg>
     )
 }
 
@@ -92,34 +86,27 @@ const Figure = ({
 }: FigureProps) => {
     switch (figure.form) {
         case "rectangle":
-            return (
-                <div>
-                    <Rectangle
-                        figure = {figure}
-                        size = {size}
-                    />
-                </div>
+            return ( 
+                <Rectangle
+                    figure = {figure}
+                    size = {size}
+                />
             )
 
         case "circle":
             return (
-                <div>
-                    <Circle
-                        figure = {figure}
-                        size = {size}
-                    />    
-                </div>
-                
+                <Circle
+                    figure = {figure}
+                    size = {size}
+                />     
             )
             
         case "triangle":
             return (
-                <div>
-                    <Triangle
-                        figure = {figure}
-                        size = {size}
-                    />            
-                </div>
+                <Triangle
+                    figure = {figure}
+                    size = {size}
+                />            
             )    
     }
 }

@@ -39,13 +39,13 @@ let initialState: Editor = {
                             y: 150
                         },
                         size: {
-                            width: 400,
-                            height: 400
+                            width: 200,
+                            height: 200
                         },
                         figure: {
                             form: "circle",
-                            strokeColor: "#d0ffff",
-                            strokeWidth: 5,
+                            strokeColor: "#000000",
+                            strokeWidth: 10,
                             fillColor: "#0000ff"
                         }
                     },
@@ -70,7 +70,25 @@ let initialState: Editor = {
                         }
                     },
                     {
-                        elementId: "3",
+                        elementId: '3',
+                        elementType: "figure",
+                        position: {
+                            x: 500,
+                            y: 400
+                        },
+                        size: {
+                            width: 100,
+                            height: 100
+                        },
+                        figure: {
+                            form: "rectangle",
+                            strokeColor: "#000000",
+                            strokeWidth: 10,
+                            fillColor: "#f0000f"
+                        }
+                    },
+                    {
+                        elementId: "4",
                         elementType: "image",
                         position: {
                             x: 530,
@@ -180,9 +198,9 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     const newState: Editor = editorReducer(state, action);
     if (addInHistory) {newState.history = addActionToHistoryReducer(state)}
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
-    console.log('BEFORE pres ' + JSON.stringify(newState.presentation.slides))
+    //console.log('BEFORE pres ' + JSON.stringify(newState.presentation.slides))
     newState.presentation = presentationReducer(newState.presentation, action);
-    console.log('AFTER pres ' + JSON.stringify(newState.presentation.slides))
+    //console.log('AFTER pres ' + JSON.stringify(newState.presentation.slides))
     return newState
 }
 
