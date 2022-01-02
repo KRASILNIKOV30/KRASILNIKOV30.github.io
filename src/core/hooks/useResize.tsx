@@ -149,6 +149,7 @@ export const useResize = ({
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         if (elementRef.current) {
+            e.preventDefault();
             const target = e.target as HTMLDivElement;
             edgeType.current = target.id;
             window.addEventListener('mousemove', onMouseMove); 

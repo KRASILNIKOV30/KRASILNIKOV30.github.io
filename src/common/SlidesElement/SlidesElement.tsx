@@ -32,6 +32,7 @@ const SlidesElement = ({
     const slideElementRef = useRef<HTMLDivElement>(null);
 
     const isOnShift = useRef<boolean>(false)
+
     /* const clickOutsideFunction = () => {
         window.onmousedown = (e) => {
             isOnShift.current = e.shiftKey;
@@ -41,13 +42,9 @@ const SlidesElement = ({
         } else {
             return(null)
         }
-    } */
-
-   /*  useClickOutside(slideElementRef, clickOutsideFunction); */
+    }
+    useClickOutside(slideElementRef, clickOutsideFunction); */ 
     
-    const onMouseUpFunction = useCallback((coordinates: Position) => {
-        changePosition(coordinates.x, coordinates.y)
-    }, [])
     useDragAndDrop({
         elementRef: slideElementRef, 
         onMouseUpFunction: (Coordinates: Position) => changePosition(Coordinates.x, Coordinates.y)
@@ -103,6 +100,7 @@ const SlidesElement = ({
                         'height': slideElement.size.height
                     }}
                     onMouseDown = {(e) => {
+                        console.log('onMouseDown')
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 selectManyElements(slideElement.elementId)
@@ -116,14 +114,17 @@ const SlidesElement = ({
                     {
                         active &&
                         <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
+                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left' onMouseDown={(e) => e.stopPropagation}></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right' onMouseDown={(e) => e.stopPropagation}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left' onMouseDown={(e) => e.stopPropagation}></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right' onMouseDown={(e) => e.stopPropagation}></div>
                         </div>
                     }
                     <Text
-                        size = {slideElement.size}
+                        size = {{
+                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
+                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
+                        }}
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
                             if (value !== '') {
@@ -208,8 +209,8 @@ const SlidesElement = ({
                     <img
                         src = {slideElement.image}
                         style={{
-                            'width': slideElement.size.width,
-                            'height': slideElement.size.height
+                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
+                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
                         }}
                     />
                 </div>

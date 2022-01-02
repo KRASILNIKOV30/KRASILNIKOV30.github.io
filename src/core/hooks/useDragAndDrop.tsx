@@ -49,7 +49,7 @@ export function useDragAndDrop({
     }, [onMouseUpFunction])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current && e.defaultPrevented) {
+        if (elementRef.current && !e.defaultPrevented) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
             const strX = elementRef.current?.style.left;
@@ -73,11 +73,10 @@ export function useDragAndDrop({
         if (elementRef.current) {
             elementRef.current.addEventListener('mousedown', onMouseDown)
         } 
-    }, [onMouseDown, elementRef])
-
-    return () => {
-        if (elementRef.current) {
-            elementRef.current.removeEventListener('mousedown', onMouseDown)
+        return () => {
+            if (elementRef.current) {
+                elementRef.current.removeEventListener('mousedown', onMouseDown)
+            }
         }
-    }
+    }, [onMouseDown, elementRef])
 }
