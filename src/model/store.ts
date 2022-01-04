@@ -148,8 +148,8 @@ export type ActionType = {
         yShift: number
     },
     ChangeSizeArgs?: {
-        widthShift: number,
-        heightShift: number
+        newWidth: number,
+        newHeight: number
     },
     ChangeTextArgs?: {
         font?: string
@@ -197,10 +197,11 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId == state.presentation.currentSlideIds[0]);
     const newState: Editor = editorReducer(state, action);
     if (addInHistory) {newState.history = addActionToHistoryReducer(state)}
+    //console.log('BEFORE slide ' + JSON.stringify(newState.presentation.slides[0].elements[1]))
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
-    //console.log('BEFORE pres ' + JSON.stringify(newState.presentation.slides))
+    //console.log('BEFORE pres ' + JSON.stringify(newState.presentation.slides[0].elements[1]))
     newState.presentation = presentationReducer(newState.presentation, action);
-    //console.log('AFTER pres ' + JSON.stringify(newState.presentation.slides))
+    //console.log('END ' + JSON.stringify(newState.presentation.slides[0].elements[1]))
     return newState
 }
 

@@ -132,12 +132,12 @@ function changePosition(xShift: number, yShift: number) {
     }
 }
 
-function changeSize(widthShift: number, heightShift: number) {
+function changeSize(newWidth: number, newHeight: number) {
     return {
         type: 'CHANGE_SIZE',
         ChangeSizeArgs: {
-            widthShift,
-            heightShift
+            newWidth,
+            newHeight
         }
     }
 }
@@ -200,5 +200,5 @@ function removeSelection(elementId: string) {
 export { uploadDoc, redo, undo, switchPreview, exportDoc, saveDoc, changeTitle, addSlide, removeSlides,
          switchSlide, selectOneSlide, selectManySlides, switchSlidePositions, setBackground,
          addObject, addImage, selectElement, selectManyElements, changePosition, changeSize,
-         changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected
+         changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected, removeSelection
 }

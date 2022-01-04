@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import styles from './SlidesElement.module.css'
 import Figure from "./Figure/Figure"
 import Text from "./Text/Text"
@@ -78,7 +78,7 @@ const SlidesElement = ({
         edgeRef,
         corners,
         onMouseUpFunctions: [
-            (size: Size) => changeSize(size.width, size.height),
+            (size: Size) => {console.log(JSON.stringify(size));changeSize(size.width, size.height)},
             (coordinates: Position) => changePosition(coordinates.x, coordinates.y)
         ]
     }) 
@@ -233,7 +233,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         selectElement: (elementId: string) => dispatch(selectElement(elementId)),
         selectManyElements: (elementId: string) => dispatch(selectManyElements(elementId)),
         changeTextValue: (value: string) => dispatch(changeTextProps(undefined, undefined, undefined, value)),
-        changeSize: (widthShift: number, heightShift: number) => dispatch(changeSize(widthShift, heightShift))
+        changeSize: (newWidth: number, newHeight: number) => dispatch(changeSize(newWidth, newHeight))
     }
 }
 

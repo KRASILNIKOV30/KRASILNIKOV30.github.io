@@ -128,7 +128,8 @@ function changePositionReducer(slide: Slide, xShift: number, yShift: number): Sl
     return newSlide
 }
 
-function changeSizeReducer(slide: Slide, widthShift: number, heightShift: number): Slide {
+function changeSizeReducer(slide: Slide, newWidth: number, newHeight: number): Slide {
+    console.log('widthShift' + newWidth + ' heightShift ' + newHeight);
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for(let i = 0; i < newSlide.elements.length; i++) {
@@ -136,8 +137,8 @@ function changeSizeReducer(slide: Slide, widthShift: number, heightShift: number
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 size: {
-                    width: newSlide.elements[i].size.width + widthShift,
-                    height: newSlide.elements[i].size.height + heightShift
+                    width: newWidth,
+                    height: newHeight
                 }
             };
             newSlide.elements.splice(i, 1, newElement)
@@ -269,7 +270,7 @@ function slideReducer(state: Slide, action: ActionType): Slide {
         case 'CHANGE_POSITION':
             return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.xShift, action.changePositionCoordinates.yShift): deepClone(state) as Slide;
         case 'CHANGE_SIZE':
-            return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.widthShift, action.ChangeSizeArgs.heightShift): deepClone(state) as Slide;
+            return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.newWidth, action.ChangeSizeArgs.newHeight): deepClone(state) as Slide;
         case 'CHANGE_TEXT_PROPS':
             return action.ChangeTextArgs !== undefined? changeTextPropsReducer(state,
                 action.ChangeTextArgs.font,
