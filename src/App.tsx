@@ -20,29 +20,28 @@ function App({
 }: AppProps) {
     const indexSlide: number = editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
     const slidesList = editor.presentation.slides.map((slide) => (
-        <div>
-            <li
-                key = {slide.slideId}
-            >
-                <div>
-                    <SlideView
-                        slideElements = {
-                            slide.elements.map((slideElement) =>
-                                <li
-                                    key = {slideElement.elementId} 
-                                > 
-                                    <SlidesElement
-                                        slideId = {slide.slideId}
-                                        elementId= {slideElement.elementId}
-                                        active = {false}
-                                    />
-                                </li> 
-                            )}
-                        background = {slide.background}   
-                    />
-                </div>
-            </li>    
-        </div>
+        <li
+            key = {slide.slideId}
+        >
+            <div>
+                <SlideView
+                    slideElements = {
+                        slide.elements.map((slideElement) =>
+                            <li
+                                className={styles.preview_slide}
+                                key = {slideElement.elementId} 
+                            > 
+                                <SlidesElement
+                                    slideId = {slide.slideId}
+                                    elementId= {slideElement.elementId}
+                                    active = {false}
+                                />
+                            </li> 
+                        )}
+                    background = {slide.background}   
+                />
+            </div>
+        </li>      
     ))
     return (
         <div className={styles.app}>
@@ -56,9 +55,7 @@ function App({
                         }
                     }}
                 > 
-                    <div>
-                        {slidesList[indexSlide]}
-                    </div>    
+                    {slidesList[indexSlide]}        
                 </div>
                 :
                 <div className={styles.app_content}>

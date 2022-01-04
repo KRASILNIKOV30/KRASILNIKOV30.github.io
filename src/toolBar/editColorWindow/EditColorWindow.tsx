@@ -57,7 +57,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                         </div>
 
                         <Button
-                            style="outline"
+                            viewStyle="outline"
                             text="Выбрать изображение"
                             onClick={() => {
                                 const inputFile = document.createElement('input');
@@ -93,7 +93,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                 <hr className={styles.hr} />
                 <div className={styles.ready_button}>
                     <Button
-                        style="default"
+                        viewStyle="default"
                         text="Готово"
                         onClick={() => {
                             switch(drawMode) {

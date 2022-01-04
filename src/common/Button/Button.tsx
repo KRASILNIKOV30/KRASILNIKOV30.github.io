@@ -2,18 +2,18 @@ import { connect } from 'react-redux';
 import styles from './Button.module.css';
 
 interface ButtonProps {
-    style: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'arrow_down' | 'arrow_up' | 'sign',
+    viewStyle: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'arrow_down' | 'arrow_up' | 'sign',
     text?: string,
     onClick: () => void
 }
 
 const Button = ({
-    style,
+    viewStyle,
     text = '',
     onClick
 }: ButtonProps) => {
     let buttonStyle = styles.button_default;
-    switch(style) {
+    switch(viewStyle) {
         case 'outline': {buttonStyle = styles.button_outline; break}
         case 'delete': {buttonStyle = styles.button_delete; break}
         case 'redo': {buttonStyle = styles.button_redo; break}
@@ -28,7 +28,7 @@ const Button = ({
             className = {`${styles.button} ${buttonStyle}`}
             onClick={onClick}
         >
-            <div className = {`${styles.text} ${style === 'sign' && styles.text_sign}`}>
+            <div className = {`${styles.text} ${viewStyle === 'sign' && styles.text_sign}`}>
                 {text}
             </div>
         </button>

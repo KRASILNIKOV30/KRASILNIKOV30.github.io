@@ -23,7 +23,9 @@ const SideBar = ({
     selectManySlides
 }: SideBarProps) => {
     const slidesList = slides.map((slide) => (
-        <div className = {styles.sidebar_element}>
+        <div className = {styles.sidebar_element}
+            key = {slide.slideId}
+        >
             <li
                 key = {slide.slideId}
                 className = {styles.scaled_slide_container}

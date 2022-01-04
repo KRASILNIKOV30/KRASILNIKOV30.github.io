@@ -9,7 +9,6 @@ type CornersType = {
 
 interface useResizeProps {
     elementRef: React.RefObject<HTMLDivElement>,
-    edgeRef: React.RefObject<HTMLDivElement>,
     corners: CornersType,
     onMouseUpFunctions: Array<Function> 
 }
@@ -23,7 +22,6 @@ export const useResize = ({
         width: useRef(0),
         height: useRef(0)
     }
-    let edgeRef = useRef<EventTarget>(null) 
     const isStartSizeDeclared = useRef(false)
     const newWidth = useRef(0); 
     const newHeight = useRef(0);
@@ -55,7 +53,7 @@ export const useResize = ({
             const shiftY = e.clientY - startClientY.current;
             const proportions = startObjectSize.width.current/startObjectSize.height.current;
             switch (edgeType.current) {
-                case 'top-left': {
+                case 'top-left': 
                     if (e.shiftKey) {
                         newX = startObjectPositionX.current + shiftX * proportions;
                         newY = startObjectPositionY.current + shiftX;
@@ -71,8 +69,8 @@ export const useResize = ({
                         newWidth.current = startObjectSize.width.current - shiftX;
                         newHeight.current = startObjectSize.height.current - shiftY    
                     }
-                } break;
-                case 'top-right': {
+                break;
+                case 'top-right': 
                     if (e.shiftKey) {
                         newX = startObjectPositionX.current;
                         newY = startObjectPositionY.current + shiftY; 
@@ -86,8 +84,8 @@ export const useResize = ({
                         newWidth.current = startObjectSize.width.current + shiftX;
                         newHeight.current = startObjectSize.height.current - shiftY    
                     }
-                } break;
-                case 'bottom-right': {
+                break;
+                case 'bottom-right': 
                     if (e.shiftKey) {
                         newWidth.current = startObjectSize.width.current + shiftX * proportions;
                         newHeight.current = startObjectSize.height.current + shiftX;    
@@ -95,8 +93,8 @@ export const useResize = ({
                         newWidth.current = startObjectSize.width.current + shiftX;
                         newHeight.current = startObjectSize.height.current + shiftY    
                     } 
-                } break;
-                case 'bottom-left': {
+                break;
+                case 'bottom-left': 
                     if (e.shiftKey) {
                         newX = startObjectPositionX.current - shiftY * proportions;
                         newY = startObjectPositionY.current;
@@ -110,7 +108,7 @@ export const useResize = ({
                         newWidth.current = startObjectSize.width.current - shiftX;
                         newHeight.current = startObjectSize.height.current + shiftY;    
                     }
-                } break;
+                break;
             } 
             if (newWidth.current < 1) {
                 newWidth.current = 1

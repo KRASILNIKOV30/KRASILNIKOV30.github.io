@@ -7,7 +7,7 @@ interface useDragAndDropProps {
 
 export function useDragAndDrop({
         elementRef,
-        onMouseUpFunction: onMouseUpFunction
+        onMouseUpFunction
 }: useDragAndDropProps) {
     const isStartPosDeclared = useRef(false);
     const startObjectPositionX = useRef<number>(0);
@@ -46,7 +46,7 @@ export function useDragAndDrop({
         }
         window.removeEventListener('mousemove', onMouseMove)
         window.removeEventListener('mouseup', onMouseUp)
-    }, [onMouseUpFunction])
+    }, [onMouseUpFunction, onMouseMove])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         if (elementRef.current && !e.defaultPrevented) {
@@ -67,15 +67,17 @@ export function useDragAndDrop({
             elementRef.current.style.left = `${elementPosition.x}px`;
             elementRef.current.style.top = `${elementPosition.y}px`
         } 
-    }, [elementPosition, setElementPosition])
+    }, [elementPosition, setElementPosition, elementRef])
 
     useEffect(() => {
+        let elementRefValue: HTMLDivElement;
         if (elementRef.current) {
             elementRef.current.addEventListener('mousedown', onMouseDown)
+            elementRefValue = elementRef.current;
         } 
         return () => {
-            if (elementRef.current) {
-                elementRef.current.removeEventListener('mousedown', onMouseDown)
+            if (elementRefValue) {
+                elementRefValue.removeEventListener('mousedown', onMouseDown)
             }
         }
     }, [onMouseDown, elementRef])

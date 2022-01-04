@@ -95,21 +95,21 @@ const ToolBar = ({
                     <div className={styles.top_buttons_block}>
                         <div className={styles.outline_button}>
                             <Button 
-                                style='outline' 
+                                viewStyle='outline' 
                                 text='Сохранить' 
                                 onClick={() => saveDoc()}
                             />
                         </div>
                         <div className={styles.outline_button}>
                             <Button 
-                                style='outline' 
+                                viewStyle='outline' 
                                 text='Загрузить' 
                                 onClick={() => uploadDoc()}
                             />
                         </div>
                         <div className={styles.outline_button}>
                             <Button 
-                                style='outline' 
+                                viewStyle='outline' 
                                 text='Переименовать' 
                                 onClick={() => setRename(!rename)}
                             />
@@ -121,38 +121,38 @@ const ToolBar = ({
                 <div className={styles.slidebar_buttons_block}>
                     <div className={styles.icon_button}>
                         <Button
-                            style='sign'
+                            viewStyle='sign'
                             text='+'
                             onClick={() => addSlide()}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
-                            style='delete'
+                            viewStyle='delete'
                             onClick={() => removeSlides()}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
-                            style='arrow_down'
+                            viewStyle='arrow_down'
                             onClick={() => switchSlidePositions(1)}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
-                            style='arrow_up'
+                            viewStyle='arrow_up'
                             onClick={() => switchSlidePositions(-1)}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
-                            style='undo'
+                            viewStyle='undo'
                             onClick={() => undo()}
                         />
                     </div>
                     <div className={styles.icon_button}>
                         <Button
-                            style='redo'
+                            viewStyle='redo'
                             onClick={() => redo()}
                         />
                     </div>
@@ -163,7 +163,7 @@ const ToolBar = ({
                     </div>
                     <div className={styles.outline_button}>
                         <Button
-                            style='outline'
+                            viewStyle='outline'
                             text='Фон'
                             onClick={() => setDrawBlock('backgroundSlide')}
                         />
@@ -180,14 +180,14 @@ const ToolBar = ({
                 <div className={styles.result_buttons_block}>
                     <div className={styles.outline_button}>
                         <Button
-                            style='outline'
+                            viewStyle='outline'
                             text='Просмотр'
                             onClick={() => switchPreview()}
                         />
                     </div>
                     <div className={styles.outline_button}>
                         <Button
-                            style='outline'
+                            viewStyle='outline'
                             text='Экспорт'
                             onClick={() => exportDoc()}
                         />
@@ -223,14 +223,14 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
             <div className={styles.optional_tools_container}>
                 <div className = {styles.outline_button}>
                     <Button
-                        style = 'outline'
+                        viewStyle = 'outline'
                         text = 'Заливка фигуры'
                         onClick = {() => onClick('fillFigure')}
                     />
                 </div>
                 <div className={styles.outline_button}>
                     <Button
-                        style='outline'
+                        viewStyle='outline'
                         text='Контур фигуры'
                         onClick = {() => onClick('strokeFigure')}
                     />

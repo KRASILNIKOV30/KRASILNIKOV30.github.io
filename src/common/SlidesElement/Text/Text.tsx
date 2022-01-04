@@ -33,7 +33,7 @@ const Text = ({
     }
     return (
         <textarea
-            //value = {textValue}
+            value = {textValue}
             className = {styles.text}
             onChange = {(event) => {
                     onKeyUp(event.currentTarget.value)
@@ -44,7 +44,6 @@ const Text = ({
                 'fontWeight': text.fontWeight,
                 'fontSize': text.fontSize,
                 'color': text.textColor,
-                //'background': text.bgColor,
                 'width': size.width,
                 'height': size.height
             }}    

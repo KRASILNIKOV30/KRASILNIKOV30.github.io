@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef } from 'react';
 import styles from './SlidesElement.module.css'
 import Figure from "./Figure/Figure"
 import Text from "./Text/Text"
@@ -31,8 +31,6 @@ const SlidesElement = ({
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
 
-    const isOnShift = useRef<boolean>(false)
-
     /* const clickOutsideFunction = () => {
         window.onmousedown = (e) => {
             isOnShift.current = e.shiftKey;
@@ -49,10 +47,6 @@ const SlidesElement = ({
         elementRef: slideElementRef, 
         onMouseUpFunction: (Coordinates: Position) => changePosition(Coordinates.x, Coordinates.y)
     })
-
-   
-
-    let edgeRef = useRef<HTMLDivElement>(null);
 
     type CornersType = {
         topLeft: React.RefObject<HTMLDivElement>,
@@ -75,7 +69,6 @@ const SlidesElement = ({
 
     useResize({
         elementRef: slideElementRef,
-        edgeRef,
         corners,
         onMouseUpFunctions: [
             (size: Size) => changeSize(size.width, size.height),
@@ -208,6 +201,7 @@ const SlidesElement = ({
                     }
                     <img
                         className = {styles.image_element}
+                        alt = 'not found'
                         src = {slideElement.image}
                         style={{
                             width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,

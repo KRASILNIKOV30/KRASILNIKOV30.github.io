@@ -159,16 +159,16 @@ function changeTextPropsReducer(
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
-        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].elementType == "text") {
+        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].elementType === "text") {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 textProps: {
-                    font: font != undefined ? font : newSlide.elements[i].textProps!.font, 
-                    textColor: textColor != undefined ? textColor : newSlide.elements[i].textProps!.textColor,
-                    bgColor: bgColor != undefined ? bgColor : newSlide.elements[i].textProps!.bgColor,
-                    textValue: textValue != undefined ? textValue : newSlide.elements[i].textProps!.textValue,
-                    fontSize: fontSize != undefined ? fontSize : newSlide.elements[i].textProps!.fontSize,
-                    fontWeight: fontWeight != undefined ? fontWeight : newSlide.elements[i].textProps!.fontWeight,
+                    font: font !== undefined ? font : newSlide.elements[i].textProps!.font, 
+                    textColor: textColor !== undefined ? textColor : newSlide.elements[i].textProps!.textColor,
+                    bgColor: bgColor !== undefined ? bgColor : newSlide.elements[i].textProps!.bgColor,
+                    textValue: textValue !== undefined ? textValue : newSlide.elements[i].textProps!.textValue,
+                    fontSize: fontSize !== undefined ? fontSize : newSlide.elements[i].textProps!.fontSize,
+                    fontWeight: fontWeight !== undefined ? fontWeight : newSlide.elements[i].textProps!.fontWeight,
                 }
             };
             newSlide.elements.splice(i, 1, newElement)
@@ -181,7 +181,7 @@ function changeStrokeWidthReducer(slide: Slide, newWidth: number): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
-        if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType == "figure") && (newSlide.elements[i].figure != undefined)) {
+        if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType === "figure") && (newSlide.elements[i].figure !== undefined)) {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 figure: {
@@ -202,7 +202,7 @@ function changeStrokeColorReducer(slide: Slide, newColor: string): Slide {
         const newSlide = deepClone(slide) as Slide;
         const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
         for (let i = 0; i < newSlide.elements.length; i++) {
-            if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType == "figure") && (newSlide.elements[i].figure != undefined)) {
+            if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType === "figure") && (newSlide.elements[i].figure !== undefined)) {
                 const newElement: SlideElement = {
                     ...newSlide.elements[i],
                     figure: {
@@ -225,7 +225,7 @@ function changeFillColorReducer(slide: Slide, newColor: string ): Slide {
         const newSlide = deepClone(slide) as Slide;
         const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
         for (let i = 0; i < newSlide.elements.length; i++) {
-            if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType == "figure") && (newSlide.elements[i].figure != undefined)) {
+            if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType === "figure") && (newSlide.elements[i].figure !== undefined)) {
                 const newElement: SlideElement = {
                     ...newSlide.elements[i],
                     figure: {

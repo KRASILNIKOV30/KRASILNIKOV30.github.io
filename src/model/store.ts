@@ -1,4 +1,4 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 import { Editor } from "./types"
 import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
@@ -194,7 +194,7 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
                                 && (action.type !== 'SWITCH_PREVIEW')
                                 && (action.type !== 'UNDO')
                                 && (action.type !== 'REDO');
-    const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId == state.presentation.currentSlideIds[0]);
+    const indexCurrentSlide: number = state.presentation.slides.findIndex(slide => slide.slideId === state.presentation.currentSlideIds[0]);
     const newState: Editor = editorReducer(state, action);
     if (addInHistory) {newState.history = addActionToHistoryReducer(state)}
     //console.log('BEFORE slide ' + JSON.stringify(newState.presentation.slides[0].elements[1]))
