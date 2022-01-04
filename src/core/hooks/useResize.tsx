@@ -143,7 +143,7 @@ export const useResize = ({
                 width: newWidth.current, 
                 height: newHeight.current
             });
-            onMouseUpFunctions[1]({shiftX, shiftY})
+            onMouseUpFunctions[1]({x: shiftX, y: shiftY})
         }
     }, [onMouseUpFunctions])
 

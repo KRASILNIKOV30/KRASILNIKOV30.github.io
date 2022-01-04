@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface useDragAndDropProps {
     elementRef: React.RefObject<HTMLDivElement>,
-    onMouseUpFunction: Function,
+    onMouseUpFunction: Function
 }
 
 export function useDragAndDrop({
@@ -37,15 +37,15 @@ export function useDragAndDrop({
             const xShift = e.clientX - startClientX.current;
             const yShift = e.clientY - startClientY.current
             let newX = startObjectPositionX.current + e.clientX - startClientX.current;
-            let newY = startObjectPositionY.current + e.clientY - startClientY.current;
-            window.removeEventListener('mousemove', onMouseMove)
-            window.removeEventListener('mouseup', onMouseUp)
+            let newY = startObjectPositionY.current + e.clientY - startClientY.current; 
             setElementPosition({
                 x: newX,
                 y: newY
             })
            onMouseUpFunction({x: xShift, y: yShift})   
         }
+        window.removeEventListener('mousemove', onMouseMove)
+        window.removeEventListener('mouseup', onMouseUp)
     }, [onMouseUpFunction])
 
     const onMouseDown = useCallback((e: MouseEvent) => {

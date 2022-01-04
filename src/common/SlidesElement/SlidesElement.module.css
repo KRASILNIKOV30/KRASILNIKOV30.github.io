@@ -46,3 +46,7 @@
 .point_bottom_left {
     cursor: nesw-resize;
 }
+
+.image_element {
+    pointer-events: none;
+}
