@@ -21,6 +21,18 @@ interface EditColorWindowProps {
 
 function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground }: EditColorWindowProps) {
     const [selectedColor, setSelectedColor] = useState('')
+    let removeButtonText: string = '';
+    switch(drawMode) {
+        case 'backgroundSlide':
+            removeButtonText = 'Удалить фон';
+            break
+        case 'fillFigure':
+            removeButtonText = 'Удалить заливку';
+            break
+        case 'strokeFigure':
+            removeButtonText = 'Удалить контур';
+            break
+    }
     return (
         <div className={styles.edit_color_window}>
             <div className={styles.frame}>
@@ -83,15 +95,32 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                         <div className={styles.secondary_text}>
                             Толщина
                         </div>
-
                         <Knob
                             value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
                             onClick={(value) => changeStrokeWidth(value)}
                         />
-                    </div>
+                    </div>    
                 }
                 <hr className={styles.hr} />
-                <div className={styles.ready_button}>
+                <div className={styles.ready_button_block}>
+                    <Button
+                        viewStyle="default"
+                        text = {removeButtonText}
+                        onClick={() => {
+                            switch(drawMode) {
+                                case 'backgroundSlide':
+                                    setBackground('transparent');
+                                    break
+                                case 'fillFigure':
+                                    changeFillColor('transparent');
+                                    break
+                                case 'strokeFigure':
+                                    changeStrokeColor('transparent');
+                                    break
+                                }
+                            onClick()
+                        }}
+                    />
                     <Button
                         viewStyle="default"
                         text="Готово"

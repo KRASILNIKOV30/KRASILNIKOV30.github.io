@@ -63,9 +63,8 @@
     align-content: space-between;
 }
 
-.ready_button {
-    margin-top: 16px;
-    margin-bottom: 40px;
-    margin-right: 32px;
-    align-self: flex-end;
+.ready_button_block {
+    display: inline-flex;
+    margin: 16px 32px 40px 32px;
+    justify-content: space-between;
 }
