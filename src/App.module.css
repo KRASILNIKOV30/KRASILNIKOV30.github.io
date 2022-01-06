@@ -1,6 +1,6 @@
 .app {
-    width: 99vw;
-    height: 99vh;
+    width: 100vw;
+    height: 100vh;
 }
 
 .app_content {
@@ -20,8 +20,17 @@
 }
 
 .preview_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: inherit;
     height: inherit;
     background: #202020;
-    z-index: -1;
+}
+
+.preview_slide {
+    user-select: none;
+    transform: scale(1.65);
+    pointer-events: none;
+    display: block;
 }
