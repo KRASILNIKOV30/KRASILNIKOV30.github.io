@@ -6,46 +6,51 @@ import type { Editor, SlideElement } from "../../model/types"
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
 import type { Position, Size } from '../../core/types/types'
 import type { AppDispatch } from '../../model/store';
-import { changePosition, changeSize, changeTextProps, selectElement, selectManyElements } from '../../model/actionCreators';
+import { changePosition, changeSize, changeTextProps, selectElement, selectManyElements, removeSelection } from '../../model/actionCreators';
 import { connect } from 'react-redux';
 import { useResize } from '../../core/hooks/useResize';
+import { useClickOutside } from '../../core/hooks/useClickOutside';
 
 type SlidesElementProps = {
     slideElement: SlideElement | undefined,
     active: boolean,
+    slideRef: React.RefObject<HTMLElement|null>,
     changePosition: (newX: number, newY: number) => void,
     selectElement: (elementId: string) => void,
     selectManyElements: (elementId: string) => void,
     changeTextValue: (value: string) => void,
-    changeSize: (widthShift: number, heightShift: number) => void
+    changeSize: (widthShift: number, heightShift: number) => void,
+    removeSelection: (elementId: string) => void
 }
 
 const SlidesElement = ({
     slideElement,
     active,
+    slideRef,
     changePosition,
     selectElement,
     selectManyElements,
     changeTextValue,
-    changeSize
+    changeSize,
+    removeSelection
 }: SlidesElementProps) => {
-    const slideElementRef = useRef<HTMLDivElement>(null);
-
-    /* const clickOutsideFunction = () => {
+    const slideElementRef = useRef<HTMLDivElement>(null);  
+    const isOnShift = useRef(false);
+    const clickOutsideFunction = () => {
         window.onmousedown = (e) => {
             isOnShift.current = e.shiftKey;
-        }
+        } 
         if (active && !isOnShift.current) {
-            dispatch(removeSelection, { elementId: slideElement.elementId })
+            removeSelection(slideElement?.elementId!)
         } else {
             return(null)
         }
     }
-    useClickOutside(slideElementRef, clickOutsideFunction); */ 
+    useClickOutside(slideElementRef, clickOutsideFunction, slideRef);  
     
     useDragAndDrop({
         elementRef: slideElementRef, 
-        onMouseUpFunction: (Coordinates: Position) => changePosition(Coordinates.x, Coordinates.y)
+        onMouseUpFunction: (coordinates: Position) => changePosition(coordinates.x, coordinates.y)
     })
 
     type CornersType = {
@@ -93,7 +98,6 @@ const SlidesElement = ({
                         'height': slideElement.size.height
                     }}
                     onMouseDown = {(e) => {
-                        console.log('onMouseDown')
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 selectManyElements(slideElement.elementId)
@@ -107,10 +111,10 @@ const SlidesElement = ({
                     {
                         active &&
                         <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left' onMouseDown={(e) => e.stopPropagation}></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right' onMouseDown={(e) => e.stopPropagation}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left' onMouseDown={(e) => e.stopPropagation}></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right' onMouseDown={(e) => e.stopPropagation}></div>
+                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
                         </div>
                     }
                     <Text
@@ -228,7 +232,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         selectElement: (elementId: string) => dispatch(selectElement(elementId)),
         selectManyElements: (elementId: string) => dispatch(selectManyElements(elementId)),
         changeTextValue: (value: string) => dispatch(changeTextProps(undefined, undefined, undefined, value)),
-        changeSize: (widthShift: number, heightShift: number) => dispatch(changeSize(widthShift, heightShift))
+        changeSize: (widthShift: number, heightShift: number) => dispatch(changeSize(widthShift, heightShift)),
+        removeSelection: (elementId: string) => dispatch(removeSelection(elementId))
     }
 }
 

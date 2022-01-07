@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import { SlideElement } from "../../model/types"
 import Button from "../../common/Button/Button";
@@ -8,6 +8,7 @@ import styles from "./EditColorWindow.module.css";
 import { connect } from "react-redux";
 import { AppDispatch } from "../../model/store";
 import { changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground } from "../../model/actionCreators";
+import { useClickOutside } from '../../core/hooks/useClickOutside'
 
 interface EditColorWindowProps {
     firstSelectedElement: SlideElement
@@ -20,6 +21,9 @@ interface EditColorWindowProps {
 }
 
 function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground }: EditColorWindowProps) {
+    const frameRef = useRef<HTMLDivElement>(null)
+    useClickOutside(frameRef, onClick)
+    
     const [selectedColor, setSelectedColor] = useState('')
     let removeButtonText: string = '';
     switch(drawMode) {
@@ -35,7 +39,10 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
     }
     return (
         <div className={styles.edit_color_window}>
-            <div className={styles.frame}>
+            <div
+                className={styles.frame}
+                ref = {frameRef}
+            >
                 {drawMode === 'backgroundSlide' &&
                     <div className={styles.head_text}>
                         Фон
@@ -109,7 +116,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                         onClick={() => {
                             switch(drawMode) {
                                 case 'backgroundSlide':
-                                    setBackground('transparent');
+                                    setBackground('#FFF');
                                     break
                                 case 'fillFigure':
                                     changeFillColor('transparent');

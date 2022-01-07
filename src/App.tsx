@@ -8,7 +8,7 @@ import { AppDispatch } from './model/store';
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
 import SideBar from './sideBar/SideBar';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 interface AppProps {
     editor: Editor,
@@ -40,10 +40,12 @@ function App({
         }
         document.addEventListener('keydown', onKeyDown)
     }
+    const slideRef = useRef(null)
     const [indexSlide, setIndexSlide] = useState(editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]));
     const slidesList = editor.presentation.slides.map((slide) => (
         <div
             key = {slide.slideId}
+            ref = {slideRef}
         >
             <SlideView
                 slideElements = {
@@ -55,6 +57,7 @@ function App({
                                 slideId = {slide.slideId}
                                 elementId= {slideElement.elementId}
                                 active = {false}
+                                slideRef={slideRef}
                             />
                         </li> 
                     )}

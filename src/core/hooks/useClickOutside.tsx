@@ -1,10 +1,21 @@
 import { useEffect, useCallback } from 'react';
 
-export function useClickOutside(elementRef: React.RefObject<HTMLElement|null>, onOutsideClick: () => void) {
+    const useClickOutside = (
+        elementRef: React.RefObject<HTMLElement|null>, 
+        onOutsideClick: () => void,
+        activeArea?: React.RefObject<HTMLElement|null> 
+    ) => {
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current && !elementRef.current.contains(e.target as Node)) {
-            onOutsideClick()
+        if (activeArea && activeArea.current) {
+            if (elementRef.current && !elementRef.current.contains(e.target as Node) && activeArea.current.contains(e.target as Node)) {
+                onOutsideClick()
+            }
+        } else {
+            if (elementRef.current && !elementRef.current.contains(e.target as Node)) {
+                onOutsideClick()
+            }
         }
+        
     }, [elementRef, onOutsideClick])
 
     useEffect(() => {
@@ -15,3 +26,5 @@ export function useClickOutside(elementRef: React.RefObject<HTMLElement|null>, o
         }
     }, [onMouseDown]);
 }
+
+export {useClickOutside}

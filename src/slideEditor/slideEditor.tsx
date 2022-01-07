@@ -3,6 +3,7 @@ import SlidesElement from "../common/SlidesElement/SlidesElement";
 import type { Editor, Slide } from '../model/types'
 import SlideView from '../common/Slide/Slide'
 import { connect } from 'react-redux';
+import { useRef } from 'react';
 
 type SlideBarProps = {
     slide: Slide
@@ -10,7 +11,8 @@ type SlideBarProps = {
 
 function SlideEditor({
         slide 
-    }: SlideBarProps) {   
+    }: SlideBarProps) {  
+    const slideRef = useRef(null);     
     
     const slideElements = slide.elements.map((slideElement) =>
         <li             
@@ -22,13 +24,15 @@ function SlideEditor({
                 slideId={slide.slideId}
                 elementId={slideElement.elementId}
                 active={slide.selectedElementsIds.includes(slideElement.elementId)}
+                slideRef={slideRef}
             />
             
         </li>
     )
     return (
         <div 
-            className={styles.slide_container}
+            className = {styles.slide_container}
+            ref = {slideRef}
         >
             <SlideView
                 slideElements = {slideElements}

@@ -5,6 +5,7 @@ import SlidesElement from '../common/SlidesElement/SlidesElement'
 import { AppDispatch } from '../model/store'
 import { selectManySlides, selectOneSlide, switchSlide } from '../model/actionCreators'
 import { connect } from 'react-redux'
+import { useRef } from 'react'
 
 
 interface SideBarProps {
@@ -22,6 +23,7 @@ const SideBar = ({
     selectOneSlide,
     selectManySlides
 }: SideBarProps) => {
+    const slideRef = useRef(null)
     const slidesList = slides.map((slide) => (
         <div className = {styles.sidebar_element}
             key = {slide.slideId}
@@ -55,6 +57,7 @@ const SideBar = ({
                                         slideId = {slide.slideId}
                                         elementId= {slideElement.elementId}
                                         active = {false}
+                                        slideRef={slideRef}
                                     />
                                 </li> 
                             )}
