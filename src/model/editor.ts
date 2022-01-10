@@ -1,6 +1,8 @@
 import type { Editor, History, Presentation } from './types';
 import { deepClone } from '../core/functions/deepClone'
 import { ActionType } from './store';
+import { jsPDF } from 'jspdf'
+import { addSlides } from './export';
 
 function addActionToHistoryReducer(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
@@ -36,9 +38,18 @@ function uploadDocReducer(editor: Editor, newEditor: Editor): Editor {
     return (newEditor)
 }
 
-function exportDocReducer(editor: Editor): Editor {
-    const newEditor = deepClone(editor) as Editor;
-    return(newEditor)
+async function exportDocReducer(state: Editor) {
+    const slides = state.presentation.slides;
+    const title = state.presentation.title;
+    const slideSize = [818, 582];
+    const doc = new jsPDF({
+        unit: "px",
+        orientation: 'l',
+        format: slideSize,
+    });
+    await addSlides(doc, slides);
+    doc.deletePage(doc.getNumberOfPages());
+    doc.save(title);
 }
 
 function switchPreviewReducer(editor: Editor): Editor {
@@ -84,7 +95,10 @@ function editorReducer(state: Editor, action: ActionType): Editor {
         case 'SAVE_DOCUMENT':
             return saveDocReducer(state)
         case 'EXPORT_DOCUMENT':
-            return exportDocReducer(state)
+            {
+                exportDocReducer(state);
+                return deepClone(state) as Editor
+            }
         case 'SWITCH_PREVIEW':
             return switchPreviewReducer(state)
         case 'UNDO': 

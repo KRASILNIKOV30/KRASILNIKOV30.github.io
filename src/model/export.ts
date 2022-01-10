@@ -1,4 +1,4 @@
-import { Slide, SlideElement } from "./types";
+import { Editor, Slide, SlideElement } from "./types";
 import { jsPDF } from 'jspdf'
 import CanvasTextWrapper from 'canvas-text-wrapper';
 import { uuid } from "uuidv4";
@@ -179,16 +179,5 @@ async function addSlides(doc: jsPDF, slides: Array<Slide>) {
     }
 }
 
-export async function exportPDF(slides: Array<Slide>, title: string) {
-    const slideSize = [818, 582];
-    const doc = new jsPDF({
-        unit: "px",
-        orientation: 'l',
-        format: slideSize,
-    });
-    await addSlides(doc, slides);
-    doc.deletePage(doc.getNumberOfPages());
-    doc.save(title);
-}
 
-export {}
+export { addSlides }

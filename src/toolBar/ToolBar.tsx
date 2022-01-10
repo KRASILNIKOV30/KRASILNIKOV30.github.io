@@ -11,7 +11,7 @@ import { Editor, Slide, SlideElement } from "../model/types"
 
 import styles from "./ToolBar.module.css"
 import EditColorWindow from "./editColorWindow/EditColorWindow";
-import { addSlide, changeTextProps, changeTitle, exportDoc, redo, removeSlides, saveDoc, switchPreview, switchSlidePositions, undo } from "../model/actionCreators";
+import { exportDoc, addSlide, changeTextProps, changeTitle, redo, removeSlides, saveDoc, switchPreview, switchSlidePositions, undo } from "../model/actionCreators";
 
 type ToolBarProps = {
     slide: Slide,

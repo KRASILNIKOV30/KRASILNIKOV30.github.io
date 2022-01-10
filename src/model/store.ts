@@ -14,24 +14,6 @@ let initialState: Editor = {
                 slideId: "0",
                 elements: [
                     {
-                        elementId: "0",
-                        elementType: "figure",
-                        position: {
-                            x: 32,
-                            y: 64
-                        },
-                        size: {
-                            width: 356,
-                            height: 93
-                        },
-                        figure: {
-                            form: "triangle",
-                            strokeColor: "#d0ff00",
-                            strokeWidth: 5,
-                            fillColor: "#ff00ff"
-                        }
-                    },
-                    {
                         elementId: "1",
                         elementType: "figure",
                         position: {
