@@ -65,9 +65,31 @@ const ToolBar = ({
         }   
     )
     const [drawBlock, setDrawBlock] = useState('absent')
-    const firstSelectedElement: SlideElement = slide.elements.
-        find(element => element.elementId === 
-            slide.selectedElementsIds[0])!;
+    const firstSelectedElement: SlideElement = slide.elements.find(element => element.elementId === slide.selectedElementsIds[0])!;
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+            undo()
+        }
+    });
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.code == 'KeyY' && (event.ctrlKey || event.metaKey)) {
+            redo()
+        }
+    });
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.altKey) {
+            switchPreview()
+        }
+    });
+    
+    document.addEventListener('keydown', function(event) {
+        if (event.code == 'KeyN' && (event.ctrlKey || event.metaKey)) {
+            addSlide()
+        }
+    });
     return (
         <div className={styles.toolbar}>
             <div className={styles.top_block}>
