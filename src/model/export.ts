@@ -1,4 +1,4 @@
-import { Editor, Slide, SlideElement } from "./types";
+import { Slide, SlideElement } from "./types";
 import { jsPDF } from 'jspdf'
 import CanvasTextWrapper from 'canvas-text-wrapper';
 import { uuid } from "uuidv4";

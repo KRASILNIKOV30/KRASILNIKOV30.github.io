@@ -5,7 +5,7 @@ import { AppDispatch, uploadDocFunction } from '../model/store'
 import Button from "../common/Button/Button"
 import DropDown from "../common/DropDown/DropDown"
 import Knob from "../common/Knob/Knob"
-import Input from "../common/Input/input" 
+import TextField from "../common/Input/input" 
 
 import { Editor, Slide, SlideElement } from "../model/types"
 
@@ -52,13 +52,11 @@ const ToolBar = ({
     let figureSelected = true;
     slide.selectedElementsIds.forEach(id => 
         {
-            if(slide.elements.
-                find(element => element.elementId === id)?.elementType === 'figure')
+            if(slide.elements.find(element => element.elementId === id)?.elementType === 'figure')
             {
                 textSelected = false;
             }
-            else if (slide.elements.
-                find(element => element.elementId === id)?.elementType === 'text')
+            else if (slide.elements.find(element => element.elementId === id)?.elementType === 'text')
             {
                 figureSelected = false;
             }
@@ -67,41 +65,17 @@ const ToolBar = ({
     const [drawBlock, setDrawBlock] = useState('absent')
     const firstSelectedElement: SlideElement = slide.elements.find(element => element.elementId === slide.selectedElementsIds[0])!;
     
-    document.addEventListener('keydown', function(event) {
-        if (event.code == 'KeyZ' && (event.ctrlKey || event.metaKey)) {
-            undo()
-        }
-    });
-    
-    document.addEventListener('keydown', function(event) {
-        if (event.code == 'KeyY' && (event.ctrlKey || event.metaKey)) {
-            redo()
-        }
-    });
-    
-    document.addEventListener('keydown', function(event) {
-        if (event.altKey) {
-            switchPreview()
-        }
-    });
-    
-    document.addEventListener('keydown', function(event) {
-        if (event.code == 'KeyN' && (event.ctrlKey || event.metaKey)) {
-            addSlide()
-        }
-    });
+
     return (
         <div className={styles.toolbar}>
             <div className={styles.top_block}>
-                <img className={styles.logo}
-                    src=""
-                />
+                <div className={styles.logo}> </div>
                 <div className={styles.top_block_second}>
                     <div className={styles.rename_container}>
                     {
                         rename ?
-                            <Input 
-                                style="big"
+                            <TextField 
+                                size="big"
                                 onKeyUp = {(value) => {
                                     if (value !== '') {
                                         changeTitle(value);
@@ -230,7 +204,7 @@ const ToolBar = ({
 
     
 
-interface OptionalTools {
+interface OptionalToolsProps {
     textSelected: boolean,
     figureSelected: boolean,
     firstSelectedElement: SlideElement,
@@ -239,7 +213,7 @@ interface OptionalTools {
     changeTextSize: (fontSize: number) => void,
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize }: OptionalTools) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize }: OptionalToolsProps) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -264,8 +238,8 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
         return (
             <div className={styles.optional_tools_container}>
                 <p className={styles.optional_tools_text}>Шрифт</p>
-                <Input
-                    style="small"
+                <TextField
+                    size="small"
                     placeholder={firstSelectedElement.textProps!.font}
                     onKeyUp={(value) => changeTextFont(value)}
                 /> 

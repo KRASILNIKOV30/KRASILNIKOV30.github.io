@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { connect } from 'react-redux';
-import { useClickOutside } from '../../core/hooks/useClickOutside';
 import styles from './Slide.module.css'
 
 interface SlideViewProps {

@@ -16,7 +16,7 @@ import { useEffect, useCallback } from 'react';
             }
         }
         
-    }, [elementRef, onOutsideClick])
+    }, [elementRef, onOutsideClick, activeArea])
 
     useEffect(() => {
         window.addEventListener('mousedown', onMouseDown)

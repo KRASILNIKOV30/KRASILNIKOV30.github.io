@@ -4,7 +4,7 @@ import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
-import { uploadDoc } from './actionCreators';
+import { uploadDoc, redo, undo } from './actionCreators';
 
 let initialState: Editor = {
     presentation: {
@@ -146,7 +146,7 @@ export type ActionType = {
     newEditor?: Editor
 }
 
-export function uploadDocFunction() {
+function uploadDocFunction() {
     const inputFile = document.createElement('input')
     inputFile.type = 'file';
     inputFile.style.display = 'none';
@@ -168,6 +168,16 @@ export function uploadDocFunction() {
     inputFile.remove();
 }
 
+window.addEventListener('keydown', function(event) {
+        console.log(event.code)
+        if (event.code === 'KeyZ' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(undo())
+        }
+        if (event.code === 'KeyY' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(redo())
+        }
+    });
+
 function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
                                 && (action.type !== 'EXPORT_DOCUMENT')
@@ -185,7 +195,9 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     return newState
 }
 
-
-export let store = createStore(mainReducer, localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: initialState)
+//localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: 
+let store = createStore(mainReducer, initialState)
 
 export type AppDispatch = typeof store.dispatch
+
+export { store, uploadDocFunction }

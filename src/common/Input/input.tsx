@@ -1,25 +1,25 @@
 import { connect } from 'react-redux';
 import styles from './input.module.css';
 
-interface InputProps {
-    style: 'small' | 'big',
+interface TextFieldProps {
+    size: 'small' | 'big',
     placeholder?: string,
     value?: string,
     onKeyUp: (value: string) => void
 }
 
-const Input = ({
-    style,
+const TextField = ({
+    size,
     value,
     onKeyUp,
     placeholder = ""
-}: InputProps) => {
+}: TextFieldProps) => {
     return (
         <input
-            autoFocus={style === 'big'}
+            autoFocus={size === 'big'}
             type='text'
             value={value}
-            className={`${styles.input} ${style === 'big' ? styles.big: styles.small}`}
+            className={`${styles.input} ${size === 'big' ? styles.big: styles.small}`}
             placeholder={placeholder}
             onKeyUp={(e) => {
                 if (e.key === 'Enter') {
@@ -30,4 +30,4 @@ const Input = ({
     )
 }
 
-export default connect()(Input)
+export default connect()(TextField)
