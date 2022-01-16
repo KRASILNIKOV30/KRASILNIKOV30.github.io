@@ -1,12 +1,13 @@
 import { Slide, SlideElement } from "./types";
+import { Size } from '../core/types/types'
 import { jsPDF } from 'jspdf'
 import CanvasTextWrapper from 'canvas-text-wrapper';
 import { uuid } from "uuidv4";
 
-function getBase64FromPicture(image: SlideElement): Promise<string> {
+function getBase64FromPicture(src: string, size: Size): Promise<string> {
     return new Promise((resolve) => {
-        const img: HTMLImageElement = new Image(image.size.width, image.size.height);
-        img.src = image.image!;
+        const img: HTMLImageElement = new Image(size.width, size.height);
+        img.src = src;
         img.crossOrigin = 'use-credentials';
         img.onload = () => {
             const canvas = document.createElement('canvas');
@@ -113,7 +114,7 @@ async function addObjectOnPage(doc: jsPDF, object: SlideElement) {
         } else if (object.elementType === 'figure') {
             addFigure(doc, object);
         } else if (object.elementType === 'image') {
-            const base64 = await getBase64FromPicture(object);
+            const base64 = await getBase64FromPicture(object.image!, object.size);
             addImage(doc, object, base64);
         }
         resolve(Promise);
@@ -128,7 +129,7 @@ async function addObjectsOnPage(doc: jsPDF, elements: Array<SlideElement>) {
 }
 
 async function setBackgroundImage(doc: jsPDF, image: SlideElement) {
-    const base64 = await getBase64FromPicture(image);
+    const base64 = await getBase64FromPicture(image.image!, image.size);
     doc.addImage (
         base64,
         'jpg',
@@ -180,4 +181,4 @@ async function addSlides(doc: jsPDF, slides: Array<Slide>) {
 }
 
 
-export { addSlides }
+export { addSlides, getBase64FromPicture }

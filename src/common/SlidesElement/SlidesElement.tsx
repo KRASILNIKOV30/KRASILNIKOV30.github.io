@@ -95,7 +95,7 @@ const SlidesElement = ({
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
-                        'height': slideElement.size.height
+                        'height': slideElement.size.height,
                     }}
                     onMouseDown = {(e) => {
                         if (!active) {
@@ -141,7 +141,8 @@ const SlidesElement = ({
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
-                        'height': slideElement.size.height
+                        'height': slideElement.size.height,
+                        'strokeWidth': slideElement.figure?.strokeWidth
                     }}
                     onMouseDown = {(e) => {
                         if (!active) {

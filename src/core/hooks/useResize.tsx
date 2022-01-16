@@ -67,7 +67,7 @@ export const useResize = ({
                         shiftXRef.current = shiftX;
                         shiftYRef.current = shiftY;
                         newWidth.current = startObjectSize.width.current - shiftX;
-                        newHeight.current = startObjectSize.height.current - shiftY    
+                        newHeight.current = startObjectSize.height.current - shiftY
                     }
                 break;
                 case 'top-right': 
@@ -110,11 +110,12 @@ export const useResize = ({
                     }
                 break;
             } 
-            if (newWidth.current < 1) {
-                newWidth.current = 1
+            const strokeWidth = Number(elementRef.current?.style.strokeWidth)
+            if (newWidth.current < strokeWidth*2+5) {
+                newWidth.current = strokeWidth*2+5
             }
-            if (newHeight.current < 1) {
-                newHeight.current = 1
+            if (newHeight.current < strokeWidth*2+5) {
+                newHeight.current = strokeWidth*2+5
             }
             setElementPosition({
                 x: newX,

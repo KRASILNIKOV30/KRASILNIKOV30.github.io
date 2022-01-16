@@ -11,16 +11,16 @@ const Circle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width + figure.strokeWidth;
-    const height: number = size.height + figure.strokeWidth;
+    const width: number = size.width !== 0 ?(size.width - figure.strokeWidth) / 2 : figure.strokeWidth;
+    const height: number = size.height !== 0 ? (size.height - figure.strokeWidth) / 2 : figure.strokeWidth;
     return (
         <svg
-            width = {width}
-            height = {height}
+            width = {size.width + figure.strokeWidth}
+            height = {size.height + figure.strokeWidth}
         >
             <ellipse
-                rx = {(size.width - figure.strokeWidth) / 2}
-                ry = {(size.height - figure.strokeWidth) / 2}
+                rx = {width}
+                ry = {height}
                 cx = {size.width / 2}
                 cy = {size.height / 2}
                 fill = {figure.fillColor}
@@ -36,18 +36,18 @@ const Rectangle = ({
     figure,
     size
 }: FigureProps) => {
-    const width: number = size.width + figure.strokeWidth;
-    const height: number = size.height + figure.strokeWidth;
+    const width: number = size.width !== 0 ? size.width - figure.strokeWidth : figure.strokeWidth;
+    const height: number = size.height !== 0 ? size.height - figure.strokeWidth : figure.strokeWidth;
     return (
         <svg
-            width = {width}
-            height = {height}
+            width = {size.width + figure.strokeWidth}
+            height = {size.height + figure.strokeWidth}
         >
             <rect   
                 x = {figure.strokeWidth/2}
                 y = {figure.strokeWidth/2}
-                width = {size.width-figure.strokeWidth}
-                height = {size.height-figure.strokeWidth}
+                width = {width}
+                height = {height}
                 fill = {figure.fillColor}
                 stroke = {figure.strokeColor}
                 strokeWidth = {figure.strokeWidth}

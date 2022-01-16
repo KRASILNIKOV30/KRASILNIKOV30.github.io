@@ -1,10 +1,13 @@
 import { createStore } from 'redux';
+import axios from "axios";
 import { Editor } from "./types"
 import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
 import { uploadDoc, redo, undo } from './actionCreators';
+import { getBase64FromPicture } from './export'
+import { useRef } from 'react';
 
 let initialState: Editor = {
     presentation: {
@@ -80,7 +83,7 @@ let initialState: Editor = {
                             width: 100,
                             height: 100
                         },
-                        image: 'https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg',
+                        image: "https://www.institutps.ru/upload/images/teachers_photo/arnaberdiev_wide_v2.jpg"
                     }
                 ],
                 background: "#FFF2AF",
