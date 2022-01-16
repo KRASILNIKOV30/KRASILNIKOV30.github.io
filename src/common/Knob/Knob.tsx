@@ -12,21 +12,23 @@ const Knob = ({
 }: KnobProps) => {
     return (
         <table className={styles.table}>
-            <tr className={styles.row}>
-                <td 
-                    className={styles.minus}
-                    onClick={() => {
-                        onClick(--value)
-                    }}
-                ></td>
-                <td className={styles.value}>{value}</td>
-                <td 
-                    className={styles.plus}
-                    onClick={() => {
-                        onClick(++value)
-                    }}
-                ></td>
-            </tr>
+            <thead className={styles.table_head}>
+                <tr className={styles.row}>
+                    <td 
+                        className={styles.minus}
+                        onClick={() => {
+                            onClick(--value)
+                        }}
+                    ></td>
+                    <td className={styles.value}>{value}</td>
+                    <td 
+                        className={styles.plus}
+                        onClick={() => {
+                            onClick(++value)
+                        }}
+                    ></td>
+                </tr>
+            </thead>   
         </table>
     )
 }

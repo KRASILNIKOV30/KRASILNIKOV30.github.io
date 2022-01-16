@@ -10,7 +10,7 @@
     flex-wrap: nowrap;
 }
 
-.row {
+.row, .table_head {
     width: inherit;
     height: 100%;
     margin-top: -1px;
