@@ -10,13 +10,13 @@ type CornersType = {
 interface useResizeProps {
     elementRef: React.RefObject<HTMLDivElement>,
     corners: CornersType,
-    onMouseUpFunctions: Array<Function> 
+    onMouseUpFunction: Function
 }
 
 export const useResize = ({
     elementRef,
     corners,
-    onMouseUpFunctions
+    onMouseUpFunction
 }: useResizeProps) => {
     const startObjectSize = {
         width: useRef(0),
@@ -138,13 +138,14 @@ export const useResize = ({
                 width: newWidth.current,
                 height: newHeight.current
             });
-            onMouseUpFunctions[0]({
-                width: newWidth.current, 
-                height: newHeight.current
-            });
-            onMouseUpFunctions[1]({x: shiftX, y: shiftY})
+            onMouseUpFunction(
+                newWidth.current, 
+                newHeight.current,
+                shiftX,
+                shiftY
+            );
         }
-    }, [onMouseUpFunctions])
+    }, [onMouseUpFunction])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         if (elementRef.current) {

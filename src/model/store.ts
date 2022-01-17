@@ -5,7 +5,7 @@ import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
-import { uploadDoc, redo, undo } from './actionCreators';
+import { uploadDoc, redo, undo, deleteSelected } from './actionCreators';
 import { getBase64FromPicture } from './export'
 import { useRef } from 'react';
 
@@ -134,7 +134,9 @@ export type ActionType = {
     },
     ChangeSizeArgs?: {
         newWidth: number,
-        newHeight: number
+        newHeight: number,
+        xShift: number,
+        yShift: number
     },
     ChangeTextArgs?: {
         font?: string
@@ -172,12 +174,14 @@ function uploadDocFunction() {
 }
 
 window.addEventListener('keydown', function(event) {
-        console.log(event.code)
         if (event.code === 'KeyZ' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(undo())
         }
         if (event.code === 'KeyY' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(redo())
+        }
+        if (event.code === 'Delete') {
+            store.dispatch(deleteSelected())
         }
     });
 
@@ -195,6 +199,8 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
     newState.presentation = presentationReducer(newState.presentation, action);
     localStorage.setItem("savedEditor", JSON.stringify(newState))
+    console.log('size = ' + JSON.stringify(newState.presentation.slides[0].elements[0].size))
+    console.log('position = ' + JSON.stringify(newState.presentation.slides[0].elements[0].position))
     return newState
 }
 

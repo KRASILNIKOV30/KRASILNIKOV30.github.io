@@ -19,7 +19,7 @@ type SlidesElementProps = {
     selectElement: (elementId: string) => void,
     selectManyElements: (elementId: string) => void,
     changeTextValue: (value: string) => void,
-    changeSize: (widthShift: number, heightShift: number) => void,
+    changeSize: (newWidth: number, newHeight: number, xShift: number, yShift: number) => void,
     removeSelection: (elementId: string) => void
 }
 
@@ -75,10 +75,7 @@ const SlidesElement = ({
     useResize({
         elementRef: slideElementRef,
         corners,
-        onMouseUpFunctions: [
-            (size: Size) => changeSize(size.width, size.height),
-            (coordinates: Position) => changePosition(coordinates.x, coordinates.y)
-        ]
+        onMouseUpFunction: (width: number, height: number, x: number, y: number) => changeSize(width, height, x, y)
     }) 
 
     if(slideElement === undefined) {
@@ -233,7 +230,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         selectElement: (elementId: string) => dispatch(selectElement(elementId)),
         selectManyElements: (elementId: string) => dispatch(selectManyElements(elementId)),
         changeTextValue: (value: string) => dispatch(changeTextProps(undefined, undefined, undefined, value)),
-        changeSize: (widthShift: number, heightShift: number) => dispatch(changeSize(widthShift, heightShift)),
+        changeSize: (newWidth: number, newHeight: number, xShift: number, yShift: number) => dispatch(changeSize(newWidth, newHeight, xShift, yShift)),
         removeSelection: (elementId: string) => dispatch(removeSelection(elementId))
     }
 }

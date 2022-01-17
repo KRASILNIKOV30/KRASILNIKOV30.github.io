@@ -132,12 +132,14 @@ function changePosition(xShift: number, yShift: number) {
     }
 }
 
-function changeSize(newWidth: number, newHeight: number) {
+function changeSize(newWidth: number, newHeight: number, xShift: number, yShift: number) {
     return {
         type: 'CHANGE_SIZE',
         ChangeSizeArgs: {
             newWidth,
-            newHeight
+            newHeight,
+            xShift,
+            yShift
         }
     }
 }
