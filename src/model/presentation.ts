@@ -80,7 +80,7 @@ function switchSlidePositionsReducer(presentation: Presentation, orderShift: num
     if(orderShift > 0) {
         for (let i = newPresentation.currentSlideIds.length - 1; i >= 0; i--) {
             const indexSlide: number = newSlides.findIndex(slide => slide.slideId === newPresentation.currentSlideIds[i]);
-            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+            if (indexSlide + orderShift < newSlides.length) {
                 const tempSlide: Slide = newSlides[indexSlide + orderShift];
                 newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
                 newSlides.splice(indexSlide, 1, tempSlide);
@@ -93,7 +93,7 @@ function switchSlidePositionsReducer(presentation: Presentation, orderShift: num
     else {
         for (let i = 0; i < newPresentation.currentSlideIds.length; i++) {
             const indexSlide: number = newSlides.findIndex(slide => slide.slideId === newPresentation.currentSlideIds[i]);
-            if (indexSlide + orderShift >= 0 && indexSlide + orderShift < newSlides.length) {
+            if (indexSlide + orderShift >= 0) {
                 const tempSlide: Slide = newSlides[indexSlide + orderShift];
                 newSlides.splice(indexSlide + orderShift, 1, newSlides[indexSlide]);
                 newSlides.splice(indexSlide, 1, tempSlide);

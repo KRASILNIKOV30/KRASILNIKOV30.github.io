@@ -112,9 +112,8 @@ function selectManyElementsReducer(slide: Slide, elementId: string): Slide {
 
 function changePositionReducer(slide: Slide, xShift: number, yShift: number): Slide {
     const newSlide = deepClone(slide) as Slide;
-    const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for(let i = 0; i < newSlide.elements.length; i++) {
-        if(selectedElementsId.includes(newSlide.elements[i].elementId)) {
+        if(newSlide.selectedElementsIds.includes(newSlide.elements[i].elementId)) {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 position: {
@@ -126,6 +125,36 @@ function changePositionReducer(slide: Slide, xShift: number, yShift: number): Sl
         }
     }
     return newSlide
+}
+
+function switchLayerReducer(slide: Slide, orderShift: number): Slide {
+    const newSlide = deepClone(slide) as Slide;
+    if (orderShift > 0) {
+        for (let i = newSlide.selectedElementsIds.length - 1; i >= 0; i--) {
+            const indexElement: number = newSlide.elements.findIndex(element => element.elementId === newSlide.selectedElementsIds[i]);
+            if (indexElement + orderShift < newSlide.elements.length) {
+                const tempElement: SlideElement = newSlide.elements[indexElement + orderShift];
+                newSlide.elements.splice(indexElement + orderShift, 1, newSlide.elements[indexElement]);
+                newSlide.elements.splice(indexElement, 1, tempElement)
+            }
+            else {
+                return newSlide
+            }
+        }
+    }
+    else {
+        for (let i = 0; i < newSlide.selectedElementsIds.length; i++) {
+            const indexElement: number = newSlide.elements.findIndex(element => element.elementId === newSlide.selectedElementsIds[i]);
+            if (indexElement + orderShift >= 0) {
+                const tempSlide: SlideElement = newSlide.elements[indexElement + orderShift];
+                newSlide.elements.splice(indexElement + orderShift, 1, newSlide.elements[indexElement]);
+                newSlide.elements.splice(indexElement, 1, tempSlide);
+            }
+        }
+    }
+    return {
+        ...newSlide
+    }   
 }
 
 function changeSizeReducer(slide: Slide, newWidth: number, newHeight: number, xShift: number, yShift: number): Slide {
@@ -272,6 +301,9 @@ function slideReducer(state: Slide, action: ActionType): Slide {
             return action.elementId !== undefined? selectManyElementsReducer(state, action.elementId): deepClone(state) as Slide;
         case 'CHANGE_POSITION':
             return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.xShift, action.changePositionCoordinates.yShift): deepClone(state) as Slide;
+        case 'SWITCH_LAYER':
+            return action.orderShift !== undefined? switchLayerReducer(state, action.orderShift): deepClone(state) as Slide;
+        
         case 'CHANGE_SIZE':
             return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.newWidth, action.ChangeSizeArgs.newHeight, action.ChangeSizeArgs.xShift, action.ChangeSizeArgs.yShift): deepClone(state) as Slide;
         case 'CHANGE_TEXT_PROPS':

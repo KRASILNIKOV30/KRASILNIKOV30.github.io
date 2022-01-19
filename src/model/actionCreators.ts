@@ -144,6 +144,13 @@ function changeSize(newWidth: number, newHeight: number, xShift: number, yShift:
     }
 }
 
+function switchLayer(orderShift: number) {
+    return {
+        type: 'SWITCH_LAYER',
+        orderShift
+    }
+}
+
 function changeTextProps(
     font?: string,
     textColor?: string,
@@ -201,6 +208,6 @@ function removeSelection(elementId: string) {
 
 export { uploadDoc, redo, undo, switchPreview, exportDoc, saveDoc, changeTitle, addSlide, removeSlides,
          switchSlide, selectOneSlide, selectManySlides, switchSlidePositions, setBackground,
-         addObject, addImage, selectElement, selectManyElements, changePosition, changeSize,
+         addObject, addImage, selectElement, selectManyElements, changePosition, changeSize, switchLayer,
          changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected, removeSelection
 }
