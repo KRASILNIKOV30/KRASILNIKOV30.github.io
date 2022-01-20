@@ -1,8 +1,9 @@
-import type { Editor, History, Presentation } from './types';
+import type { Editor, History, Presentation, Slide, SlideElement } from './types';
 import { deepClone } from '../core/functions/deepClone'
 import { ActionType } from './store';
 import { jsPDF } from 'jspdf'
 import { addSlides } from './export';
+import { v4 } from 'uuid';
 
 function addActionToHistoryReducer(editor: Editor): History {
     const newHistory = deepClone(editor.history) as History;
@@ -35,6 +36,62 @@ function saveDocReducer(editor: Editor): Editor {
 }
 
 function uploadDocReducer(editor: Editor, newEditor: Editor): Editor {
+    return (newEditor)
+}
+
+function copyReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
+    newEditor.buffers.slideBuffer = [];
+    newEditor.buffers.elementBuffer = [];
+    const slideIndex = newEditor.presentation.slides.findIndex(slide => slide.slideId === newEditor.presentation.currentSlideIds[0])
+    if (newEditor.presentation.slides[slideIndex].selectedElementsIds.length > 0) {
+        newEditor.presentation.slides[slideIndex].elements.forEach(element => {
+            if(newEditor.presentation.slides[slideIndex].selectedElementsIds.includes(element.elementId)) {
+                const newElement = deepClone(element) as SlideElement;
+                newEditor.buffers.elementBuffer.push(newElement)
+            }
+        })
+    }
+    else {
+        newEditor.presentation.slides.forEach(slide => {
+            if (newEditor.presentation.currentSlideIds.includes(slide.slideId)) {
+                const newSlide = deepClone(slide) as Slide;
+                newEditor.buffers.slideBuffer.push(newSlide)
+            }
+        })
+    }
+    return (newEditor)
+}
+
+function pasteReducer(editor: Editor): Editor {
+    const newEditor = deepClone(editor) as Editor;
+    if (newEditor.buffers.elementBuffer.length > 0) {
+        const slideIndex = newEditor.presentation.slides.findIndex(slide => slide.slideId === newEditor.presentation.currentSlideIds[0])
+        newEditor.buffers.elementBuffer.forEach(element => {
+            const newElement = deepClone(element) as SlideElement;
+            newElement.elementId = v4()
+                newElement.position = {
+                    x: newElement.position.x + 10,
+                    y: newElement.position.y + 10
+                }
+            newEditor.presentation.slides[slideIndex].elements.push(newElement);
+            element.position = {
+                x: element.position.x + 10,
+                y: element.position.y + 10
+            }
+        })
+        for (let i = 0; i < newEditor.buffers.elementBuffer.length; i++) {
+            
+        }
+    }
+    else {
+        newEditor.buffers.slideBuffer.forEach(slide => {
+            const newSlide = deepClone(slide) as Slide;
+            newSlide.slideId = v4();
+            newSlide.elements.forEach(element => element.elementId = v4())
+            newEditor.presentation.slides.push(newSlide)
+        })
+    }
     return (newEditor)
 }
 
@@ -105,6 +162,10 @@ function editorReducer(state: Editor, action: ActionType): Editor {
             return undoReducer(state)
         case 'REDO':
             return redoReducer(state);
+        case 'PASTE': 
+            return pasteReducer(state)
+        case 'COPY':
+            return copyReducer(state);
         case 'UPLOAD_DOCUMENT':
             return action.newEditor? uploadDocReducer(state, action.newEditor): deepClone(state) as Editor
         default:

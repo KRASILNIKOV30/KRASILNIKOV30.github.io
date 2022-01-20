@@ -94,7 +94,7 @@ const SlidesElement = ({
                         'width': slideElement.size.width,
                         'height': slideElement.size.height,
                     }}
-                    onMouseDown = {(e) => {
+                    onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 selectManyElements(slideElement.elementId)
@@ -141,7 +141,7 @@ const SlidesElement = ({
                         'height': slideElement.size.height,
                         'strokeWidth': slideElement.figure?.strokeWidth
                     }}
-                    onMouseDown = {(e) => {
+                    onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 selectManyElements(slideElement.elementId)
@@ -181,7 +181,7 @@ const SlidesElement = ({
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
-                    onMouseDown = {(e) => {
+                    onClick = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 selectManyElements(slideElement.elementId)

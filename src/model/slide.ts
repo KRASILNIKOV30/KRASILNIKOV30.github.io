@@ -107,6 +107,7 @@ function selectElementReducer(slide: Slide, elementId: string): Slide {
 function selectManyElementsReducer(slide: Slide, elementId: string): Slide {
     const newSlide = deepClone(slide) as Slide;
     newSlide.selectedElementsIds.push(elementId);
+    console.log(JSON.stringify(newSlide.selectedElementsIds))
     return newSlide
 } 
 

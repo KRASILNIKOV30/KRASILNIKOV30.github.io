@@ -38,6 +38,18 @@ function redo() {
     }
 }
 
+function copy() {
+    return {
+        type: 'COPY'
+    }
+}
+
+function paste() {
+    return {
+        type: 'PASTE'
+    }
+}
+
 //presentation
 function changeTitle(newTitle: string) {
     return {
@@ -209,5 +221,6 @@ function removeSelection(elementId: string) {
 export { uploadDoc, redo, undo, switchPreview, exportDoc, saveDoc, changeTitle, addSlide, removeSlides,
          switchSlide, selectOneSlide, selectManySlides, switchSlidePositions, setBackground,
          addObject, addImage, selectElement, selectManyElements, changePosition, changeSize, switchLayer,
-         changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected, removeSelection
-}
+         changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected, removeSelection,
+         copy, paste
+        }

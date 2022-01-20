@@ -43,6 +43,8 @@ function deleteSlidesReducer(presentation: Presentation): Presentation {
 
 function switchSlideReducer(presentation: Presentation, slideId: string): Presentation {
     const newPresentation = deepClone(presentation) as Presentation;
+    const slideIndex = newPresentation.slides.findIndex(slide => slide.slideId === newPresentation.currentSlideIds[0])
+    newPresentation.slides[slideIndex].selectedElementsIds = [];
     return {
         ...newPresentation,
         currentSlideIds: [slideId]

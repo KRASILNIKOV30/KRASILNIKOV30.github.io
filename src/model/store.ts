@@ -5,7 +5,7 @@ import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
-import { uploadDoc, redo, undo, deleteSelected } from './actionCreators';
+import { uploadDoc, redo, undo, deleteSelected, switchLayer, copy, paste } from './actionCreators';
 import { getBase64FromPicture } from './export'
 import { useRef } from 'react';
 
@@ -87,7 +87,7 @@ let initialState: Editor = {
                     }
                 ],
                 background: "#FFF2AF",
-                selectedElementsIds: ['1']
+                selectedElementsIds: []
             }, 
             {
                 slideId: "1",
@@ -107,7 +107,7 @@ let initialState: Editor = {
                     }
                 ],
                 background: "#532232",
-                selectedElementsIds: ['0']
+                selectedElementsIds: []
             }
         ],
         currentSlideIds: ['0']
@@ -115,6 +115,10 @@ let initialState: Editor = {
     history: {
         undoStack: [],
         redoStack: []
+    },
+    buffers: {
+        slideBuffer: [],
+        elementBuffer: []
     },
     statePreview: false
 };
@@ -173,17 +177,32 @@ function uploadDocFunction() {
     inputFile.remove();
 }
 
-window.addEventListener('keydown', function(event) {
+function addHotKeys() {
+    window.addEventListener('keydown', function(event) {
         if (event.code === 'KeyZ' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(undo())
         }
         if (event.code === 'KeyY' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(redo())
         }
+        if (event.code === 'ArrowUp' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(switchLayer(1))
+        }
+        if (event.code === 'ArrowDown' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(switchLayer(-1))
+        }
+        if (event.code === 'KeyC' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(copy())
+        }
+        if (event.code === 'KeyV' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(paste())
+        }
         if (event.code === 'Delete') {
             store.dispatch(deleteSelected())
         }
     });
+}
+
 
 function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     const addInHistory: boolean = (action.type !== 'SAVE_DOCUMENT')
@@ -199,14 +218,12 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
     newState.presentation = presentationReducer(newState.presentation, action);
     localStorage.setItem("savedEditor", JSON.stringify(newState))
-    console.log('size = ' + JSON.stringify(newState.presentation.slides[0].elements[0].size))
-    console.log('position = ' + JSON.stringify(newState.presentation.slides[0].elements[0].position))
     return newState
 }
 
-//localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: 
-let store = createStore(mainReducer, initialState)
+
+let store = createStore(mainReducer, localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: initialState)
 
 export type AppDispatch = typeof store.dispatch
 
-export { store, uploadDocFunction }
+export { store, uploadDocFunction, addHotKeys }

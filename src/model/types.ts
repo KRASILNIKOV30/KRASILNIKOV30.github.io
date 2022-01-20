@@ -4,7 +4,13 @@ type Editor = {
     presentation: Presentation;
     history: History;
     statePreview: boolean;
+    buffers: Buffers;
 } 
+
+type Buffers = {
+    slideBuffer: Array<Slide>;
+    elementBuffer: Array<SlideElement>
+}
 
 type History = {
     undoStack: Array<Presentation>;

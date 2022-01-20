@@ -3,9 +3,11 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './App';
-import { store } from './model/store';
+import { addHotKeys, store } from './model/store';
 
 const rootElement = document.getElementById('root')
+
+addHotKeys()
 
 ReactDOM.render(
     <Provider store={store}>
