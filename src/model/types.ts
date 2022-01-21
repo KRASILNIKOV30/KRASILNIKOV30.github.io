@@ -5,7 +5,14 @@ type Editor = {
     history: History;
     statePreview: boolean;
     buffers: Buffers;
-} 
+    // colorTheme: ColorTheme;
+}
+
+// type ColorTheme = {
+//     mainColor: string,
+//     subColor: string,
+//     backColor: string
+// }
 
 type Buffers = {
     slideBuffer: Array<Slide>;

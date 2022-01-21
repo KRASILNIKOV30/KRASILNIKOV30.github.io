@@ -95,6 +95,18 @@ function pasteReducer(editor: Editor): Editor {
     return (newEditor)
 }
 
+// function changeColorThemeReducer(state: Editor, mainColor: string, subColor: string, backColor: string): Editor {
+//     const newEditor = deepClone(state) as Editor;
+//     return {
+//         ...newEditor,
+//         colorTheme: {
+//             mainColor,
+//             subColor,
+//             backColor
+//         }
+//     }
+// }
+
 async function exportDocReducer(state: Editor) {
     const slides = state.presentation.slides;
     const title = state.presentation.title;

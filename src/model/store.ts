@@ -120,6 +120,11 @@ let initialState: Editor = {
         slideBuffer: [],
         elementBuffer: []
     },
+    // colorTheme: {
+    //     mainColor: '#2824EE',
+    //     subColor: '#EEEEF2',
+    //     backColor: '#FFFFFF'
+    // },
     statePreview: false
 };
 
