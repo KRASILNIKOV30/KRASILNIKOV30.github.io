@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './SlidesElement.module.css'
 import Figure from "./Figure/Figure"
 import Text from "./Text/Text"
@@ -36,11 +36,8 @@ const SlidesElement = ({
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);  
     const isOnShift = useRef(false);
-    const clickOutsideFunction = () => {
-        window.onmousedown = (e) => {
-            isOnShift.current = e.shiftKey;
-        } 
-        if (active && !isOnShift.current) {
+    const clickOutsideFunction = () => { 
+        if (active) {
             removeSelection(slideElement?.elementId!)
         } else {
             return(null)
@@ -77,6 +74,17 @@ const SlidesElement = ({
         corners,
         onMouseUpFunction: (width: number, height: number, x: number, y: number) => changeSize(width, height, x, y)
     }) 
+
+    const [elementWidth, setElementWidth] = useState(slideElement?.size.width)
+    const [elementHeight, setElementHeight] = useState(slideElement?.size.height)
+    useEffect(() => {
+        setElementWidth(slideElement!.size.width)
+        setElementHeight(slideElement?.size.height)
+    }, [slideElement!.size.width, slideElement!.size.height])
+    useEffect(() => {
+        setElementWidth(Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)));
+        setElementHeight(Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)))
+    }, [Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2))])    
 
     if(slideElement === undefined) {
         return (<div></div>)
@@ -116,8 +124,8 @@ const SlidesElement = ({
                     }
                     <Text
                         size = {{
-                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
-                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
+                            width: elementWidth!,
+                            height: elementHeight!
                         }}
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
@@ -164,8 +172,8 @@ const SlidesElement = ({
                     <Figure
                         figure = {slideElement.figure!}
                         size = {{
-                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
-                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
+                            width: elementWidth!/* slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width */,
+                            height: elementHeight!/* slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height */
                         }}
                     />
                 </div>
@@ -203,11 +211,11 @@ const SlidesElement = ({
                     }
                     <img
                         className = {styles.image_element}
-                        alt = 'not found'
+                        alt = 'user image'
                         src = {slideElement.image}
                         style={{
-                            width: slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width,
-                            height: slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height
+                            width: elementWidth!,
+                            height: elementHeight!
                         }}
                     />
                 </div>

@@ -4,7 +4,7 @@ import SlideEditor from './slideEditor/slideEditor';
 import styles from './App.module.css';
 import SlideView from './common/Slide/Slide';
 import SlidesElement from './common/SlidesElement/SlidesElement'
-import SideBar from './sideBar/SideBar'
+import SideBar from './sideBar/sideBar'
 import { AppDispatch } from './model/store';
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
