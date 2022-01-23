@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import styles from './input.module.css';
+import styles from './textField.module.css';
 
 interface TextFieldProps {
     size: 'small' | 'big',

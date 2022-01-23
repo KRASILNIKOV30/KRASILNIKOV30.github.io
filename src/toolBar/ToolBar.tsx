@@ -5,7 +5,7 @@ import { AppDispatch, uploadDocFunction } from '../model/store'
 import Button from "../common/Button/Button"
 import DropDown from "../common/DropDown/DropDown"
 import Knob from "../common/Knob/Knob"
-import TextField from "../common/Input/input" 
+import TextField from "../common/TextField/textField" 
 
 import { Editor, Slide, SlideElement } from "../model/types"
 
@@ -27,6 +27,7 @@ type ToolBarProps = {
     exportDoc: () => void,
     changeTextFont: (font: string) => void,
     changeTextSize: (fontSize: number) => void,
+    changeTextWeight: (fontWeight: number) => void,
     changeTitle: (newTitle: string) => void,
 }
 
@@ -44,7 +45,8 @@ const ToolBar = ({
     exportDoc,
     changeTextFont,
     changeTextSize,
-    changeTitle
+    changeTitle,
+    changeTextWeight
 }: ToolBarProps) => {
     const [rename, setRename] = useState(false);
 
@@ -171,6 +173,7 @@ const ToolBar = ({
                         onClick = {(newMode) => setDrawBlock(newMode)}
                         changeTextFont={changeTextFont}
                         changeTextSize={changeTextSize}
+                        changeTextWeight={changeTextWeight}
                     />
                 </div>
                 <div className={styles.result_buttons_block}>
@@ -211,9 +214,10 @@ interface OptionalToolsProps {
     onClick: (newMode: string) => void,
     changeTextFont: (font: string) => void,
     changeTextSize: (fontSize: number) => void,
+    changeTextWeight: (fontWeight: number) => void,
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize }: OptionalToolsProps) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize, changeTextWeight }: OptionalToolsProps) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -245,8 +249,15 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
                 /> 
                 <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
-                    value={firstSelectedElement.textProps!.fontSize}    
+                    value={firstSelectedElement.textProps!.fontSize} 
+                    step = {1}   
                     onClick={(value) => changeTextSize(value)}
+                />
+                <p className={styles.optional_tools_text}>Начертание</p>
+                <Knob 
+                    value={firstSelectedElement.textProps!.fontWeight} 
+                    step = {100}   
+                    onClick={(value) => changeTextWeight(value)}
                 />
             </div>
         )
@@ -277,6 +288,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         exportDoc: () => dispatch(exportDoc()),
         changeTextFont: (font: string) => dispatch(changeTextProps(font)),
         changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontSize)),
+        changeTextWeight: (fontWeight: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, fontWeight)),
         changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
     }
 }

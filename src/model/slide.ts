@@ -2,6 +2,8 @@ import type { SlideElement, Slide } from './types';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 import { ActionType } from './store';
+import { getBase64FromPicture } from './export';
+import { Size } from '../core/types/types';
 
 function setBackgroundReducer(slide: Slide, background: string): Slide {
     if (background !== '') {
@@ -62,7 +64,7 @@ function addObjectReducer(slide: Slide, element: string): Slide {
                 bgColor: null,
                 textValue: 'Hello Kerim',
                 fontSize: 15,
-                fontWeight: 'regular'
+                fontWeight: 500
             }
             break;
         }
@@ -74,20 +76,29 @@ function addObjectReducer(slide: Slide, element: string): Slide {
 
 function addImageReducer(slide: Slide, urlImage: string): Slide {
     const newSlide = deepClone(slide) as Slide;
+    //const base64Image = getBase64FromPicture(urlImage, {width, height});
     const newEl: SlideElement = {
         elementId: v4(),
-        elementType: 'image',
+         elementType: 'image',
         position: {
             x: 400,
             y: 400
         },
         size: {
-            width: 100,
-            height: 100
+            width: 400,
+            height: 400
         },
         image: urlImage
-    } 
+    }
     newSlide.elements.push(newEl);
+    // base64Image.then(
+    //     function(result) {
+    //         console.log('goood');
+    //         newEl.image = result;
+    //         newSlide.elements.push(newEl);
+    //     },
+    //     function(error) {console.log('baaad')}
+    // )
     return newSlide
 }
 
@@ -187,7 +198,7 @@ function changeTextPropsReducer(
     bgColor: string | undefined,
     textValue: string | undefined,
     fontSize: number | undefined,
-    fontWeight: "light" | "regular" | "bold" | undefined   
+    fontWeight: number | undefined   
 ): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
@@ -303,8 +314,7 @@ function slideReducer(state: Slide, action: ActionType): Slide {
         case 'CHANGE_POSITION':
             return action.changePositionCoordinates !== undefined? changePositionReducer(state, action.changePositionCoordinates.xShift, action.changePositionCoordinates.yShift): deepClone(state) as Slide;
         case 'SWITCH_LAYER':
-            return action.orderShift !== undefined? switchLayerReducer(state, action.orderShift): deepClone(state) as Slide;
-        
+            return action.orderShift !== undefined? switchLayerReducer(state, action.orderShift): deepClone(state) as Slide;     
         case 'CHANGE_SIZE':
             return action.ChangeSizeArgs !== undefined? changeSizeReducer(state, action.ChangeSizeArgs.newWidth, action.ChangeSizeArgs.newHeight, action.ChangeSizeArgs.xShift, action.ChangeSizeArgs.yShift): deepClone(state) as Slide;
         case 'CHANGE_TEXT_PROPS':

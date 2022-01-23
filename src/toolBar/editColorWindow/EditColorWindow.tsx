@@ -104,6 +104,7 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                         </div>
                         <Knob
                             value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
+                            step = {1}
                             onClick={(value) => changeStrokeWidth(value)}
                         />
                     </div>    

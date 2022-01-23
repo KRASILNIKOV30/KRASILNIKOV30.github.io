@@ -54,7 +54,7 @@ type TextType = {
     bgColor: string | null;
     textValue: string;
     fontSize: number;
-    fontWeight: "light" | "regular" | "bold"
+    fontWeight: number
 }
 
 type FigureType = {

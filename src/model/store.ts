@@ -51,7 +51,7 @@ let initialState: Editor = {
                             bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
-                            fontWeight: "bold"
+                            fontWeight: 500
                         }
                     },
                     {
@@ -135,7 +135,6 @@ export type ActionType = {
     orderShift?: number,
     background?: string,
     element?: string,
-    urlImage?: string,
     elementId?: string,
     changePositionCoordinates?: {
         xShift: number,
@@ -153,8 +152,9 @@ export type ActionType = {
         bgColor?: string,
         textValue?: string,
         fontSize?: number,
-        fontWeight?: "light" | "regular" | "bold"
+        fontWeight?: number
     },
+    urlImage?: string,
     newWidth?: number,
     newColor?: string,
     newEditor?: Editor
@@ -225,7 +225,6 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     localStorage.setItem("savedEditor", JSON.stringify(newState))
     return newState
 }
-
 
 let store = createStore(mainReducer, localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: initialState)
 

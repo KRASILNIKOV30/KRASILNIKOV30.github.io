@@ -18,19 +18,7 @@ const Text = ({
     placeholder
 }: TextProps) => {
     const [textValue, setTextValue] = useState(text.textValue)
-
-    if (!text.fontSize) {
-        text.fontSize = 10;        
-    }
-    if (!text.textColor) {
-        text.textColor = '#000000'
-    }
-    if (!text.fontWeight) {
-        text.fontWeight = 'light'
-    }
-    if (!text.bgColor) {
-        text.bgColor = '#FFFFFF'
-    }
+    
     return (
         <textarea
             value = {textValue}
