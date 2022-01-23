@@ -51,7 +51,8 @@ let initialState: Editor = {
                             bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
-                            fontWeight: 500
+                            fontWeight: 500,
+                            align: 'center'
                         }
                     },
                     {
@@ -152,7 +153,8 @@ export type ActionType = {
         bgColor?: string,
         textValue?: string,
         fontSize?: number,
-        fontWeight?: number
+        fontWeight?: number,
+        align?: "left" | "center" | "right"
     },
     urlImage?: string,
     newWidth?: number,

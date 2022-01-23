@@ -23,12 +23,12 @@ function saveDocReducer(editor: Editor): Editor {
     const stringEditor = JSON.stringify(newEditor);
     const fileEditor = new Blob(
         [stringEditor], {
-            type: 'application/json'
+            type: 'application/json',
         }
     )
     const link = document.createElement('a')
     link.href = URL.createObjectURL(fileEditor)
-    link.download = 'Presentation.json';
+    link.download = `${newEditor.presentation.title}.json`;
     link.style.display = 'none';
     link.click();
     link.remove();

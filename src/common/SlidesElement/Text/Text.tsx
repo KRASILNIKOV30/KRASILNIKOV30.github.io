@@ -33,7 +33,8 @@ const Text = ({
                 'fontSize': text.fontSize,
                 'color': text.textColor,
                 'width': size.width,
-                'height': size.height
+                'height': size.height,
+                'textAlign': text.align 
             }}    
         >{textValue}</textarea>
     )

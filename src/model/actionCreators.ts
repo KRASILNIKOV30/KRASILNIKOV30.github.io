@@ -169,7 +169,8 @@ function changeTextProps(
     bgColor?: string,
     textValue?: string,
     fontSize?: number,
-    fontWeight?: number
+    fontWeight?: number,
+    align?: "left" | "center" | "right"
 ) {
     return {
         type: 'CHANGE_TEXT_PROPS',
@@ -179,7 +180,8 @@ function changeTextProps(
             bgColor,
             textValue,
             fontSize,
-            fontWeight
+            fontWeight,
+            align
         }
     }
 }

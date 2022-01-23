@@ -54,7 +54,8 @@ type TextType = {
     bgColor: string | null;
     textValue: string;
     fontSize: number;
-    fontWeight: number
+    fontWeight: number;
+    align: "left" | "center" | "right"
 }
 
 type FigureType = {

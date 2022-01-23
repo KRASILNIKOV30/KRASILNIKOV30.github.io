@@ -29,6 +29,7 @@ type ToolBarProps = {
     changeTextSize: (fontSize: number) => void,
     changeTextWeight: (fontWeight: number) => void,
     changeTitle: (newTitle: string) => void,
+    changeTextAlign: (align: "left" | "center" | "right") => void
 }
 
 const ToolBar = ({
@@ -46,7 +47,8 @@ const ToolBar = ({
     changeTextFont,
     changeTextSize,
     changeTitle,
-    changeTextWeight
+    changeTextWeight,
+    changeTextAlign
 }: ToolBarProps) => {
     const [rename, setRename] = useState(false);
 
@@ -174,6 +176,7 @@ const ToolBar = ({
                         changeTextFont={changeTextFont}
                         changeTextSize={changeTextSize}
                         changeTextWeight={changeTextWeight}
+                        changeTextAlign={changeTextAlign}
                     />
                 </div>
                 <div className={styles.result_buttons_block}>
@@ -215,9 +218,10 @@ interface OptionalToolsProps {
     changeTextFont: (font: string) => void,
     changeTextSize: (fontSize: number) => void,
     changeTextWeight: (fontWeight: number) => void,
+    changeTextAlign: (align: "left" | "center" | "right") => void
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize, changeTextWeight }: OptionalToolsProps) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize, changeTextWeight, changeTextAlign }: OptionalToolsProps) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -259,6 +263,18 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
                     step = {100}   
                     onClick={(value) => changeTextWeight(value)}
                 />
+                <Button 
+                    viewStyle="align_left"
+                    onClick={() => changeTextAlign('left')}
+                />
+                <Button 
+                    viewStyle="align_center"
+                    onClick={() => changeTextAlign('center')}
+                />
+                <Button 
+                    viewStyle="align_right"
+                    onClick={() => changeTextAlign('right')}
+                />
             </div>
         )
     }
@@ -289,6 +305,7 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         changeTextFont: (font: string) => dispatch(changeTextProps(font)),
         changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontSize)),
         changeTextWeight: (fontWeight: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, fontWeight)),
+        changeTextAlign: (align: "left" | "center" | "right") => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, undefined, align)),
         changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
     }
 }
