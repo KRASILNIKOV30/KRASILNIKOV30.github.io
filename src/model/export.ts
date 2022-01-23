@@ -166,6 +166,7 @@ async function addSlides(doc: jsPDF, slides: Array<Slide>) {
                     x: 0,
                     y: 0
                 },
+                angle: 0,
                 elementType: 'image',
                 size: {
                     width: 818,

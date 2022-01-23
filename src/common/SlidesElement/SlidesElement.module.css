@@ -2,6 +2,7 @@
     position: absolute;
     box-sizing: content-box;
     padding: 2px;
+    transform-origin: center;
 }
 
 .element_active {
@@ -18,6 +19,13 @@
     border: 1px solid #2824EE;
     box-sizing: border-box;
     position: absolute;
+}
+
+.rotate_point {
+    border-radius: 10px;
+    top: -20px;
+    right: -20px;
+    cursor: pointer;
 }
 
 .point_top_left {

@@ -21,6 +21,7 @@ function addObjectReducer(slide: Slide, element: string): Slide {
             x: 400,
             y: 400
         },
+        angle: 0,
         size: {
             width: 100,
             height: 100
@@ -81,6 +82,7 @@ function addImageReducer(slide: Slide, urlImage: string): Slide {
             x: 400,
             y: 400
         },
+        angle: 0,
         size: {
             width: 100,
             height: 100

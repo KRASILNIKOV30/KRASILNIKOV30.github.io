@@ -40,7 +40,8 @@ type Slide = {
 type SlideElement = {
     elementId: string;
     elementType: "text" | "figure" | "image";
-    position: Position; 
+    position: Position;
+    angle: number; 
     isSelected?: boolean;
     size: Size; 
     image?: string;

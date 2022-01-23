@@ -2,12 +2,14 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 
 interface useDragAndDropProps {
     elementRef: React.RefObject<HTMLDivElement>,
-    onMouseUpFunction: Function
+    onMouseUpFunction: Function,
+    active: boolean
 }
 
 export function useDragAndDrop({
         elementRef,
-        onMouseUpFunction
+        onMouseUpFunction,
+        active
 }: useDragAndDropProps) {
     const isStartPosDeclared = useRef(false);
     const startObjectPositionX = useRef<number>(0);
@@ -49,7 +51,7 @@ export function useDragAndDrop({
     }, [onMouseUpFunction, onMouseMove])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (elementRef.current && !e.defaultPrevented) {
+        if (elementRef.current && !e.defaultPrevented && active) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
             const strX = elementRef.current?.style.left;

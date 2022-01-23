@@ -27,6 +27,7 @@ let initialState: Editor = {
                             width: 200,
                             height: 200
                         },
+                        angle: 0,
                         figure: {
                             form: "circle",
                             strokeColor: "#000000",
@@ -45,6 +46,7 @@ let initialState: Editor = {
                             width: 50,
                             height: 50
                         },
+                        angle: 0,
                         textProps: {
                             font: 'Montserrat',
                             textColor: "#000000",
@@ -65,6 +67,7 @@ let initialState: Editor = {
                             width: 100,
                             height: 100
                         },
+                        angle: 45,
                         figure: {
                             form: "rectangle",
                             strokeColor: "#000000",
@@ -79,6 +82,7 @@ let initialState: Editor = {
                             x: 530,
                             y: 50
                         },
+                        angle: 0,
                         size: {
                             width: 100,
                             height: 100
@@ -99,6 +103,7 @@ let initialState: Editor = {
                             x: 54,
                             y: 30
                         },
+                        angle: 0,
                         size: {
                             width: 450,
                             height: 59
