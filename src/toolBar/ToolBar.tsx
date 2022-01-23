@@ -184,7 +184,7 @@ const ToolBar = ({
                         <Button
                             viewStyle='outline'
                             text='Просмотр'
-                            onClick={() => switchPreview()}
+                            onClick={() => {switchPreview()}}
                         />
                     </div>
                     <div className={styles.outline_button}>

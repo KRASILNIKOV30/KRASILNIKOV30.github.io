@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+    import { useEffect, useRef, useState } from 'react';
 import styles from './SlidesElement.module.css'
 import Figure from "./Figure/Figure"
 import Text from "./Text/Text"

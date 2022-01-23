@@ -2,8 +2,8 @@ import type { SlideElement, Slide } from './types';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 import { ActionType } from './store';
-import { getBase64FromPicture } from './export';
 import { Size } from '../core/types/types';
+import { getBase64Image } from '../core/functions/getBase64Image';
 
 function setBackgroundReducer(slide: Slide, background: string): Slide {
     if (background !== '') {
@@ -77,7 +77,6 @@ function addObjectReducer(slide: Slide, element: string): Slide {
 
 function addImageReducer(slide: Slide, urlImage: string): Slide {
     const newSlide = deepClone(slide) as Slide;
-    //const base64Image = getBase64FromPicture(urlImage, {width, height});
     const newEl: SlideElement = {
         elementId: v4(),
          elementType: 'image',
@@ -92,14 +91,6 @@ function addImageReducer(slide: Slide, urlImage: string): Slide {
         image: urlImage
     }
     newSlide.elements.push(newEl);
-    // base64Image.then(
-    //     function(result) {
-    //         console.log('goood');
-    //         newEl.image = result;
-    //         newSlide.elements.push(newEl);
-    //     },
-    //     function(error) {console.log('baaad')}
-    // )
     return newSlide
 }
 
@@ -202,6 +193,7 @@ function changeTextPropsReducer(
     fontWeight: number | undefined,
     align: "left" | "center" | "right" | undefined
 ): Slide {
+    console.log('setted value = ' + textValue)
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
@@ -325,7 +317,7 @@ function slideReducer(state: Slide, action: ActionType): Slide {
                 action.ChangeTextArgs.font,
                 action.ChangeTextArgs.textColor,
                 action.ChangeTextArgs.bgColor,
-                action.ChangeTextArgs.textColor,
+                action.ChangeTextArgs.textValue,
                 action.ChangeTextArgs.fontSize,
                 action.ChangeTextArgs.fontWeight,
                 action.ChangeTextArgs.align

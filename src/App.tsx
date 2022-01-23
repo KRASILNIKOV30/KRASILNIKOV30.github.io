@@ -4,8 +4,8 @@ import SlideEditor from './slideEditor/slideEditor';
 import styles from './App.module.css';
 import SlideView from './common/Slide/Slide';
 import SlidesElement from './common/SlidesElement/SlidesElement'
-import SideBar from './sideBar/SideBar'
 import { AppDispatch } from './model/store';
+import SideBar from './sideBar/sideBar'
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
 import { useRef, useState } from 'react';
@@ -21,10 +21,11 @@ function App({
 }: AppProps) {
     if (editor.statePreview) {
         const onKeyDown = (e: KeyboardEvent) => {
+            console.log(e.key)
             switch (e.key) {
                 case 'Escape':
                     switchPreview();
-                    document.removeEventListener('keydown', onKeyDown);
+                    window.removeEventListener('keydown', onKeyDown);
                     break;
                 case 'ArrowRight':
                     if (indexSlide !== editor.presentation.slides.length - 1) {
@@ -38,7 +39,7 @@ function App({
                     break;            
             }
         }
-        document.addEventListener('keydown', onKeyDown)
+        window.addEventListener('keydown', onKeyDown)
     }
     const slideRef = useRef(null)
     const [indexSlide, setIndexSlide] = useState(editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]));
@@ -71,11 +72,6 @@ function App({
                 editor.statePreview ?
                 <div 
                     className={styles.preview_container}
-                    onKeyDown = {(e) => {
-                        if (e.key === 'Escape') {
-                            switchPreview()
-                        }
-                    }}
                 > 
                     <div className={styles.preview_slide}> 
                         {slidesList[indexSlide]} 
