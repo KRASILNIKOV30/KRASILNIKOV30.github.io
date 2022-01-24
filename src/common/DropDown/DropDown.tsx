@@ -1,10 +1,13 @@
 import styles from './DropDown.module.css';
 import { useState, useRef } from 'react';
 import Button from '../Button/Button';
+import TextField from '../TextField/textField';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
 import { AppDispatch } from '../../model/store';
-import { addImage, addObject } from '../../model/actionCreators';
+import { addImage, addObject, } from '../../model/actionCreators';
 import { connect } from 'react-redux';
+import { getBase64Image } from '../../core/functions/getBase64Image';
+import { getBase64FromPicture } from '../../model/export';
 
 interface DropDownProps {
     addObject: (element: string) => void,
@@ -104,6 +107,7 @@ interface DropDownOptionsToAddProps {
 }
 
 const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, addImage }: DropDownOptionsToAddProps) => {
+    const [inputImageUrl, setInputImageUrl] = useState(false);
     return (
         <div className={styles.options_to_add_container}>
             {
@@ -149,9 +153,18 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, a
                                 inputFile.onchange = () => {
                                     if (inputFile.files) {
                                         const urlImage = URL.createObjectURL(inputFile.files[0])
+                                        // getBase64FromPicture(urlImage, {width: 400, height: 400}).then((newUrl) => {
+                                        //     addImage(newUrl)
+                                        // })
+                                        // const img = document.createElement('img');
+                                        // img.src = urlImage;
+                                        // img.onload = () => {
+                                        //     const base64Image = getBase64Image(img)
+                                        //     addImage(base64Image);
+                                        //     img.remove()
+                                        // }
                                         addImage(urlImage)
                                     }
-                                   
                                 }
                                 inputFile.click();
                                 inputFile.remove();
@@ -162,16 +175,23 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, a
                             viewStyle = 'default'
                             text = 'С интернета'
                             onClick = {() => {
-                                onClick()
+                                setInputImageUrl(!inputImageUrl)
                             }}
                         />
-                        <Button 
-                            viewStyle = 'default'
-                            text = 'С Анапы 2007'
-                            onClick = {() => {
-                                onClick()
-                            }}
-                        />
+                        {
+                            inputImageUrl
+                                ?
+                                    <TextField 
+                                        size="small"
+                                        onKeyUp = {(value) => {
+                                            addImage(value);
+                                            setInputImageUrl(false)
+                                            onClick()
+                                        }}
+                                        placeholder = 'URL'
+                                    />
+                                : null
+                        }
                     </div>
                 : null
         }

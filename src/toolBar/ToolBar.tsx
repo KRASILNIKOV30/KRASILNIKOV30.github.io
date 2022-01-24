@@ -5,7 +5,7 @@ import { AppDispatch, uploadDocFunction } from '../model/store'
 import Button from "../common/Button/Button"
 import DropDown from "../common/DropDown/DropDown"
 import Knob from "../common/Knob/Knob"
-import TextField from "../common/Input/input" 
+import TextField from "../common/TextField/textField" 
 
 import { Editor, Slide, SlideElement } from "../model/types"
 
@@ -27,7 +27,9 @@ type ToolBarProps = {
     exportDoc: () => void,
     changeTextFont: (font: string) => void,
     changeTextSize: (fontSize: number) => void,
+    changeTextWeight: (fontWeight: number) => void,
     changeTitle: (newTitle: string) => void,
+    changeTextAlign: (align: "left" | "center" | "right") => void
 }
 
 const ToolBar = ({
@@ -44,7 +46,9 @@ const ToolBar = ({
     exportDoc,
     changeTextFont,
     changeTextSize,
-    changeTitle
+    changeTitle,
+    changeTextWeight,
+    changeTextAlign
 }: ToolBarProps) => {
     const [rename, setRename] = useState(false);
 
@@ -171,6 +175,8 @@ const ToolBar = ({
                         onClick = {(newMode) => setDrawBlock(newMode)}
                         changeTextFont={changeTextFont}
                         changeTextSize={changeTextSize}
+                        changeTextWeight={changeTextWeight}
+                        changeTextAlign={changeTextAlign}
                     />
                 </div>
                 <div className={styles.result_buttons_block}>
@@ -178,7 +184,7 @@ const ToolBar = ({
                         <Button
                             viewStyle='outline'
                             text='Просмотр'
-                            onClick={() => switchPreview()}
+                            onClick={() => {switchPreview()}}
                         />
                     </div>
                     <div className={styles.outline_button}>
@@ -211,9 +217,11 @@ interface OptionalToolsProps {
     onClick: (newMode: string) => void,
     changeTextFont: (font: string) => void,
     changeTextSize: (fontSize: number) => void,
+    changeTextWeight: (fontWeight: number) => void,
+    changeTextAlign: (align: "left" | "center" | "right") => void
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize }: OptionalToolsProps) {
+function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize, changeTextWeight, changeTextAlign }: OptionalToolsProps) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -245,8 +253,27 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
                 /> 
                 <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
-                    value={firstSelectedElement.textProps!.fontSize}    
+                    value={firstSelectedElement.textProps!.fontSize} 
+                    step = {1}   
                     onClick={(value) => changeTextSize(value)}
+                />
+                <p className={styles.optional_tools_text}>Начертание</p>
+                <Knob 
+                    value={firstSelectedElement.textProps!.fontWeight} 
+                    step = {100}   
+                    onClick={(value) => changeTextWeight(value)}
+                />
+                <Button 
+                    viewStyle="align_left"
+                    onClick={() => changeTextAlign('left')}
+                />
+                <Button 
+                    viewStyle="align_center"
+                    onClick={() => changeTextAlign('center')}
+                />
+                <Button 
+                    viewStyle="align_right"
+                    onClick={() => changeTextAlign('right')}
                 />
             </div>
         )
@@ -277,6 +304,8 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         exportDoc: () => dispatch(exportDoc()),
         changeTextFont: (font: string) => dispatch(changeTextProps(font)),
         changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontSize)),
+        changeTextWeight: (fontWeight: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, fontWeight)),
+        changeTextAlign: (align: "left" | "center" | "right") => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, undefined, align)),
         changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
     }
 }

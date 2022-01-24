@@ -116,7 +116,7 @@ function addObject(element: string) {
 function addImage(urlImage: string) {
     return {
         type: 'ADD_IMAGE',
-        urlImage
+        urlImage,
     }
 }
 
@@ -178,7 +178,8 @@ function changeTextProps(
     bgColor?: string,
     textValue?: string,
     fontSize?: number,
-    fontWeight?: "light" | "regular" | "bold"
+    fontWeight?: number,
+    align?: "left" | "center" | "right"
 ) {
     return {
         type: 'CHANGE_TEXT_PROPS',
@@ -188,7 +189,8 @@ function changeTextProps(
             bgColor,
             textValue,
             fontSize,
-            fontWeight
+            fontWeight,
+            align
         }
     }
 }

@@ -50,7 +50,8 @@ let initialState: Editor = {
                             bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
-                            fontWeight: "bold"
+                            fontWeight: 500,
+                            align: 'center'
                         }
                     },
                     {
@@ -137,7 +138,6 @@ export type ActionType = {
     orderShift?: number,
     background?: string,
     element?: string,
-    urlImage?: string,
     elementId?: string,
     changeAngleArgs?: {
         angleShift: number
@@ -158,8 +158,10 @@ export type ActionType = {
         bgColor?: string,
         textValue?: string,
         fontSize?: number,
-        fontWeight?: "light" | "regular" | "bold"
+        fontWeight?: number,
+        align?: "left" | "center" | "right"
     },
+    urlImage?: string,
     newWidth?: number,
     newColor?: string,
     newEditor?: Editor
@@ -227,12 +229,13 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     if (addInHistory) {newState.history = addActionToHistoryReducer(state)}
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
     newState.presentation = presentationReducer(newState.presentation, action);
-    localStorage.setItem("savedEditor", JSON.stringify(newState))
+    //localStorage.setItem("savedEditor", JSON.stringify(newState))
     return newState
 }
 
+//localStorage.getItem("savedEditor") === null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: 
 
-let store = createStore(mainReducer, localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: initialState)
+let store = createStore(mainReducer, initialState)
 
 export type AppDispatch = typeof store.dispatch
 

@@ -2,6 +2,8 @@ import type { SlideElement, Slide } from './types';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 import { ActionType } from './store';
+import { Size } from '../core/types/types';
+import { getBase64Image } from '../core/functions/getBase64Image';
 
 function setBackgroundReducer(slide: Slide, background: string): Slide {
     if (background !== '') {
@@ -63,7 +65,8 @@ function addObjectReducer(slide: Slide, element: string): Slide {
                 bgColor: null,
                 textValue: 'Hello Kerim',
                 fontSize: 15,
-                fontWeight: 'regular'
+                fontWeight: 500,
+                align: 'left'
             }
             break;
         }
@@ -77,18 +80,18 @@ function addImageReducer(slide: Slide, urlImage: string): Slide {
     const newSlide = deepClone(slide) as Slide;
     const newEl: SlideElement = {
         elementId: v4(),
-        elementType: 'image',
+         elementType: 'image',
         position: {
             x: 400,
             y: 400
         },
         angle: 0,
         size: {
-            width: 100,
-            height: 100
+            width: 400,
+            height: 400
         },
         image: urlImage
-    } 
+    }
     newSlide.elements.push(newEl);
     return newSlide
 }
@@ -203,12 +206,14 @@ function changeTextPropsReducer(
     bgColor: string | undefined,
     textValue: string | undefined,
     fontSize: number | undefined,
-    fontWeight: "light" | "regular" | "bold" | undefined   
+    fontWeight: number | undefined,
+    align: "left" | "center" | "right" | undefined
 ): Slide {
+    console.log('setted value = ' + textValue)
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
-        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].elementType === "text") {
+        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].textProps !== undefined) {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 textProps: {
@@ -218,6 +223,7 @@ function changeTextPropsReducer(
                     textValue: textValue !== undefined ? textValue : newSlide.elements[i].textProps!.textValue,
                     fontSize: fontSize !== undefined ? fontSize : newSlide.elements[i].textProps!.fontSize,
                     fontWeight: fontWeight !== undefined ? fontWeight : newSlide.elements[i].textProps!.fontWeight,
+                    align: align !== undefined ? align : newSlide.elements[i].textProps!.align
                 }
             };
             newSlide.elements.splice(i, 1, newElement)
@@ -329,9 +335,10 @@ function slideReducer(state: Slide, action: ActionType): Slide {
                 action.ChangeTextArgs.font,
                 action.ChangeTextArgs.textColor,
                 action.ChangeTextArgs.bgColor,
-                action.ChangeTextArgs.textColor,
+                action.ChangeTextArgs.textValue,
                 action.ChangeTextArgs.fontSize,
-                action.ChangeTextArgs.fontWeight
+                action.ChangeTextArgs.fontWeight,
+                action.ChangeTextArgs.align
             ): deepClone(state) as Slide;
         case 'CHANGE_STROKE_WIDTH':
             return action.newWidth !== undefined? changeStrokeWidthReducer(state, action.newWidth): deepClone(state) as Slide;

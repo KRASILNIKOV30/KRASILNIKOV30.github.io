@@ -3,11 +3,13 @@ import styles from './Knob.module.css';
 
 interface KnobProps {
     value: number,
+    step: number,
     onClick: (value: number) => void
 }
 
 const Knob = ({
     value,
+    step,
     onClick
 }: KnobProps) => {
     return (
@@ -17,14 +19,20 @@ const Knob = ({
                     <td 
                         className={styles.minus}
                         onClick={() => {
-                            onClick(--value)
+                            if (value - step > 0) {
+                                value -= step
+                            }
+                            onClick(value)
                         }}
                     ></td>
                     <td className={styles.value}>{value}</td>
                     <td 
                         className={styles.plus}
                         onClick={() => {
-                            onClick(++value)
+                            if (value + step <= 900) {
+                                value += step
+                            }
+                            onClick(value)
                         }}
                     ></td>
                 </tr>
