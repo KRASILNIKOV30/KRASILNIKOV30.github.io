@@ -80,8 +80,16 @@ function addEllipse(doc: jsPDF, object: SlideElement, mode: string) {
 
 function addFigure(doc: jsPDF, object: SlideElement) {
     if (object.figure) {
-        doc.setDrawColor(object.figure.strokeColor);
-        doc.setFillColor(object.figure.fillColor)
+        if (object.figure.strokeColor === "transparent") {
+            doc.setDrawColor(0, 0, 0, 0)
+        } else {
+            doc.setDrawColor(object.figure.strokeColor);
+        }
+        if (object.figure.fillColor === "transparent") {
+            doc.setFillColor(0, 0, 0, 0)
+        } else {
+            doc.setFillColor(object.figure.fillColor);
+        }
         doc.setLineWidth(object.figure.strokeWidth);
         const drawingMode = 'FD'; //DrawFill
         if (object.figure.form === 'rectangle') {
