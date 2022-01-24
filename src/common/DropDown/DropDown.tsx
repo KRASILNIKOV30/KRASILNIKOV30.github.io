@@ -5,7 +5,7 @@ import { addObject, addImage } from '../../model/element';
 import { dispatch } from '../../model/editor';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
 import { Input } from '../Input/input';
-import { GettingWeather } from './WeatherInfo/WeatherInfo';
+import { useGettingWeather } from './WeatherInfo/WeatherInfo';
 
 export const DropDown = () => {
     const [opened, setOpened] = useState(false);
@@ -13,6 +13,7 @@ export const DropDown = () => {
 
     useClickOutside(dropDownRef, () => setOpened(false));
     
+
     return (
         <div className = {styles.container}
             ref={dropDownRef}
@@ -107,6 +108,8 @@ interface DropDownOptionsToAddProps {
 }
 
 const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClick }: DropDownOptionsToAddProps) => {
+    const buttonRef = useRef(null)
+    useGettingWeather({buttonRef})
     return (
         <div className={styles.options_to_add_container}>
             {
@@ -189,13 +192,15 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClic
                                 
                             }}
                         />
-                        <Button
-                            style = 'outline'
-                            text = 'Найти'
-                            onClick = {() => {
-                                GettingWeather()
-                            }}
-                        />
+                        <div
+                            ref = {buttonRef}
+                        >
+                            <Button
+                                style = 'outline'
+                                text = 'Найти'
+                                onClick={() => {}}
+                            />
+                        </div>
                     </div>
                 : null
         }

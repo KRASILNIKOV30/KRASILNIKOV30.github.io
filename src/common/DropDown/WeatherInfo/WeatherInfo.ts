@@ -43,27 +43,41 @@
   возможно сделать собственный хук
   возможно сделать объект - виджет*/
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+interface GettingWeatherProps {
+    buttonRef: React.RefObject<HTMLElement|null>
+}
 
-const GettingWeather = () => {
-  const city = 'Kazan';
-  const temp = '';
-  const [weather, setWeather] = useState(temp);
-  useEffect(() => {
-    loadWeather();
-  }, []);
-  const loadWeather = () => {
-    console.log('>> Loading weather <<');
-    try {
-      fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=98e5bfeb477c9bec9f5ee8de192eaed8')
-        .then(res => res.json())
-        .then(weather => {
-          setWeather(weather.main.temp);
-        });
-    } catch (e) {}
-  };
-  console.log(`>> Current temp is: ${weather || 'EMPTY'} <<`);
-  return ({weather});
+const useGettingWeather = ({
+    buttonRef
+}: GettingWeatherProps) => {
+    const city = 'Kazan';
+    const temp = '';
+    const [weather, setWeather] = useState(temp);
+
+    const onMouseDown = useCallback((e: MouseEvent) => {
+      try {
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=98e5bfeb477c9bec9f5ee8de192eaed8')
+          .then(res => res.json())
+          .then(weather => {
+            setWeather(weather.main.temp);
+          });
+      } catch (e) {}
+      console.log(city + ': ' + weather)
+    }, [])
+
+    useEffect(() => {  
+      console.log('useEffect')
+        if (buttonRef.current) {
+            buttonRef.current.addEventListener('mousedown', onMouseDown)
+        }
+        return () => {
+          if (buttonRef.current) {
+            buttonRef.current.removeEventListener('mousedown', onMouseDown)  
+          }
+        }
+        
+    }, [buttonRef.current])
 };
-export { GettingWeather };
+export { useGettingWeather };
