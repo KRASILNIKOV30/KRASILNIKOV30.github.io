@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import styles from './Button.module.css';
 
 interface ButtonProps {
-    viewStyle: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'arrow_down' | 'arrow_up' | 'sign' | 'align_left' | 'align_center' | 'align_right',
+    viewStyle: 'default' | 'outline' | 'delete' | 'redo' | 'undo' | 'arrow_down' | 'arrow_up' | 'sign' | 'align_left' | 'align_center' | 'align_right' | 'text_color',
     text?: string,
     onClick: () => void
 }
@@ -24,6 +24,7 @@ const Button = ({
         case 'align_left': {buttonStyle = styles.button_align_left; break}
         case 'align_center': {buttonStyle = styles.button_align_center; break}
         case 'align_right': {buttonStyle = styles.button_align_right; break}
+        case 'text_color': {buttonStyle = styles.button_text_color; break}
     }
     return (
         <button

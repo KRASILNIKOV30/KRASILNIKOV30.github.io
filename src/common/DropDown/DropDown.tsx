@@ -6,6 +6,8 @@ import { useClickOutside } from '../../core/hooks/useClickOutside';
 import { AppDispatch } from '../../model/store';
 import { addImage, addObject, } from '../../model/actionCreators';
 import { connect } from 'react-redux';
+import { getBase64FromPicture } from '../../model/export';
+
 
 interface DropDownProps {
     addObject: (element: string) => void,
@@ -151,7 +153,9 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, a
                                 inputFile.onchange = () => {
                                     if (inputFile.files) {
                                         const urlImage = URL.createObjectURL(inputFile.files[0])
-                                        addImage(urlImage)
+                                        getBase64FromPicture(urlImage, {width: 400, height: 400}).then((newUrl) => {
+                                            addImage(newUrl)
+                                        })
                                     }
                                 }
                                 inputFile.click();
@@ -172,7 +176,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, a
                                     <TextField 
                                         size="small"
                                         onKeyUp = {(value) => {
-                                            addImage(value);
+                                            addImage(value)
                                             setInputImageUrl(false)
                                             onClick()
                                         }}
