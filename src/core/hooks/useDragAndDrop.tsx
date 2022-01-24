@@ -3,11 +3,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 interface useDragAndDropProps {
     elementRef: React.RefObject<HTMLDivElement>,
     onMouseUpFunction: Function,
-    id: string,
 }
 
 export function useDragAndDrop({
-        id,
         elementRef,
         onMouseUpFunction: onMouseUpFunction
 }: useDragAndDropProps) {
@@ -24,7 +22,6 @@ export function useDragAndDrop({
     const startClientY = useRef(0); 
 
     const onMouseMove = useCallback((e: MouseEvent) => {
-       // console.log('onMouseMove', elementRef.current)
         if (isStartPosDeclared.current) {
             let newX = startObjectPositionX.current + e.clientX - startClientX.current;
             let newY = startObjectPositionY.current + e.clientY - startClientY.current;
@@ -36,8 +33,9 @@ export function useDragAndDrop({
     }, [setElementPosition])
     
     const onMouseUp = useCallback((e: MouseEvent) => {
-        //console.log('onMouseUp', elementRef.current)
         if (isStartPosDeclared.current) {
+            const shiftX = e.clientX - startClientX.current;
+            const shiftY = e.clientY - startClientY.current
             let newX = startObjectPositionX.current + e.clientX - startClientX.current;
             let newY = startObjectPositionY.current + e.clientY - startClientY.current;
             window.removeEventListener('mousemove', onMouseMove)
@@ -46,12 +44,11 @@ export function useDragAndDrop({
                 x: newX,
                 y: newY
             })
-         //   onMouseUpFunction({newX, newY})   
+           onMouseUpFunction({shiftX, shiftY})   
         }
     }, [onMouseUpFunction])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
-       // console.log('onMouseDown', elementRef.current)
         if (elementRef.current) {
             window.addEventListener('mouseup', onMouseUp);
             window.addEventListener('mousemove', onMouseMove);
@@ -68,14 +65,12 @@ export function useDragAndDrop({
     
     useEffect(() => {
         if (elementRef.current && isStartPosDeclared.current) {
-            //elementRef.current.style.left = `${elementPosition.x}px`;
-           // elementRef.current.style.top = `${elementPosition.y}px`
+            elementRef.current.style.left = `${elementPosition.x}px`;
+            elementRef.current.style.top = `${elementPosition.y}px`
         } 
     }, [elementPosition, setElementPosition])
 
-   // console.log(id, 'drag n drop', elementRef.current)
     useEffect(() => {
-        console.log(id , 'useEffect1', elementRef.current)
         if (elementRef.current) {
             elementRef.current.addEventListener('mousedown', onMouseDown)
         } 

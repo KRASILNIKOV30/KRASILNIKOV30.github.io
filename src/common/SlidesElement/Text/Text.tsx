@@ -25,10 +25,9 @@ export const Text = ({
         text.bgColor = '#FFFFFF'
     }
     return (
-        <input
+        <textarea
             autoFocus
-            type = 'text'
-            value = {text.textValue!}
+            //value = {text.textValue!}
             className = {styles.text}
             placeholder = {placeholder}
             onKeyUp = {(event) => {
@@ -42,6 +41,6 @@ export const Text = ({
                 'color': text.textColor,
                 'background': text.bgColor
             }}    
-        ></input>
+        ></textarea>
     )
 }

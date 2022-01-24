@@ -127,6 +127,28 @@ function selectElement(editor: Editor, { elementId }: selectedElementsArgs): Edi
     }
 }
 
+type removeSelectionArgs = {
+    elementId: string;
+}
+
+
+function removeSelection(editor: Editor, { elementId }: removeSelectionArgs): Editor {
+    const newHistory: History = addActionToHistory(editor);
+    const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
+    const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
+    const indexElement: number = newSlides[indexSlide].selectedElementsIds.findIndex(elementsId => elementsId === elementId)
+    newSlides[indexSlide].selectedElementsIds = [elementId];
+    newSlides[indexSlide].selectedElementsIds.splice(indexElement, 1);
+    return {
+        ...editor,
+        history: newHistory,
+        presentation: {
+            ...editor.presentation,
+            slides: newSlides
+        }
+    }
+}
+
 function selectManyElements(editor: Editor, { elementId }: selectedElementsArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
@@ -143,11 +165,11 @@ function selectManyElements(editor: Editor, { elementId }: selectedElementsArgs)
 } 
 
 export type ChangePositionArgs = {
-    newX: number,
-    newY: number
+    shiftX: number,
+    shiftY: number
 }
 
-export function changePosition(editor: Editor, { newX, newY}: ChangePositionArgs): Editor {
+export function changePosition(editor: Editor, { shiftX, shiftY}: ChangePositionArgs): Editor {
     const newHistory: History = addActionToHistory(editor);
     const newSlides = deepClone(editor.presentation.slides) as Array<Slide>;
     const indexSlide: number = newSlides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]);
@@ -157,8 +179,8 @@ export function changePosition(editor: Editor, { newX, newY}: ChangePositionArgs
             const newElement: SlideElement = {
                 ...newSlides[indexSlide].elements[i],
                 position: {
-                    x: newX,
-                    y: newY
+                    x: newSlides[indexSlide].elements[i].position.x + shiftX,
+                    y: newSlides[indexSlide].elements[i].position.y + shiftY
                 }
             };
             newSlides[indexSlide].elements.splice(i, 1, newElement)
@@ -373,4 +395,4 @@ function deleteSelected(editor: Editor ): Editor {
     }
 }
 
-export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth }
+export { addImage, addObject, selectElement, selectManyElements, changeFillColor, changeStrokeColor, changeTextProps, changeStrokeWidth, removeSelection }

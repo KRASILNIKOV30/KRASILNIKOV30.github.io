@@ -4,9 +4,10 @@ import { Text } from "./Text/Text"
 import type { SlideElement } from "../../model/types"
 import { useCallback, useRef } from 'react';
 import { dispatch } from '../../model/editor'
-import { changeTextProps, changePosition, selectElement, selectManyElements } from '../../model/element'
+import { changeTextProps, changePosition, selectElement, selectManyElements, removeSelection } from '../../model/element'
 import { useDragAndDrop } from '../../core/hooks/useDragAndDrop';
-import type { Position } from '../../core/types/types'
+import type { Position } from '../../core/types/types';
+import { useClickOutside } from '../../core/hooks/useClickOutside'
 
 interface SlidesElementProps {
     slideElement: SlideElement,
@@ -19,12 +20,24 @@ const SlidesElement = ({
 }: SlidesElementProps) => {
     const slideElementRef = useRef<HTMLDivElement>(null);
 
-    console.log('render', slideElement.elementId)
+    const isOnShift = useRef<boolean>(false)
+    const clickOutsideFunction = () => {
+        window.onmousedown = (e) => {
+            isOnShift.current = e.shiftKey;
+        }
+        if (active && !isOnShift.current) {
+            dispatch(removeSelection, { elementId: slideElement.elementId })
+        } else {
+            return(null)
+        }
+    }
+
+    useClickOutside(slideElementRef, clickOutsideFunction);
+    
     const onMouseUpFunction = useCallback((coordinates: Position) => {
-       // dispatch(changePosition, coordinates)
+        dispatch(changePosition, coordinates)
     }, [])
     useDragAndDrop({
-        id: slideElement.elementId,
         elementRef: slideElementRef, 
         onMouseUpFunction,
     })
@@ -33,13 +46,13 @@ const SlidesElement = ({
         case "text": 
             return (
                 <div
-                    ref = {active ? slideElementRef : null}
+                    ref = {slideElementRef}
                     className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                     }}
-                    onClick = {(e) => {
+                    onMouseDown = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 dispatch(selectManyElements, { elementId: slideElement.elementId })
@@ -63,16 +76,7 @@ const SlidesElement = ({
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
                             if (value !== '') {
-                                dispatch(changeTextProps, {
-                                    textPropsValue: {
-                                        textColor: slideElement.textProps?.textColor,
-                                        bgColor: slideElement.textProps?.bgColor,
-                                        textValue: value,
-                                        fontSize: slideElement.textProps?.fontSize,
-                                        fontWeight: slideElement.textProps?.fontWeight
-                                    },
-                                    SelectedElementIds: [slideElement.elementId]
-                                });
+                                dispatch(changeTextProps, {textValue: value});
                             }
                         }}
                     />
@@ -86,9 +90,11 @@ const SlidesElement = ({
                     className = {`${active ? styles.element_active : styles.element}`}
                     style = {{
                         'top': slideElement.position.y,
-                        'left': slideElement.position.x
+                        'left': slideElement.position.x,
+                        'width': slideElement.size.width,
+                        'height': slideElement.size.height
                     }}
-                    onClick = {(e) => {
+                    onMouseDown = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 dispatch(selectManyElements, { elementId: slideElement.elementId })
@@ -125,7 +131,7 @@ const SlidesElement = ({
                         'width': slideElement.size.width,
                         'height': slideElement.size.height
                     }}
-                    onClick = {(e) => {
+                    onMouseDown = {(e) => {
                         if (!active) {
                             if (e.ctrlKey || e.shiftKey) {
                                 dispatch(selectManyElements, { elementId: slideElement.elementId })
