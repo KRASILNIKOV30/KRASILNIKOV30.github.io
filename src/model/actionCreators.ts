@@ -106,10 +106,14 @@ function setBackground(background: string) {
     }
 }
 
-function addObject(element: string) {
+function addObject(element: string, textValue?: string) {
     return {
         type: 'ADD_OBJECT',
-        element
+        addObjectArgs: {
+            element,
+            textValue    
+        }
+        
     }
 }
 

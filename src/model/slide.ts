@@ -12,7 +12,7 @@ function setBackgroundReducer(slide: Slide, background: string): Slide {
     else { return slide }
 }
 
-function addObjectReducer(slide: Slide, element: string): Slide {
+function addObjectReducer(slide: Slide, element: string, textValue?: string): Slide {
     const newSlide = deepClone(slide) as Slide;
     const newEl: SlideElement = {
         elementId: v4(),
@@ -60,7 +60,7 @@ function addObjectReducer(slide: Slide, element: string): Slide {
             newEl.textProps = {
                 font: 'Arial',
                 textColor: 'black',
-                textValue: 'Hello Kerim',
+                textValue: textValue ? textValue : 'Hello Kerim',
                 fontSize: 15,
                 fontWeight: 500,
                 align: 'left'
@@ -308,7 +308,7 @@ function slideReducer(state: Slide, action: ActionType): Slide {
         case 'SET_BACKGROUND':
             return action.background !== undefined? setBackgroundReducer(state, action.background): deepClone(state) as Slide;
         case 'ADD_OBJECT':
-            return action.element !== undefined? addObjectReducer(state, action.element): deepClone(state) as Slide;
+            return action.addObjectArgs !== undefined? addObjectReducer(state, action.addObjectArgs.element, action.addObjectArgs.textValue): deepClone(state) as Slide;
         case 'ADD_IMAGE':
             return action.urlImage !== undefined? addImageReducer(state, action.urlImage): deepClone(state) as Slide;
         case 'SELECT_ELEMENT':

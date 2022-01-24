@@ -117,6 +117,7 @@ const SlidesElement = ({
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
                         'height': slideElement.size.height,
+                        'transform': `rotate(${angle}deg)`
                     }}
                     onClick = {(e) => {
                         if (!active) {
@@ -136,6 +137,7 @@ const SlidesElement = ({
                             <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
                             <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
                             <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div> 
+                            <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
                         </div>
                     }
                     <Text
@@ -182,7 +184,7 @@ const SlidesElement = ({
                             <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
                             <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
                             <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
-                            {<div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>}
+                            <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
                         </div>
                     }
                     <Figure
@@ -203,7 +205,8 @@ const SlidesElement = ({
                         'top': slideElement.position.y,
                         'left': slideElement.position.x,
                         'width': slideElement.size.width,
-                        'height': slideElement.size.height
+                        'height': slideElement.size.height,
+                        'transform': `rotate(${angle}deg)`
                     }}
                     onClick = {(e) => {
                         if (!active) {
@@ -223,6 +226,7 @@ const SlidesElement = ({
                             <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
                             <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
                             <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
+                            <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
                         </div>
                     }
                     <img

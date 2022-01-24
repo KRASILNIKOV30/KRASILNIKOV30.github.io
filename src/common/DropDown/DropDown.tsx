@@ -49,7 +49,7 @@ const DropDown = ({addObject, addImage}: DropDownProps) => {
 
 interface DropDownOptionsProps {
     onClick: () => void,
-    addObject: (element: string) => void,
+    addObject: (element: string, textValue?: string) => void,
     addImage: (urlImage: string) => void,
 }
 
@@ -193,7 +193,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick, addObject, a
 
 const mapDispatchToProps = (dispatch: AppDispatch) => {
     return {
-        addObject: (element: string) => dispatch(addObject(element)),
+        addObject: (element: string, textValue?: string) => dispatch(addObject(element, textValue)),
         addImage: (urlImage: string) => dispatch(addImage(urlImage)),
     }
 }

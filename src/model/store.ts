@@ -38,6 +38,10 @@ export type ActionType = {
     background?: string,
     element?: string,
     elementId?: string,
+    addObjectArgs?: {
+        element: string,
+        textValue?: string
+    }
     changeAngleArgs?: {
         angleShift: number
     },
