@@ -215,11 +215,21 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
         return (
             <div className={styles.optional_tools_container}>
                 <p className={styles.optional_tools_text}>Шрифт</p>
-                <Input
+                
+                <Input 
+                    style="small"
+                    placeholder={firstSelectedElement.textProps!.font}
+                    onKeyUp={(value) => dispatch(changeTextProps, { font: value })}
+                />    
+                <select>
+                    <Input 
                     style="small"
                     placeholder={firstSelectedElement.textProps!.font}
                     onKeyUp={(value) => dispatch(changeTextProps, { font: value })}
                 /> 
+                    <option>Arial</option>
+                    <option>Huyna</option>
+                </select>  
                 <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
                     value={firstSelectedElement.textProps!.fontSize}    

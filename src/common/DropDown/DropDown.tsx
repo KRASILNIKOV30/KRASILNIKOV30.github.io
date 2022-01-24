@@ -1,9 +1,11 @@
 import styles from './DropDown.module.css';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '../Button/Button';
 import { addObject, addImage } from '../../model/element';
 import { dispatch } from '../../model/editor';
 import { useClickOutside } from '../../core/hooks/useClickOutside';
+import { Input } from '../Input/input';
+import { GettingWeather } from './WeatherInfo/WeatherInfo';
 
 export const DropDown = () => {
     const [opened, setOpened] = useState(false);
@@ -43,12 +45,14 @@ interface DropDownOptionsProps {
 const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
     const [activeFigure, setActiveFigure] = useState(false);
     const [activeImage, setActiveImage] = useState(false);
+    const [activeWeather, setActiveWeather] = useState(false);
     return (
         <div className={styles.options_container}>
             <div
                 className = {`${styles.figure} ${activeFigure && styles.figure_active}`}
                 onClick = {() => {
                     setActiveFigure(!activeFigure);
+                    setActiveWeather(false)
                     setActiveImage(false);
                 }}
             >
@@ -58,6 +62,7 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
                 className = {`${styles.image} ${activeImage && styles.image}`}
                 onClick = {() => {
                     setActiveImage(!activeImage);
+                    setActiveWeather(false)
                     setActiveFigure(false);
                 }}
             >
@@ -74,9 +79,20 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
             >
                 Текст
             </div>
+            <div
+                className = {`${styles.weather} ${activeWeather && styles.weather_active}`}
+                onClick = {() => {
+                    setActiveFigure(false);
+                    setActiveFigure(false);
+                    setActiveWeather(!activeWeather)
+                }}
+            >
+                Погода
+            </div>
             <DropDownOptionsToAdd 
                 activeFigure = {activeFigure}
                 activeImage = {activeImage}
+                activeWeather = {activeWeather}
                 onClick = {onClick}
             />
         </div>
@@ -86,10 +102,11 @@ const DropDownOptions = ({onClick}: DropDownOptionsProps) => {
 interface DropDownOptionsToAddProps {
     activeFigure: boolean,
     activeImage: boolean,
+    activeWeather: boolean
     onClick: () => void
 }
 
-const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOptionsToAddProps) => {
+const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClick }: DropDownOptionsToAddProps) => {
     return (
         <div className={styles.options_to_add_container}>
             {
@@ -156,6 +173,27 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, onClick }: DropDownOp
                             text = 'С Анапы 2007'
                             onClick = {() => {
                                 dispatch(addImage, { urlImage: 'https://cdn.photosight.ru/sight/2007/08/27/2270629.jpg' })
+                            }}
+                        />
+                    </div>
+                : null
+        }
+        {
+            activeWeather
+                ?
+                    <div className = {styles.weather_types}>
+                        <Input
+                            style = 'small'
+                            placeholder = 'Введите название города...'
+                            onKeyUp = {(value) => {
+                                
+                            }}
+                        />
+                        <Button
+                            style = 'outline'
+                            text = 'Найти'
+                            onClick = {() => {
+                                GettingWeather()
                             }}
                         />
                     </div>
