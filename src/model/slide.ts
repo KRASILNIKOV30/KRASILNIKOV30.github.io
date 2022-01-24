@@ -62,7 +62,6 @@ function addObjectReducer(slide: Slide, element: string): Slide {
             newEl.textProps = {
                 font: 'Arial',
                 textColor: 'black',
-                bgColor: null,
                 textValue: 'Hello Kerim',
                 fontSize: 15,
                 fontWeight: 500,
@@ -203,7 +202,6 @@ function changeTextPropsReducer(
     slide: Slide | undefined,
     font: string | undefined,
     textColor: string | undefined,
-    bgColor: string | undefined,
     textValue: string | undefined,
     fontSize: number | undefined,
     fontWeight: number | undefined,
@@ -218,7 +216,6 @@ function changeTextPropsReducer(
                 textProps: {
                     font: font !== undefined ? font : newSlide.elements[i].textProps!.font, 
                     textColor: textColor !== undefined ? textColor : newSlide.elements[i].textProps!.textColor,
-                    bgColor: bgColor !== undefined ? bgColor : newSlide.elements[i].textProps!.bgColor,
                     textValue: textValue !== undefined ? textValue : newSlide.elements[i].textProps!.textValue,
                     fontSize: fontSize !== undefined ? fontSize : newSlide.elements[i].textProps!.fontSize,
                     fontWeight: fontWeight !== undefined ? fontWeight : newSlide.elements[i].textProps!.fontWeight,
@@ -333,7 +330,6 @@ function slideReducer(state: Slide, action: ActionType): Slide {
             return action.ChangeTextArgs !== undefined? changeTextPropsReducer(state,
                 action.ChangeTextArgs.font,
                 action.ChangeTextArgs.textColor,
-                action.ChangeTextArgs.bgColor,
                 action.ChangeTextArgs.textValue,
                 action.ChangeTextArgs.fontSize,
                 action.ChangeTextArgs.fontWeight,

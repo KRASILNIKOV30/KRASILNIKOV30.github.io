@@ -47,7 +47,6 @@ let initialState: Editor = {
                         textProps: {
                             font: 'Montserrat',
                             textColor: "#000000",
-                            bgColor: "#FFFFFF",
                             textValue: "Hello Kerim!",
                             fontSize: 16,
                             fontWeight: 500,
@@ -155,7 +154,6 @@ export type ActionType = {
     ChangeTextArgs?: {
         font?: string
         textColor?: string,
-        bgColor?: string,
         textValue?: string,
         fontSize?: number,
         fontWeight?: number,

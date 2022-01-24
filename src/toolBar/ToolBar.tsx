@@ -275,6 +275,10 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
                     viewStyle="align_right"
                     onClick={() => changeTextAlign('right')}
                 />
+                <Button 
+                    viewStyle="text_color"
+                    onClick={() => onClick('textColor')}
+                />
             </div>
         )
     }
@@ -303,9 +307,9 @@ const mapDispatchToProps = (dispatch: AppDispatch) => {
         switchPreview: () => dispatch(switchPreview()),
         exportDoc: () => dispatch(exportDoc()),
         changeTextFont: (font: string) => dispatch(changeTextProps(font)),
-        changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontSize)),
-        changeTextWeight: (fontWeight: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, fontWeight)),
-        changeTextAlign: (align: "left" | "center" | "right") => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, undefined, align)),
+        changeTextSize: (fontSize: number) => dispatch(changeTextProps(undefined, undefined, undefined, fontSize)),
+        changeTextWeight: (fontWeight: number) => dispatch(changeTextProps(undefined, undefined, undefined, undefined, fontWeight)),
+        changeTextAlign: (align: "left" | "center" | "right") => dispatch(changeTextProps(undefined, undefined, undefined, undefined, undefined, align)),
         changeTitle: (newTitle: string) => dispatch(changeTitle(newTitle)),
     }
 }

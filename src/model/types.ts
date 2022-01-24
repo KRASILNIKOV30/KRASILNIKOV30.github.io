@@ -5,14 +5,7 @@ type Editor = {
     history: History;
     statePreview: boolean;
     buffers: Buffers;
-    // colorTheme: ColorTheme;
 }
-
-// type ColorTheme = {
-//     mainColor: string,
-//     subColor: string,
-//     backColor: string
-// }
 
 type Buffers = {
     slideBuffer: Array<Slide>;
@@ -52,7 +45,6 @@ type SlideElement = {
 type TextType = {
     font: string;
     textColor: string;
-    bgColor: string | null;
     textValue: string;
     fontSize: number;
     fontWeight: number;

@@ -103,6 +103,10 @@
     background: center no-repeat url('./icons/align_center_active.svg');
 }
 
+.button_text_color {
+    background: center no-repeat url('./icons/text_color.svg');
+}
+
 
 .button_undo:hover,
 .button_redo:hover,
@@ -112,8 +116,9 @@
 .button_arrow_up:hover,
 .button_align_left:hover,
 .button_align_right:hover,
-.button_align_center:hover {
-    background-color: rgba(40, 36, 238, 0.1);
+.button_align_center:hover,
+.button_text_color:hover {
+    background-color: rgba(21, 21, 24, 0.1);
     cursor: pointer;
     color: #2824EE;
 }

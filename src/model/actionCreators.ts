@@ -175,7 +175,6 @@ function switchLayer(orderShift: number) {
 function changeTextProps(
     font?: string,
     textColor?: string,
-    bgColor?: string,
     textValue?: string,
     fontSize?: number,
     fontWeight?: number,
@@ -186,7 +185,6 @@ function changeTextProps(
         ChangeTextArgs: {
             font,
             textColor,
-            bgColor,
             textValue,
             fontSize,
             fontWeight,
