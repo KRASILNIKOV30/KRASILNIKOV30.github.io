@@ -1,13 +1,10 @@
 import { createStore } from 'redux';
-import axios from "axios";
 import { Editor } from "./types"
 import { addActionToHistoryReducer, editorReducer } from './editor'
 import { presentationReducer } from './presentation';
 import { slideReducer } from './slide'
 import { deepClone } from '../core/functions/deepClone';
 import { uploadDoc, redo, undo, deleteSelected, switchLayer, copy, paste } from './actionCreators';
-import { getBase64FromPicture } from './export'
-import { useRef } from 'react';
 
 let initialState: Editor = {
     presentation: {
@@ -142,6 +139,9 @@ export type ActionType = {
     element?: string,
     urlImage?: string,
     elementId?: string,
+    changeAngleArgs?: {
+        angleShift: number
+    },
     changePositionCoordinates?: {
         xShift: number,
         yShift: number

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { selectElement } from "../../model/actionCreators";
 
 interface useRotateProps {
     elementRef: React.RefObject<HTMLDivElement>,
@@ -13,20 +14,22 @@ const useRotate = ({
     rotateButtonRef,
     startAngle
 }: useRotateProps) => {
-    const shiftAngle = useRef(0);
     const [angle, setAngle] = useState(startAngle);
     const startClientX = useRef(0);
 
     const onMouseMove = useCallback((e: MouseEvent) => {
         const newAngle = startAngle + e.clientX - startClientX.current
         setAngle(newAngle)
-    }, [])
+    }, [startAngle])
 
     const onMouseUp = useCallback((e: MouseEvent) => {
+        const angleShift = e.clientX - startClientX.current;
+        const newAngle = startAngle + angleShift
+        setAngle(newAngle)
+        onMouseUpFunction(angleShift)
         window.removeEventListener('mousemove', onMouseMove);
         window.removeEventListener('mouseup', onMouseUp);
-        onMouseUpFunction(shiftAngle.current)
-    }, [onMouseUpFunction])
+    }, [onMouseUpFunction, onMouseMove])
 
     const onMouseDown = useCallback((e: MouseEvent) => {
         e.preventDefault();
@@ -44,7 +47,6 @@ const useRotate = ({
     }, [angle, setAngle])
     
     useEffect(() => {
-        console.log('useRotate')
         let elementRefValue: HTMLDivElement;
         if (rotateButtonRef.current) {
             rotateButtonRef.current.addEventListener('mousedown', onMouseDown)

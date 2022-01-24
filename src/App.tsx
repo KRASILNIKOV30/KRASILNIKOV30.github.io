@@ -8,7 +8,7 @@ import SideBar from './sideBar/sideBar'
 import { AppDispatch } from './model/store';
 import { switchPreview } from './model/actionCreators';
 import { connect } from 'react-redux';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface AppProps {
     editor: Editor,
@@ -19,27 +19,34 @@ function App({
     editor,
     switchPreview
 }: AppProps) {
-    if (editor.statePreview) {
+    const indexSlideRef = useRef(0)
+        useEffect(() => {
+            if (editor.statePreview) {
+                document.addEventListener('keydown', onKeyDown)
+            }
+            return () => {
+                document.removeEventListener('keydown', onKeyDown);
+            }
+        }, [editor.statePreview])
         const onKeyDown = (e: KeyboardEvent) => {
             switch (e.key) {
                 case 'Escape':
                     switchPreview();
-                    document.removeEventListener('keydown', onKeyDown);
                     break;
                 case 'ArrowRight':
-                    if (indexSlide !== editor.presentation.slides.length - 1) {
-                        setIndexSlide(indexSlide + 1);    
+                    if (indexSlideRef.current !== editor.presentation.slides.length - 1) {
+                        indexSlideRef.current += 1
+                        setIndexSlide(indexSlideRef.current);    
                     }
                     break;
                 case 'ArrowLeft':
-                    if (indexSlide !== 0) {
-                        setIndexSlide(indexSlide - 1);
+                    if (indexSlideRef.current !== 0) {
+                        indexSlideRef.current -= 1;
+                        setIndexSlide(indexSlideRef.current);
                     }
                     break;            
             }
-        }
-        document.addEventListener('keydown', onKeyDown)
-    }
+        }   
     const slideRef = useRef(null)
     const [indexSlide, setIndexSlide] = useState(editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]));
     const slidesList = editor.presentation.slides.map((slide) => (
