@@ -232,4 +232,4 @@ export { uploadDoc, redo, undo, switchPreview, exportDoc, saveDoc, changeTitle, 
          addObject, addImage, selectElement, selectManyElements, changePosition, changeAngle, changeSize, switchLayer,
          changeTextProps, changeStrokeWidth, changeStrokeColor, changeFillColor, deleteSelected, removeSelection,
          copy, paste
-        }
+}

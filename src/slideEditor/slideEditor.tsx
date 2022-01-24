@@ -18,7 +18,6 @@ function SlideEditor({
         <li             
             key = {slideElement.elementId}
             className = {styles.slide_element}
-            onClick = {console.log}
         >
             <SlidesElement
                 slideId={slide.slideId}

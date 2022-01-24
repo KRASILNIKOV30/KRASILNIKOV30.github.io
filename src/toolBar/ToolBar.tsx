@@ -221,7 +221,16 @@ interface OptionalToolsProps {
     changeTextAlign: (align: "left" | "center" | "right") => void
 }
 
-function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onClick, changeTextFont, changeTextSize, changeTextWeight, changeTextAlign }: OptionalToolsProps) {
+function OptionalTools({ 
+    textSelected,
+    figureSelected,
+    firstSelectedElement,
+    onClick,
+    changeTextFont,
+    changeTextSize,
+    changeTextWeight,
+    changeTextAlign
+}: OptionalToolsProps) {
     if (!textSelected && figureSelected){
         return (
             <div className={styles.optional_tools_container}>
@@ -283,7 +292,10 @@ function OptionalTools({ textSelected, figureSelected, firstSelectedElement, onC
         )
     }
     else {
-        return (<div className={styles.optional_tools_container}></div>)
+        return (
+            <div className={styles.optional_tools_container}>
+            </div>
+        )
     }
 }
 

@@ -1,4 +1,4 @@
-import { Editor } from './model/types';
+import { Editor, Slide } from './model/types';
 import ToolBar from './toolBar/ToolBar';
 import SlideEditor from './slideEditor/slideEditor';  
 import styles from './App.module.css';
@@ -11,31 +11,34 @@ import { connect } from 'react-redux';
 import { useEffect, useRef, useState } from 'react';
 
 interface AppProps {
-    editor: Editor,
+    statePreview: Boolean,
+    slides: Array<Slide>,
+    slideId: String
     switchPreview: () => void
 }
 
 function App({
-    editor,
+    statePreview,
+    slides,
+    slideId,
     switchPreview
 }: AppProps) {
     const indexSlideRef = useRef(0)
         useEffect(() => {
-            if (editor.statePreview) {
+            if (statePreview) {
                 document.addEventListener('keydown', onKeyDown)
             }
             return () => {
                 document.removeEventListener('keydown', onKeyDown);
             }
-        }, [editor.statePreview])
+        }, [statePreview])
         const onKeyDown = (e: KeyboardEvent) => {
-            console.log(e.key)
             switch (e.key) {
                 case 'Escape':
                     switchPreview();
                     break;
                 case 'ArrowRight':
-                    if (indexSlideRef.current !== editor.presentation.slides.length - 1) {
+                    if (indexSlideRef.current !== slides.length - 1) {
                         indexSlideRef.current += 1
                         setIndexSlide(indexSlideRef.current);    
                     }
@@ -49,8 +52,8 @@ function App({
             }
         }   
     const slideRef = useRef(null)
-    const [indexSlide, setIndexSlide] = useState(editor.presentation.slides.findIndex(slide => slide.slideId === editor.presentation.currentSlideIds[0]));
-    const slidesList = editor.presentation.slides.map((slide) => (
+    const [indexSlide, setIndexSlide] = useState(slides.findIndex(slide => slide.slideId === slideId));
+    const slidesList = slides.map((slide) => (
         <div
             key = {slide.slideId}
             ref = {slideRef}
@@ -58,9 +61,7 @@ function App({
             <SlideView
                 slideElements = {
                     slide.elements.map((slideElement) =>
-                        <li
-                            key = {slideElement.elementId} 
-                        > 
+                        <li key = {slideElement.elementId}> 
                             <SlidesElement
                                 slideId = {slide.slideId}
                                 elementId= {slideElement.elementId}
@@ -76,10 +77,8 @@ function App({
     return (
         <div className={styles.app}>
             {
-                editor.statePreview ?
-                <div 
-                    className={styles.preview_container}
-                > 
+                statePreview ?
+                <div  className={styles.preview_container}> 
                     <div className={styles.preview_slide}> 
                         {slidesList[indexSlide]} 
                     </div>        
@@ -99,7 +98,9 @@ function App({
 
 function mapStateToProps(state: Editor) {
     return {
-        editor: state
+        statePreview: state.statePreview,
+        slides: state.presentation.slides,
+        slideId: state.presentation.currentSlideIds[0]
     }
 }
 
