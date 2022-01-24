@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { selectElement } from "../../model/actionCreators";
 
 interface useRotateProps {
     elementRef: React.RefObject<HTMLDivElement>,

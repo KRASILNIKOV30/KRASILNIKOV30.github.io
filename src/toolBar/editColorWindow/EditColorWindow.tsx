@@ -22,7 +22,16 @@ interface EditColorWindowProps {
     setTextColor: (newColor: string) => void
 }
 
-function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillColor, changeStrokeColor, changeStrokeWidth, setBackground, setTextColor }: EditColorWindowProps) {
+function EditColorWindow({ 
+    drawMode,
+    firstSelectedElement,
+    onClick,
+    changeFillColor,
+    changeStrokeColor,
+    changeStrokeWidth,
+    setBackground,
+    setTextColor
+}: EditColorWindowProps) {
     const frameRef = useRef<HTMLDivElement>(null)
     useClickOutside(frameRef, onClick)
     
@@ -45,25 +54,29 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                 className={styles.frame}
                 ref = {frameRef}
             >
-                {drawMode === 'backgroundSlide' &&
-                    <div className={styles.head_text}>
-                        Фон
-                    </div>
+                {
+                    drawMode === 'backgroundSlide' &&
+                        <div className={styles.head_text}>
+                            Фон
+                        </div>
                 }
-                {drawMode === 'fillFigure' &&
-                    <div className={styles.head_text}>
-                        Заливка
-                    </div>
+                {
+                    drawMode === 'fillFigure' &&
+                        <div className={styles.head_text}>
+                            Заливка
+                        </div>
                 }
-                {drawMode === 'strokeFigure' &&
-                    <div className={styles.head_text}>
-                        Контур
-                    </div>
+                {
+                    drawMode === 'strokeFigure' &&
+                        <div className={styles.head_text}>
+                            Контур
+                        </div>
                 }
-                {drawMode === 'textColor' &&
-                    <div className={styles.head_text}>
-                        Текст
-                    </div>
+                {
+                    drawMode === 'textColor' &&
+                        <div className={styles.head_text}>
+                            Текст
+                        </div>
                 }
                 <hr className={styles.hr} />
                 <div className={styles.palette_block}>
@@ -76,46 +89,48 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                         />
                     </div>
                 </div>
-                {drawMode === 'backgroundSlide' &&
-                    <div className={styles.change_value}>
-                        <div className={styles.secondary_text}>
-                            Изображение
-                        </div>
+                {
+                    drawMode === 'backgroundSlide' &&
+                        <div className={styles.change_value}>
+                            <div className={styles.secondary_text}>
+                                Изображение
+                            </div>
 
-                        <Button
-                            viewStyle="outline"
-                            text="Выбрать изображение"
-                            onClick={() => {
-                                const inputFile = document.createElement('input');
-                                inputFile.type = 'file';
-                                inputFile.style.display = 'none';
-                                inputFile.accept = 'image/*';
-                                inputFile.onchange = () => {
-                                    if (inputFile.files) {
-                                        const urlImage = URL.createObjectURL(inputFile.files[0])
-                                        getBase64FromPicture(urlImage, {width: 818, height: 582}).then((newUrl) => {
-                                            setBackground(newUrl)
-                                        })
+                            <Button
+                                viewStyle="outline"
+                                text="Выбрать изображение"
+                                onClick={() => {
+                                    const inputFile = document.createElement('input');
+                                    inputFile.type = 'file';
+                                    inputFile.style.display = 'none';
+                                    inputFile.accept = 'image/*';
+                                    inputFile.onchange = () => {
+                                        if (inputFile.files) {
+                                            const urlImage = URL.createObjectURL(inputFile.files[0])
+                                            getBase64FromPicture(urlImage, {width: 818, height: 582}).then((newUrl) => {
+                                                setBackground(newUrl)
+                                            })
+                                        }
                                     }
-                                }
-                                inputFile.click();
-                                inputFile.remove();
-                                onClick()
-                            }}
-                        />
-                    </div>
-                }
-                {drawMode === 'strokeFigure' &&
-                    <div className={styles.change_value}>
-                        <div className={styles.secondary_text}>
-                            Толщина
+                                    inputFile.click();
+                                    inputFile.remove();
+                                    onClick()
+                                }}
+                            />
                         </div>
-                        <Knob
-                            value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
-                            step = {1}
-                            onClick={(value) => changeStrokeWidth(value)}
-                        />
-                    </div>    
+                }
+                {
+                    drawMode === 'strokeFigure' &&
+                        <div className={styles.change_value}>
+                            <div className={styles.secondary_text}>
+                                Толщина
+                            </div>
+                            <Knob
+                                value = {firstSelectedElement.figure !== undefined ? firstSelectedElement.figure.strokeWidth: 0}
+                                step = {1}
+                                onClick={(value) => changeStrokeWidth(value)}
+                            />
+                        </div>    
                 }
                 <hr className={styles.hr} />
                 <div className={styles.ready_button_block}>
