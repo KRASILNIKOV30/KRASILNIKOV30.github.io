@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import { AppDispatch } from "../../model/store";
 import { changeFillColor, changeStrokeColor, changeStrokeWidth, changeTextProps, setBackground } from "../../model/actionCreators";
 import { useClickOutside } from '../../core/hooks/useClickOutside'
+import { getBase64FromPicture } from "../../model/export";
 
 interface EditColorWindowProps {
     firstSelectedElement: SlideElement
@@ -92,9 +93,10 @@ function EditColorWindow({ drawMode, firstSelectedElement, onClick, changeFillCo
                                 inputFile.onchange = () => {
                                     if (inputFile.files) {
                                         const urlImage = URL.createObjectURL(inputFile.files[0])
-                                        setBackground(urlImage)
+                                        getBase64FromPicture(urlImage, {width: 818, height: 582}).then((newUrl) => {
+                                            setBackground(newUrl)
+                                        })
                                     }
-                                   
                                 }
                                 inputFile.click();
                                 inputFile.remove();

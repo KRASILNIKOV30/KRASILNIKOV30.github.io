@@ -2,8 +2,6 @@ import type { SlideElement, Slide } from './types';
 import { deepClone } from '../core/functions/deepClone';
 import { v4 } from 'uuid';
 import { ActionType } from './store';
-import { Size } from '../core/types/types';
-import { getBase64Image } from '../core/functions/getBase64Image';
 
 function setBackgroundReducer(slide: Slide, background: string): Slide {
     if (background !== '') {
