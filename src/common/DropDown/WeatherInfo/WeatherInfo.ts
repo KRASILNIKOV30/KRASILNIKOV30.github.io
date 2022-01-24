@@ -56,7 +56,7 @@ const useGettingWeather = ({
     const temp = '';
     const [weather, setWeather] = useState(temp);
 
-    const onMouseDown = useCallback((e: MouseEvent) => {
+    const onMouseDown = () => {
       try {
         fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=98e5bfeb477c9bec9f5ee8de192eaed8')
           .then(res => res.json())
@@ -65,10 +65,9 @@ const useGettingWeather = ({
           });
       } catch (e) {}
       console.log(city + ': ' + weather)
-    }, [])
+    }
 
     useEffect(() => {  
-      console.log('useEffect')
         if (buttonRef.current) {
             buttonRef.current.addEventListener('mousedown', onMouseDown)
         }
@@ -78,6 +77,6 @@ const useGettingWeather = ({
           }
         }
         
-    }, [buttonRef.current])
+    }, [buttonRef, buttonRef.current, onMouseDown])
 };
 export { useGettingWeather };
