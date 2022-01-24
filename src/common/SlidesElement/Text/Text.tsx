@@ -21,7 +21,7 @@ const Text = ({
     
     return (
         <textarea
-            value = {textValue}
+            value = {text.textValue}
             className = {styles.text}
             onChange = {(event) => {
                     onKeyUp(event.currentTarget.value)

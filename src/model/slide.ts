@@ -209,7 +209,6 @@ function changeTextPropsReducer(
     fontWeight: number | undefined,
     align: "left" | "center" | "right" | undefined
 ): Slide {
-    console.log('setted value = ' + textValue)
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {

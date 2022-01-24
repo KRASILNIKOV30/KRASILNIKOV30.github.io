@@ -230,6 +230,7 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     newState.presentation.slides.splice(indexCurrentSlide, 1, slideReducer(newState.presentation.slides[indexCurrentSlide], action))
     newState.presentation = presentationReducer(newState.presentation, action);
     //localStorage.setItem("savedEditor", JSON.stringify(newState))
+    console.log('setted value = ' + state.presentation.slides[0].elements[1].textProps?.textValue)
     return newState
 }
 
