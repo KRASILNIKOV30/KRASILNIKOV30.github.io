@@ -111,11 +111,11 @@ export const useResize = ({
                 break;
             } 
             const strokeWidth = Number(elementRef.current?.style.strokeWidth)
-            if (newWidth.current < strokeWidth*2+5) {
-                newWidth.current = strokeWidth*2+5
+            if (newWidth.current < strokeWidth) {
+                newWidth.current = strokeWidth
             }
-            if (newHeight.current < strokeWidth*2+5) {
-                newHeight.current = strokeWidth*2+5
+            if (newHeight.current < strokeWidth) {
+                newHeight.current = strokeWidth
             }
             setElementPosition({
                 x: newX,

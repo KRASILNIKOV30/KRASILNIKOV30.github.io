@@ -36,7 +36,7 @@ function addTextBox(doc: jsPDF, object: SlideElement) {
         ctx.lineWidth = 4;
         CanvasTextWrapper.CanvasTextWrapper(canvas, text, {
             font: `${object.textProps.fontWeight} ${object.textProps.fontSize}px ${object.textProps.font}`,
-            textAlign: "left"
+            textAlign: `${object.textProps.align}`
         });
         const base64 = canvas.toDataURL();
         doc.addImage(

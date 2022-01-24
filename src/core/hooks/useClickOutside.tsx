@@ -6,7 +6,7 @@ import { useEffect, useCallback } from 'react';
         activeArea?: React.RefObject<HTMLElement|null> 
     ) => {
     const onMouseDown = useCallback((e: MouseEvent) => {
-        if (!e.shiftKey || !e.ctrlKey) {
+        if (!e.shiftKey && !e.ctrlKey) {
             if (activeArea && activeArea.current) {
                 if (elementRef.current && !elementRef.current.contains(e.target as Node) && activeArea.current.contains(e.target as Node)) {
                     onOutsideClick()

@@ -33,7 +33,7 @@
     cursor: pointer;
 }
 
-.drop_down_active {
+.drop_down_active, .drop_down:hover {
     border-color: #2824EE;
     color: #2824EE;
 }

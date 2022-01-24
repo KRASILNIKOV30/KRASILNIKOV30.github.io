@@ -25,7 +25,7 @@ const SideBar = ({
 }: SideBarProps) => {
     const slideRef = useRef(null)
     const slidesList = slides.map((slide) => (
-        <div className = {styles.sidebar_element}
+        <div className = {`${styles.sidebar_element} ${currentSlideIds.includes(slide.slideId, 0)? styles.sidebar_element_selected: ''}`}
             key = {slide.slideId}
         >
             <li

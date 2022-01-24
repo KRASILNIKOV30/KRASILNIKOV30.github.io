@@ -145,9 +145,7 @@ const SlidesElement = ({
                         }}
                         text = {slideElement.textProps!}
                         onKeyUp = {(value) => {
-                            if (value !== '') {
-                                changeTextValue(value)
-                            }
+                            changeTextValue(value)
                         }}
                     />
                 </div>

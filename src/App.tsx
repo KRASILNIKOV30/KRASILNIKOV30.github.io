@@ -29,7 +29,6 @@ function App({
             }
         }, [editor.statePreview])
         const onKeyDown = (e: KeyboardEvent) => {
-            console.log(e.key)
             switch (e.key) {
                 case 'Escape':
                     switchPreview();
