@@ -107,7 +107,6 @@ function addImage(doc: jsPDF, object: SlideElement, base64: string) {
 }
 
 async function addObjectOnPage(doc: jsPDF, object: SlideElement) {
-    // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve) => {
         if (object.elementType === 'text') {
             addTextBox(doc, object);

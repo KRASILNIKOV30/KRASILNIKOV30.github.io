@@ -1,4 +1,4 @@
-    import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './SlidesElement.module.css'
 import Figure from "./Figure/Figure"
 import Text from "./Text/Text"
@@ -190,8 +190,8 @@ const SlidesElement = ({
                     <Figure
                         figure = {slideElement.figure!}
                         size = {{
-                            width: elementWidth!/* slideElementRef.current ? Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)) : slideElement.size.width */,
-                            height: elementHeight!/* slideElementRef.current ? Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)) : slideElement.size.height */
+                            width: elementWidth!,
+                            height: elementHeight!
                         }}
                     />
                 </div>
