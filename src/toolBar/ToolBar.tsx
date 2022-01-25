@@ -169,17 +169,17 @@ const ToolBar = ({
                         />
                     </div>
                     {
-                        firstSelectedElement &&
+                        (firstSelectedElement) &&
                         <OptionalTools 
-                        textSelected = {textSelected}
-                        figureSelected = {figureSelected}
-                        firstSelectedElement = {firstSelectedElement}
-                        onClick = {(newMode) => setDrawBlock(newMode)}
-                        changeTextFont={changeTextFont}
-                        changeTextSize={changeTextSize}
-                        changeTextWeight={changeTextWeight}
-                        changeTextAlign={changeTextAlign}
-                    />
+                            textSelected = {textSelected}
+                            figureSelected = {figureSelected}
+                            firstSelectedElement = {firstSelectedElement}
+                            onClick = {(newMode) => setDrawBlock(newMode)}
+                            changeTextFont={changeTextFont}
+                            changeTextSize={changeTextSize}
+                            changeTextWeight={changeTextWeight}
+                            changeTextAlign={changeTextAlign}
+                        />
                     }
                 </div>
                 <div className={styles.result_buttons_block}>
@@ -200,9 +200,9 @@ const ToolBar = ({
                 </div>
             </div>
             {
-                (drawBlock !== 'absent' && firstSelectedElement) &&
+                (drawBlock !== 'absent' && (firstSelectedElement || drawBlock === 'backgroundSlide')) &&
                 <EditColorWindow
-                    firstSelectedElement = {firstSelectedElement}
+                    firstSelectedElement = {firstSelectedElement? firstSelectedElement: null}
                     drawMode = {drawBlock}
                     onClick={() => setDrawBlock('absent')}
                 />
