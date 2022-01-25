@@ -99,6 +99,9 @@ function addHotKeys() {
         if (event.code === 'KeyY' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(redo())
         }
+        if (event.code === 'KeyY' && (event.ctrlKey || event.metaKey)) {
+            store.dispatch(redo())
+        }
         if (event.code === 'ArrowUp' && (event.ctrlKey || event.metaKey)) {
             store.dispatch(switchLayer(1))
         }

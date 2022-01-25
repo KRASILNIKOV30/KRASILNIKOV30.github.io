@@ -60,7 +60,7 @@ function addObjectReducer(slide: Slide, element: string, textValue?: string): Sl
             newEl.textProps = {
                 font: 'Arial',
                 textColor: 'black',
-                textValue: textValue ? textValue : 'Hello Kerim',
+                textValue: textValue ? textValue : 'Текст',
                 fontSize: 15,
                 fontWeight: 500,
                 align: 'left'
