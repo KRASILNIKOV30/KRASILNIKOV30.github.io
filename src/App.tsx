@@ -5,9 +5,9 @@ import { dispatch } from './model/editor';
 import { switchPreview } from './model/presentation';
 import { SlideView } from './common/Slide/Slide';
 import { SlidesElement } from './common/SlidesElement/SlidesElement'
-import { SideBar } from './sideBar/sideBar';
 import './hotKeys';
 import { SlideEditor } from './slideEditor/slideEditor';
+import { SideBar } from './sideBar/sideBar';
 
 type AppProps = {
     editor: Editor;

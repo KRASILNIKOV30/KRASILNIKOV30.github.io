@@ -106,10 +106,10 @@ interface DropDownOptionsToAddProps {
     activeWeather: boolean
     onClick: () => void
 }
-
 const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClick }: DropDownOptionsToAddProps) => {
     const buttonRef = useRef(null)
-    useGettingWeather({buttonRef})
+    const [cityName, setCityName] = useState('Yoshkar-Ola')
+    useGettingWeather({buttonRef, city:cityName, addWeatherFunction: addObject}) 
     return (
         <div className={styles.options_to_add_container}>
             {
@@ -189,7 +189,8 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClic
                             style = 'small'
                             placeholder = 'Введите название города...'
                             onKeyUp = {(value) => {
-                                
+                                setCityName(value);
+                                console.log('city name is ' + cityName)
                             }}
                         />
                         <div
