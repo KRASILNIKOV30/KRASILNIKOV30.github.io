@@ -117,7 +117,7 @@ interface DropDownOptionsToAddProps {
     activeFigure: boolean,
     activeImage: boolean,
     onClick: () => void,
-    addObject: (element: string) => void,
+    addObject: (element: string, textValue?: string) => void,
     addImage: (urlImage: string) => void,
     activeWeather: boolean
 }
@@ -126,7 +126,7 @@ const DropDownOptionsToAdd = ({ activeFigure, activeImage, activeWeather, onClic
     const [inputImageUrl, setInputImageUrl] = useState(false);
     const [cityName, setCityName] = useState('Yoshkar-Ola')
     const buttonRef = useRef(null)
-    useGettingWeather({buttonRef})
+    useGettingWeather({buttonRef, city: cityName, addWeatherFunction: (element: string, textValue: string) => addObject(element, textValue)})
     return (
         <div className={styles.options_to_add_container}>
             {

@@ -46,17 +46,20 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
 interface GettingWeatherProps {
-    buttonRef: React.RefObject<HTMLElement|null>
+    buttonRef: React.RefObject<HTMLElement|null>,
+    city: string,
+    addWeatherFunction: Function
 }
 
 const useGettingWeather = ({
-    buttonRef
+    buttonRef,
+    city,
+    addWeatherFunction
 }: GettingWeatherProps) => {
-    const city = 'Kazan';
     const temp = '';
     const [weather, setWeather] = useState(temp);
 
-    const onMouseDown = () => {
+    const onMouseDown = useCallback(() => {
       try {
         fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=98e5bfeb477c9bec9f5ee8de192eaed8')
           .then(res => res.json())
@@ -64,8 +67,11 @@ const useGettingWeather = ({
             setWeather(weather.main.temp);
           });
       } catch (e) {}
-      console.log(city + ': ' + weather)
-    }
+      if (weather) {
+          addWeatherFunction('text', city + ': ' + weather)
+          setWeather('')
+      }
+    }, [city, weather, setWeather])
 
     useEffect(() => {  
         if (buttonRef.current) {
