@@ -42,7 +42,7 @@ const SlidesElement = ({
 
 
     const clickOutsideFunction = () => { 
-        if (active && slideElement?.elementId) {
+        if (active && slideElement) {
             removeSelection(slideElement.elementId)
         } else {
             return(null)

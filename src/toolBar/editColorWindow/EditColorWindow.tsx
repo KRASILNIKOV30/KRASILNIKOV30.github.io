@@ -12,7 +12,7 @@ import { useClickOutside } from '../../core/hooks/useClickOutside'
 import { getBase64FromPicture } from "../../model/export";
 
 interface EditColorWindowProps {
-    firstSelectedElement: SlideElement
+    firstSelectedElement: SlideElement | null
     drawMode: string,
     onClick: () => void,
     changeStrokeColor: (newColor: string) => void,
@@ -120,7 +120,7 @@ function EditColorWindow({
                         </div>
                 }
                 {
-                    drawMode === 'strokeFigure' &&
+                    (drawMode === 'strokeFigure' && firstSelectedElement) &&
                         <div className={styles.change_value}>
                             <div className={styles.secondary_text}>
                                 Толщина

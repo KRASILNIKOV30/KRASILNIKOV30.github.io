@@ -138,9 +138,9 @@ function mainReducer(state: Editor = initialState, action: ActionType): Editor {
     return newState
 }
  
+// localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: 
 
-
-let store = createStore(mainReducer, /* localStorage.getItem("savedEditor") !== null ? deepClone(JSON.parse(localStorage.getItem("savedEditor")!)) as Editor: */ initialState)
+let store = createStore(mainReducer, initialState)
 
 export type AppDispatch = typeof store.dispatch
 

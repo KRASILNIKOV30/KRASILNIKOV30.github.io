@@ -95,8 +95,7 @@ function addImageReducer(slide: Slide, urlImage: string): Slide {
 
 function removeSelectionReducer(slide: Slide, elementId: string): Slide {
     const newSlide = deepClone(slide) as Slide;
-    const elementIndex = newSlide.selectedElementsIds.findIndex((id) => id === elementId)
-    newSlide.selectedElementsIds.splice(elementIndex, 1)
+    newSlide.selectedElementsIds = []
     return newSlide
 }
 
@@ -294,11 +293,10 @@ function changeFillColorReducer(slide: Slide, newColor: string ): Slide {
 function deleteSelectedReducer(slide: Slide): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
-    newSlide.elements.forEach(element => {
-        if(selectedElementsId.includes(element.elementId)) {
-            newSlide.elements.splice(newSlide.elements.indexOf(element), 1)
-        }
-    })
+    for (let i = 0; i < selectedElementsId.length; i++) {
+        const indexToDelete = newSlide.elements.findIndex(element => element.elementId === selectedElementsId[i])
+        newSlide.elements.splice(indexToDelete, 1)
+    }
     newSlide.selectedElementsIds = [];
     return newSlide
 }
