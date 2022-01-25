@@ -39,7 +39,7 @@ type SlideElement = {
     size: Size; 
     image?: string;
     textProps?: TextType;
-    figure?: FigureType
+    figure?: FigureType;
 }
 
 type TextType = {
