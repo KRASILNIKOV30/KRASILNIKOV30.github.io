@@ -120,8 +120,8 @@ async function addObjectOnPage(doc: jsPDF, object: SlideElement) {
             addTextBox(doc, object);
         } else if (object.elementType === 'figure') {
             addFigure(doc, object);
-        } else if (object.elementType === 'image') {
-            const base64 = await getBase64FromPicture(object.image!, object.size);
+        } else if (object.elementType === 'image' && object.image) {
+            const base64 = await getBase64FromPicture(object.image, object.size);
             addImage(doc, object, base64);
         }
         resolve(Promise);
@@ -136,15 +136,17 @@ async function addObjectsOnPage(doc: jsPDF, elements: Array<SlideElement>) {
 }
 
 async function setBackgroundImage(doc: jsPDF, image: SlideElement) {
-    const base64 = await getBase64FromPicture(image.image!, image.size);
-    doc.addImage (
-        base64,
-        'jpg',
-        0,
-        0,
-        818,
-        582
-    );
+    if (image.image) {
+        const base64 = await getBase64FromPicture(image.image, image.size);
+        doc.addImage (
+            base64,
+            'jpg',
+            0,
+            0,
+            818,
+            582
+        );
+    } 
 }
 
 function setBackgroundColor(doc: jsPDF, color: string) {

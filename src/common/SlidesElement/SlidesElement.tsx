@@ -42,8 +42,8 @@ const SlidesElement = ({
 
 
     const clickOutsideFunction = () => { 
-        if (active) {
-            removeSelection(slideElement?.elementId!)
+        if (active && slideElement?.elementId) {
+            removeSelection(slideElement.elementId)
         } else {
             return(null)
         }
@@ -60,7 +60,7 @@ const SlidesElement = ({
         elementRef: slideElementRef,
         onMouseUpFunction: (angleShift: number) => changeAngle(angleShift), 
         rotateButtonRef,
-        startAngle: slideElement?.angle! 
+        startAngle: slideElement?.angle? slideElement?.angle: 0 //
     })
 
     type CornersType = {
@@ -92,10 +92,10 @@ const SlidesElement = ({
     const [elementHeight, setElementHeight] = useState(slideElement?.size.height)
     const [angle, setAngle] = useState(slideElement?.angle)
     useEffect(() => {
-        setElementWidth(slideElement!.size.width)
+        setElementWidth(slideElement?.size.width)
         setElementHeight(slideElement?.size.height)
         setAngle(slideElement?.angle)
-    }, [slideElement!.size.width, slideElement!.size.height, slideElement?.angle])
+    }, [slideElement?.size.width, slideElement?.size.height, slideElement?.angle])
     useEffect(() => {
         setElementWidth(Number(slideElementRef.current?.style.width.substring(0, slideElementRef.current?.style.width.length - 2)));
         setElementHeight(Number(slideElementRef.current?.style.height.substring(0, slideElementRef.current?.style.height.length - 2)))
@@ -108,94 +108,104 @@ const SlidesElement = ({
     
     switch (slideElement.elementType) {
         case "text": 
-            return (
-                <div
-                    ref = {slideElementRef}
-                    className = {`${active ? styles.element_active : styles.element}`}
-                    style = {{
-                        'top': slideElement.position.y,
-                        'left': slideElement.position.x,
-                        'width': slideElement.size.width,
-                        'height': slideElement.size.height,
-                        'transform': `rotate(${angle}deg)`
-                    }}
-                    onClick = {(e) => {
-                        if (!active) {
-                            if (e.ctrlKey || e.shiftKey) {
-                                selectManyElements(slideElement.elementId)
+            if (slideElement.textProps) {
+                return (
+                    <div
+                        ref = {slideElementRef}
+                        className = {`${active ? styles.element_active : styles.element}`}
+                        style = {{
+                            'top': slideElement.position.y,
+                            'left': slideElement.position.x,
+                            'width': slideElement.size.width,
+                            'height': slideElement.size.height,
+                            'transform': `rotate(${angle}deg)`
+                        }}
+                        onClick = {(e) => {
+                            if (!active) {
+                                if (e.ctrlKey || e.shiftKey) {
+                                    selectManyElements(slideElement.elementId)
+                                }
+                                else {
+                                    selectElement(slideElement.elementId)
+                                }
                             }
-                            else {
-                                selectElement(slideElement.elementId)
-                            }
+                        }}
+                    >
+                        {
+                            active &&
+                            <div className = {styles.points_container}>
+                                <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                                <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div> 
+                                <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
+                            </div>
                         }
-                    }}
-                >
-                    {
-                        active &&
-                        <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div> 
-                            <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
-                        </div>
-                    }
-                    <Text
-                        size = {{
-                            width: elementWidth!,
-                            height: elementHeight!
-                        }}
-                        text = {slideElement.textProps!}
-                        onKeyUp = {(value) => {
-                            changeTextValue(value)
-                        }}
-                    />
-                </div>
-            )
+                        <Text
+                            size = {{
+                                width: elementWidth? elementWidth: slideElement.size.width,
+                                height: elementHeight? elementHeight: slideElement.size.height
+                            }}
+                            text = {slideElement.textProps}
+                            onKeyUp = {(value) => {
+                                changeTextValue(value)
+                            }}
+                        />
+                    </div>
+                )
+            }
+            else {
+                return null
+            }
         case "figure":
-            return (
-                <div
-                    ref = {slideElementRef}
-                    id = {slideElement.elementId}
-                    className = {`${active ? styles.element_active : styles.element}`}
-                    style = {{
-                        'top': slideElement.position.y,
-                        'left': slideElement.position.x,
-                        'width': slideElement.size.width,
-                        'height': slideElement.size.height,
-                        'strokeWidth': slideElement.figure?.strokeWidth,
-                        'transform': `rotate(${angle}deg)`
-                    }}
-                    onClick = {(e) => {
-                        if (!active) {
-                            if (e.ctrlKey || e.shiftKey) {
-                                selectManyElements(slideElement.elementId)
-                            }
-                            else {
-                                selectElement(slideElement.elementId)
-                            }
-                        }
-                    }}
-                >
-                    {
-                        active &&
-                        <div className = {styles.points_container}>
-                            <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
-                            <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
-                            <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
-                            <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
-                        </div>
-                    }
-                    <Figure
-                        figure = {slideElement.figure!}
-                        size = {{
-                            width: elementWidth!,
-                            height: elementHeight!
+            if (slideElement.figure) {
+                return (
+                    <div
+                        ref = {slideElementRef}
+                        id = {slideElement.elementId}
+                        className = {`${active ? styles.element_active : styles.element}`}
+                        style = {{
+                            'top': slideElement.position.y,
+                            'left': slideElement.position.x,
+                            'width': slideElement.size.width,
+                            'height': slideElement.size.height,
+                            'strokeWidth': slideElement.figure?.strokeWidth,
+                            'transform': `rotate(${angle}deg)`
                         }}
-                    />
-                </div>
-            )    
+                        onClick = {(e) => {
+                            if (!active) {
+                                if (e.ctrlKey || e.shiftKey) {
+                                    selectManyElements(slideElement.elementId)
+                                }
+                                else {
+                                    selectElement(slideElement.elementId)
+                                }
+                            }
+                        }}
+                    >
+                        {
+                            active &&
+                            <div className = {styles.points_container}>
+                                <div className={`${styles.point} ${styles.point_top_left}`} ref = {topLeftRef} id = 'top-left'></div>
+                                <div className={`${styles.point} ${styles.point_top_right}`} ref = {topRightRef} id = 'top-right'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_left}`} ref = {bottomLeftRef} id = 'bottom-left'></div>
+                                <div className={`${styles.point} ${styles.point_bottom_right}`} ref = {bottomRightRef} id = 'bottom-right'></div>
+                                <div className={`${styles.point} ${styles.rotate_point}`} ref = {rotateButtonRef}></div>
+                            </div>
+                        }
+                        <Figure
+                            figure = {slideElement.figure}
+                            size = {{
+                                width: elementWidth? elementWidth: slideElement.size.width,
+                                height: elementHeight? elementHeight: slideElement.size.height
+                            }}
+                        />
+                    </div>
+                )
+            }
+            else {
+                return null 
+            }    
         case "image":
             return (
                 <div
@@ -234,8 +244,8 @@ const SlidesElement = ({
                         alt = 'user image'
                         src = {slideElement.image}
                         style={{
-                            width: elementWidth!,
-                            height: elementHeight!
+                            width: elementWidth? elementWidth: slideElement.size.width,
+                            height: elementHeight? elementHeight: slideElement.size.height
                         }}
                     />
                 </div>

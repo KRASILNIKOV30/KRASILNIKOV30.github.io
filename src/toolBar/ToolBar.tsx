@@ -67,7 +67,7 @@ const ToolBar = ({
         }   
     )
     const [drawBlock, setDrawBlock] = useState('absent')
-    const firstSelectedElement: SlideElement = slide.elements.find(element => element.elementId === slide.selectedElementsIds[0])!;
+    const firstSelectedElement: SlideElement | undefined = slide.elements.find(element => element.elementId === slide.selectedElementsIds[0]);
     
 
     return (
@@ -168,7 +168,9 @@ const ToolBar = ({
                             onClick={() => setDrawBlock('backgroundSlide')}
                         />
                     </div>
-                    <OptionalTools 
+                    {
+                        firstSelectedElement &&
+                        <OptionalTools 
                         textSelected = {textSelected}
                         figureSelected = {figureSelected}
                         firstSelectedElement = {firstSelectedElement}
@@ -178,6 +180,7 @@ const ToolBar = ({
                         changeTextWeight={changeTextWeight}
                         changeTextAlign={changeTextAlign}
                     />
+                    }
                 </div>
                 <div className={styles.result_buttons_block}>
                     <div className={styles.outline_button}>
@@ -197,7 +200,7 @@ const ToolBar = ({
                 </div>
             </div>
             {
-                drawBlock !== 'absent' &&
+                (drawBlock !== 'absent' && firstSelectedElement) &&
                 <EditColorWindow
                     firstSelectedElement = {firstSelectedElement}
                     drawMode = {drawBlock}

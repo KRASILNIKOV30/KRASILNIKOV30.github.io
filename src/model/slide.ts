@@ -207,7 +207,7 @@ function changeTextPropsReducer(
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
-        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].textProps !== undefined) {
+        if (selectedElementsId.includes(newSlide.elements[i].elementId) && newSlide.elements[i].textProps) {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 textProps: {
@@ -229,7 +229,7 @@ function changeStrokeWidthReducer(slide: Slide, newWidth: number): Slide {
     const newSlide = deepClone(slide) as Slide;
     const selectedElementsId: Array<string> = newSlide.selectedElementsIds.concat();
     for (let i = 0; i < newSlide.elements.length; i++) {
-        if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType === "figure") && (newSlide.elements[i].figure !== undefined)) {
+        if (selectedElementsId.includes(newSlide.elements[i].elementId) && (newSlide.elements[i].elementType === "figure") && (newSlide.elements[i].figure)) {
             const newElement: SlideElement = {
                 ...newSlide.elements[i],
                 figure: {
