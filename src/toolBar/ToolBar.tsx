@@ -254,24 +254,24 @@ function OptionalTools({
             </div>
         )
     }
-    else if (textSelected && !figureSelected) {
+    else if (textSelected && !figureSelected && firstSelectedElement.textProps) {
         return (
             <div className={styles.optional_tools_container}>
                 <p className={styles.optional_tools_text}>Шрифт</p>
                 <TextField
                     size="small"
-                    placeholder={firstSelectedElement.textProps!.font}
+                    placeholder={firstSelectedElement.textProps.font}
                     onKeyUp={(value) => changeTextFont(value)}
                 /> 
                 <p className={styles.optional_tools_text}>Размер шрифта</p>
                 <Knob 
-                    value={firstSelectedElement.textProps!.fontSize} 
+                    value={firstSelectedElement.textProps.fontSize} 
                     step = {1}   
                     onClick={(value) => changeTextSize(value)}
                 />
                 <p className={styles.optional_tools_text}>Начертание</p>
                 <Knob 
-                    value={firstSelectedElement.textProps!.fontWeight} 
+                    value={firstSelectedElement.textProps.fontWeight} 
                     step = {100}   
                     onClick={(value) => changeTextWeight(value)}
                 />
